@@ -1,0 +1,3 @@
+# JNI native libraries will be populated on release
+# - arm64-v8a/libvauchi_mobile.so
+# - x86_64/libvauchi_mobile.so

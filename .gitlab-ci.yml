@@ -1,0 +1,80 @@
+# GitLab CI for vauchi-mobile-android
+#
+# Android library distribution for VauchiMobile
+#
+# This pipeline:
+# - Builds the AAR library
+# - Publishes to GitLab Maven registry
+# - Auto-updates on upstream release triggers
+
+stages:
+  - build
+  - publish
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+# Build AAR library
+build:aar:
+  stage: build
+  image: cimg/android:2024.01
+  script:
+    - ./gradlew :vauchi-mobile:assembleRelease
+  artifacts:
+    paths:
+      - vauchi-mobile/build/outputs/aar/
+    expire_in: 1 week
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_TAG =~ /^v/
+
+# Publish to GitLab Maven
+publish:maven:
+  stage: publish
+  image: cimg/android:2024.01
+  needs:
+    - build:aar
+  script:
+    - ./gradlew :vauchi-mobile:publishReleasePublicationToGitLabRepository
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v/
+
+# Triggered by upstream vauchi/core release
+# Downloads native libs and updates the library
+update:bindings:
+  stage: build
+  image: cimg/android:2024.01
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "trigger" && $UPSTREAM_VERSION
+  script:
+    - |
+      echo "Updating to version $UPSTREAM_VERSION"
+
+      # Download Android bindings from upstream
+      PACKAGE_URL="https://gitlab.com/api/v4/projects/vauchi%2Fcore/packages/generic/vauchi-mobile/$UPSTREAM_VERSION"
+
+      curl -L -o android-bindings.zip "$PACKAGE_URL/vauchi-mobile-android-$UPSTREAM_VERSION.zip"
+      unzip android-bindings.zip
+
+      # Copy JNI libs
+      cp -r vauchi-mobile-android-$UPSTREAM_VERSION/jniLibs/* vauchi-mobile/src/main/jniLibs/
+
+      # Copy Kotlin bindings
+      mkdir -p vauchi-mobile/src/main/kotlin/uniffi
+      cp -r vauchi-mobile-android-$UPSTREAM_VERSION/kotlin/uniffi/* vauchi-mobile/src/main/kotlin/uniffi/
+
+      # Update version
+      sed -i "s/const val VERSION = \".*\"/const val VERSION = \"$UPSTREAM_VERSION\"/" \
+        vauchi-mobile/src/main/kotlin/com/vauchi/mobile/VauchiMobile.kt
+
+      # Build and publish
+      VERSION=$UPSTREAM_VERSION ./gradlew :vauchi-mobile:assembleRelease :vauchi-mobile:publishReleasePublicationToGitLabRepository
+
+      # Commit changes
+      git config user.email "ci@vauchi.com"
+      git config user.name "Vauchi CI"
+      git add -A
+      git commit -m "chore: Update to $UPSTREAM_VERSION"
+      git tag "$UPSTREAM_VERSION"
+      git push origin main --tags
