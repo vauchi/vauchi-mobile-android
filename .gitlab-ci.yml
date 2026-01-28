@@ -46,35 +46,45 @@ update:bindings:
   stage: build
   image: cimg/android:2024.01
   rules:
-    - if: $CI_PIPELINE_SOURCE == "trigger" && $UPSTREAM_VERSION
+    # Accept both trigger sources:
+    #   "trigger" = Pipeline Trigger API (trigger-downstream.sh)
+    #   "pipeline" = GitLab trigger: keyword (multi-project pipeline)
+    - if: ($CI_PIPELINE_SOURCE == "trigger" || $CI_PIPELINE_SOURCE == "pipeline") && $UPSTREAM_VERSION
   script:
     - |
       echo "Updating to version $UPSTREAM_VERSION"
 
-      # Download Android bindings from upstream
-      PACKAGE_URL="https://gitlab.com/api/v4/projects/vauchi%2Fcore/packages/generic/vauchi-mobile/$UPSTREAM_VERSION"
+      # Strip v prefix for package version
+      CLEAN_VERSION="${UPSTREAM_VERSION#v}"
 
-      curl -L -o android-bindings.zip "$PACKAGE_URL/vauchi-mobile-android-$UPSTREAM_VERSION.zip"
+      # Download Android bindings from upstream
+      PACKAGE_URL="https://gitlab.com/api/v4/projects/vauchi%2Fcore/packages/generic/vauchi-mobile/$CLEAN_VERSION"
+      echo "Downloading from: $PACKAGE_URL"
+
+      curl -sfL -o android-bindings.zip "$PACKAGE_URL/vauchi-mobile-android-$CLEAN_VERSION.zip"
       unzip android-bindings.zip
 
       # Copy JNI libs
-      cp -r vauchi-mobile-android-$UPSTREAM_VERSION/jniLibs/* vauchi-mobile/src/main/jniLibs/
+      mkdir -p vauchi-mobile/src/main/jniLibs
+      cp -r vauchi-mobile-android-$CLEAN_VERSION/jniLibs/* vauchi-mobile/src/main/jniLibs/
 
       # Copy Kotlin bindings
       mkdir -p vauchi-mobile/src/main/kotlin/uniffi
-      cp -r vauchi-mobile-android-$UPSTREAM_VERSION/kotlin/uniffi/* vauchi-mobile/src/main/kotlin/uniffi/
+      cp -r vauchi-mobile-android-$CLEAN_VERSION/kotlin/uniffi/* vauchi-mobile/src/main/kotlin/uniffi/
 
       # Update version
-      sed -i "s/const val VERSION = \".*\"/const val VERSION = \"$UPSTREAM_VERSION\"/" \
+      sed -i "s/const val VERSION = \".*\"/const val VERSION = \"$CLEAN_VERSION\"/" \
         vauchi-mobile/src/main/kotlin/com/vauchi/mobile/VauchiMobile.kt
 
       # Build and publish
-      VERSION=$UPSTREAM_VERSION ./gradlew :vauchi-mobile:assembleRelease :vauchi-mobile:publishReleasePublicationToGitLabRepository
+      VERSION=$CLEAN_VERSION ./gradlew :vauchi-mobile:assembleRelease :vauchi-mobile:publishReleasePublicationToGitLabRepository
 
-      # Commit changes
+      # Configure git to push via CI_JOB_TOKEN
       git config user.email "ci@vauchi.com"
       git config user.name "Vauchi CI"
+      git remote set-url origin "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/${CI_PROJECT_PATH}.git"
+
       git add -A
       git commit -m "chore: Update to $UPSTREAM_VERSION"
       git tag "$UPSTREAM_VERSION"
-      git push origin main --tags
+      git push origin HEAD:main --tags
