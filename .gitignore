@@ -1,0 +1,7 @@
+# Build outputs
+build/
+.gradle/
+
+# Local configuration
+local.properties
+
