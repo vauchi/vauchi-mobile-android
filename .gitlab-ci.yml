@@ -7,7 +7,17 @@
 # - Publishes to GitLab Maven registry
 # - Auto-updates on upstream release triggers
 
+include:
+  - project: 'vauchi/scripts'
+    ref: main
+    file: '/ci-templates/reuse.yml'
+
+# Generated repo — REUSE headers may be incomplete
+reuse-lint:
+  allow_failure: true
+
 stages:
+  - lint
   - build
   - publish
   - notify
