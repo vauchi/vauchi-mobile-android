@@ -21,7 +21,7 @@ object VauchiMobileLib {
     /**
      * Library version
      */
-    const val VERSION = "0.1.3"
+    const val VERSION = "0.1.4"
 
     /**
      * Check if native library is loaded
