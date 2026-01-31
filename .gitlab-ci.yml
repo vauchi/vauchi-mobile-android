@@ -12,6 +12,10 @@ stages:
   - publish
   - notify
 
+workflow:
+  auto_cancel:
+    on_new_commit: interruptible
+
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
@@ -46,6 +50,7 @@ publish:maven:
 update:bindings:
   stage: build
   image: cimg/android:2024.01
+  resource_group: bindings-update
   rules:
     # Accept all trigger sources:
     #   "trigger" = Pipeline Trigger API (trigger-downstream.sh from CI)
@@ -96,6 +101,7 @@ update:bindings:
 notify:android-app:
   stage: notify
   image: alpine:latest
+  resource_group: notify-downstream
   needs:
     - update:bindings
   rules:
