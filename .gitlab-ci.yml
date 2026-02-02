@@ -67,6 +67,9 @@ update:bindings:
     #   "pipeline" = GitLab trigger: keyword (multi-project pipeline)
     #   "api" = Pipeline API with PRIVATE-TOKEN (trigger-downstream.sh locally, or glab)
     - if: ($CI_PIPELINE_SOURCE == "trigger" || $CI_PIPELINE_SOURCE == "pipeline" || $CI_PIPELINE_SOURCE == "api") && $UPSTREAM_VERSION
+  before_script:
+    # Install cosign for signature verification
+    - curl -sSfL https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 -o /usr/local/bin/cosign && chmod +x /usr/local/bin/cosign || echo "Warning: cosign install failed, skipping verification"
   script:
     - |
       echo "Updating to version $UPSTREAM_VERSION"
@@ -79,6 +82,23 @@ update:bindings:
       echo "Downloading from: $PACKAGE_URL"
 
       curl -sfL -o android-bindings.zip "$PACKAGE_URL/vauchi-mobile-android-$CLEAN_VERSION.zip"
+
+      # Verify checksum signature with cosign if .sig is available
+      CHECKSUM_URL="$PACKAGE_URL/vauchi-mobile-android-$CLEAN_VERSION.zip.sha256"
+      SIG_URL="${CHECKSUM_URL}.sig"
+      COSIGN_PUB_URL="https://gitlab.com/vauchi/core/-/raw/main/cosign.pub"
+      echo "Fetching checksum and signature..."
+      if curl -sf -o checksum.sha256 "$CHECKSUM_URL" && curl -sf -o checksum.sha256.sig "$SIG_URL" && curl -sf -o cosign.pub "$COSIGN_PUB_URL"; then
+        if cosign verify-blob --key cosign.pub --signature checksum.sha256.sig checksum.sha256; then
+          echo "Checksum signature verified"
+        else
+          echo "WARNING: Checksum signature verification FAILED"
+        fi
+        rm -f checksum.sha256 checksum.sha256.sig cosign.pub
+      else
+        echo "WARNING: Could not fetch signature or public key — skipping verification"
+      fi
+
       unzip android-bindings.zip
 
       # Copy JNI libs
