@@ -1017,6 +1017,26 @@ internal open class UniffiVTableCallbackInterfacePlatformAudioHandler(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // A JNA Library to expose the extern-C FFI definitions.
 // This is an implementation detail which will be called internally by the public API.
 
@@ -1079,6 +1099,10 @@ internal interface UniffiLib : Library {
     ): Byte
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_calculate_retry_backoff(`ptr`: Pointer,`attempt`: Int,uniffi_out_err: UniffiRustCallStatus, 
     ): Long
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_cancel_account_deletion(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_check_consent(`ptr`: Pointer,`consentType`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Byte
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_check_content_updates(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_clear_pending_updates_for_contact(`ptr`: Pointer,`contactId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1105,7 +1129,11 @@ internal interface UniffiLib : Library {
     ): Int
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_dismiss_demo_contact(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_execute_account_deletion(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_export_backup(`ptr`: Pointer,`password`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_export_gdpr_data(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_export_storage_key(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
@@ -1115,7 +1143,11 @@ internal interface UniffiLib : Library {
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_all_delivery_records(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_consent_records(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_contact(`ptr`: Pointer,`id`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_deletion_state(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_delivery_count_by_status(`ptr`: Pointer,`status`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Int
@@ -1171,6 +1203,8 @@ internal interface UniffiLib : Library {
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_total_pending_count(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Int
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_grant_consent(`ptr`: Pointer,`consentType`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_has_identity(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_has_seen_aha_moment(`ptr`: Pointer,`momentType`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1196,6 +1230,8 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_is_primary_device(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_list_contacts(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_list_contacts_paginated(`ptr`: Pointer,`offset`: Int,`limit`: Int,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_list_labels(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
@@ -1227,8 +1263,12 @@ internal interface UniffiLib : Library {
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_restore_demo_contact(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_revoke_consent(`ptr`: Pointer,`consentType`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_revoke_field_validation(`ptr`: Pointer,`contactId`: RustBuffer.ByValue,`fieldId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_schedule_account_deletion(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_search_contacts(`ptr`: Pointer,`query`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_search_social_networks(`ptr`: Pointer,`query`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1473,6 +1513,10 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_calculate_retry_backoff(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_cancel_account_deletion(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_check_consent(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_check_content_updates(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_clear_pending_updates_for_contact(
@@ -1499,7 +1543,11 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_dismiss_demo_contact(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_execute_account_deletion(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_export_backup(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_export_gdpr_data(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_export_storage_key(
     ): Short
@@ -1509,7 +1557,11 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_all_delivery_records(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_consent_records(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_contact(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_deletion_state(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_delivery_count_by_status(
     ): Short
@@ -1565,6 +1617,8 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_total_pending_count(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_grant_consent(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_has_identity(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_has_seen_aha_moment(
@@ -1590,6 +1644,8 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_is_primary_device(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_list_contacts(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_list_contacts_paginated(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_list_labels(
     ): Short
@@ -1621,7 +1677,11 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_restore_demo_contact(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_revoke_consent(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_revoke_field_validation(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_schedule_account_deletion(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_search_contacts(
     ): Short
@@ -1783,6 +1843,12 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_calculate_retry_backoff() != 60454.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_cancel_account_deletion() != 49743.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_check_consent() != 20830.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_check_content_updates() != 7487.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -1822,7 +1888,13 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_dismiss_demo_contact() != 52421.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_execute_account_deletion() != 40961.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_export_backup() != 14975.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_export_gdpr_data() != 23597.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_export_storage_key() != 42895.toShort()) {
@@ -1837,7 +1909,13 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_get_all_delivery_records() != 60693.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_get_consent_records() != 7910.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_get_contact() != 17724.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_get_deletion_state() != 30292.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_get_delivery_count_by_status() != 25864.toShort()) {
@@ -1921,6 +1999,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_get_total_pending_count() != 28547.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_grant_consent() != 28571.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_has_identity() != 17028.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -1958,6 +2039,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_list_contacts() != 21454.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_list_contacts_paginated() != 30748.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_list_labels() != 31739.toShort()) {
@@ -2005,10 +2089,16 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_restore_demo_contact() != 31302.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_revoke_consent() != 7992.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_revoke_field_validation() != 14878.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
-    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_search_contacts() != 63776.toShort()) {
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_schedule_account_deletion() != 23295.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_search_contacts() != 4061.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_search_social_networks() != 27909.toShort()) {
@@ -2882,6 +2972,16 @@ public interface VauchiMobileInterface {
     fun `calculateRetryBackoff`(`attempt`: kotlin.UInt): kotlin.ULong
     
     /**
+     * Cancel a scheduled account deletion.
+     */
+    fun `cancelAccountDeletion`()
+    
+    /**
+     * Check whether consent is currently granted for a type.
+     */
+    fun `checkConsent`(`consentType`: MobileConsentType): kotlin.Boolean
+    
+    /**
      * Check for available content updates.
      *
      * This is a blocking call that checks the remote server for updates.
@@ -2963,9 +3063,19 @@ public interface VauchiMobileInterface {
     fun `dismissDemoContact`()
     
     /**
+     * Execute account deletion (only after grace period).
+     */
+    fun `executeAccountDeletion`()
+    
+    /**
      * Export encrypted backup.
      */
     fun `exportBackup`(`password`: kotlin.String): kotlin.String
+    
+    /**
+     * Export all user data for GDPR compliance.
+     */
+    fun `exportGdprData`(): MobileGdprExport
     
     /**
      * Export the current storage key bytes for migration to secure storage.
@@ -2991,9 +3101,19 @@ public interface VauchiMobileInterface {
     fun `getAllDeliveryRecords`(): List<MobileDeliveryRecord>
     
     /**
+     * Get all consent records.
+     */
+    fun `getConsentRecords`(): List<MobileConsentRecord>
+    
+    /**
      * Get single contact by ID.
      */
     fun `getContact`(`id`: kotlin.String): MobileContact?
+    
+    /**
+     * Get current deletion state.
+     */
+    fun `getDeletionState`(): MobileDeletionInfo
     
     /**
      * Get delivery count by status.
@@ -3141,6 +3261,11 @@ public interface VauchiMobileInterface {
     fun `getTotalPendingCount`(): kotlin.UInt
     
     /**
+     * Grant consent for a specific type.
+     */
+    fun `grantConsent`(`consentType`: MobileConsentType)
+    
+    /**
      * Check if identity exists.
      */
     fun `hasIdentity`(): kotlin.Boolean
@@ -3209,6 +3334,11 @@ public interface VauchiMobileInterface {
      * List all contacts.
      */
     fun `listContacts`(): List<MobileContact>
+    
+    /**
+     * List contacts with pagination.
+     */
+    fun `listContactsPaginated`(`offset`: kotlin.UInt, `limit`: kotlin.UInt): List<MobileContact>
     
     /**
      * List all visibility labels.
@@ -3300,6 +3430,11 @@ public interface VauchiMobileInterface {
     fun `restoreDemoContact`(): MobileDemoContact?
     
     /**
+     * Revoke consent for a specific type.
+     */
+    fun `revokeConsent`(`consentType`: MobileConsentType)
+    
+    /**
      * Revoke your validation of a contact's field.
      *
      * Returns true if a validation was revoked, false if you hadn't validated.
@@ -3307,7 +3442,12 @@ public interface VauchiMobileInterface {
     fun `revokeFieldValidation`(`contactId`: kotlin.String, `fieldId`: kotlin.String): kotlin.Boolean
     
     /**
-     * Search contacts.
+     * Schedule account deletion with 7-day grace period.
+     */
+    fun `scheduleAccountDeletion`(): MobileDeletionInfo
+    
+    /**
+     * Search contacts using SQL-level search.
      */
     fun `searchContacts`(`query`: kotlin.String): List<MobileContact>
     
@@ -3641,6 +3781,37 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Cancel a scheduled account deletion.
+     */
+    @Throws(MobileException::class)override fun `cancelAccountDeletion`()
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_cancel_account_deletion(
+        it, _status)
+}
+    }
+    
+    
+
+    
+    /**
+     * Check whether consent is currently granted for a type.
+     */
+    @Throws(MobileException::class)override fun `checkConsent`(`consentType`: MobileConsentType): kotlin.Boolean {
+            return FfiConverterBoolean.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_check_consent(
+        it, FfiConverterTypeMobileConsentType.lower(`consentType`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
      * Check for available content updates.
      *
      * This is a blocking call that checks the remote server for updates.
@@ -3861,6 +4032,21 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Execute account deletion (only after grace period).
+     */
+    @Throws(MobileException::class)override fun `executeAccountDeletion`()
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_execute_account_deletion(
+        it, _status)
+}
+    }
+    
+    
+
+    
+    /**
      * Export encrypted backup.
      */
     @Throws(MobileException::class)override fun `exportBackup`(`password`: kotlin.String): kotlin.String {
@@ -3869,6 +4055,22 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     uniffiRustCallWithError(MobileException) { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_export_backup(
         it, FfiConverterString.lower(`password`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Export all user data for GDPR compliance.
+     */
+    @Throws(MobileException::class)override fun `exportGdprData`(): MobileGdprExport {
+            return FfiConverterTypeMobileGdprExport.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_export_gdpr_data(
+        it, _status)
 }
     }
     )
@@ -3943,6 +4145,22 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Get all consent records.
+     */
+    @Throws(MobileException::class)override fun `getConsentRecords`(): List<MobileConsentRecord> {
+            return FfiConverterSequenceTypeMobileConsentRecord.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_get_consent_records(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
      * Get single contact by ID.
      */
     @Throws(MobileException::class)override fun `getContact`(`id`: kotlin.String): MobileContact? {
@@ -3951,6 +4169,22 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     uniffiRustCallWithError(MobileException) { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_get_contact(
         it, FfiConverterString.lower(`id`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Get current deletion state.
+     */
+    @Throws(MobileException::class)override fun `getDeletionState`(): MobileDeletionInfo {
+            return FfiConverterTypeMobileDeletionInfo.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_get_deletion_state(
+        it, _status)
 }
     }
     )
@@ -4397,6 +4631,21 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Grant consent for a specific type.
+     */
+    @Throws(MobileException::class)override fun `grantConsent`(`consentType`: MobileConsentType)
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_grant_consent(
+        it, FfiConverterTypeMobileConsentType.lower(`consentType`),_status)
+}
+    }
+    
+    
+
+    
+    /**
      * Check if identity exists.
      */override fun `hasIdentity`(): kotlin.Boolean {
             return FfiConverterBoolean.lift(
@@ -4595,6 +4844,22 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     uniffiRustCallWithError(MobileException) { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_list_contacts(
         it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * List contacts with pagination.
+     */
+    @Throws(MobileException::class)override fun `listContactsPaginated`(`offset`: kotlin.UInt, `limit`: kotlin.UInt): List<MobileContact> {
+            return FfiConverterSequenceTypeMobileContact.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_list_contacts_paginated(
+        it, FfiConverterUInt.lower(`offset`),FfiConverterUInt.lower(`limit`),_status)
 }
     }
     )
@@ -4851,6 +5116,21 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Revoke consent for a specific type.
+     */
+    @Throws(MobileException::class)override fun `revokeConsent`(`consentType`: MobileConsentType)
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_revoke_consent(
+        it, FfiConverterTypeMobileConsentType.lower(`consentType`),_status)
+}
+    }
+    
+    
+
+    
+    /**
      * Revoke your validation of a contact's field.
      *
      * Returns true if a validation was revoked, false if you hadn't validated.
@@ -4869,7 +5149,23 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
-     * Search contacts.
+     * Schedule account deletion with 7-day grace period.
+     */
+    @Throws(MobileException::class)override fun `scheduleAccountDeletion`(): MobileDeletionInfo {
+            return FfiConverterTypeMobileDeletionInfo.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_schedule_account_deletion(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Search contacts using SQL-level search.
      */
     @Throws(MobileException::class)override fun `searchContacts`(`query`: kotlin.String): List<MobileContact> {
             return FfiConverterSequenceTypeMobileContact.lift(
@@ -5288,6 +5584,68 @@ public object FfiConverterTypeMobileApplyFailure: FfiConverterRustBuffer<MobileA
 
 
 /**
+ * A recorded consent decision.
+ */
+data class MobileConsentRecord (
+    /**
+     * Unique record ID.
+     */
+    var `id`: kotlin.String, 
+    /**
+     * Type of consent.
+     */
+    var `consentType`: MobileConsentType, 
+    /**
+     * Whether consent was granted.
+     */
+    var `granted`: kotlin.Boolean, 
+    /**
+     * Unix timestamp of the decision.
+     */
+    var `timestamp`: kotlin.ULong, 
+    /**
+     * Privacy policy version at time of consent.
+     */
+    var `policyVersion`: kotlin.String?
+) {
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileConsentRecord: FfiConverterRustBuffer<MobileConsentRecord> {
+    override fun read(buf: ByteBuffer): MobileConsentRecord {
+        return MobileConsentRecord(
+            FfiConverterString.read(buf),
+            FfiConverterTypeMobileConsentType.read(buf),
+            FfiConverterBoolean.read(buf),
+            FfiConverterULong.read(buf),
+            FfiConverterOptionalString.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: MobileConsentRecord) = (
+            FfiConverterString.allocationSize(value.`id`) +
+            FfiConverterTypeMobileConsentType.allocationSize(value.`consentType`) +
+            FfiConverterBoolean.allocationSize(value.`granted`) +
+            FfiConverterULong.allocationSize(value.`timestamp`) +
+            FfiConverterOptionalString.allocationSize(value.`policyVersion`)
+    )
+
+    override fun write(value: MobileConsentRecord, buf: ByteBuffer) {
+            FfiConverterString.write(value.`id`, buf)
+            FfiConverterTypeMobileConsentType.write(value.`consentType`, buf)
+            FfiConverterBoolean.write(value.`granted`, buf)
+            FfiConverterULong.write(value.`timestamp`, buf)
+            FfiConverterOptionalString.write(value.`policyVersion`, buf)
+    }
+}
+
+
+
+/**
  * Mobile-friendly contact.
  */
 data class MobileContact (
@@ -5455,6 +5813,61 @@ public object FfiConverterTypeMobileContentConfig: FfiConverterRustBuffer<Mobile
             FfiConverterBoolean.write(value.`remoteUpdatesEnabled`, buf)
             FfiConverterString.write(value.`contentUrl`, buf)
             FfiConverterOptionalString.write(value.`proxyUrl`, buf)
+    }
+}
+
+
+
+/**
+ * Deletion info with timing details.
+ */
+data class MobileDeletionInfo (
+    /**
+     * Current deletion state.
+     */
+    var `state`: MobileDeletionState, 
+    /**
+     * When deletion was scheduled (0 if not scheduled).
+     */
+    var `scheduledAt`: kotlin.ULong, 
+    /**
+     * When deletion can be executed (0 if not scheduled).
+     */
+    var `executeAt`: kotlin.ULong, 
+    /**
+     * Days remaining in grace period (0 if not scheduled).
+     */
+    var `daysRemaining`: kotlin.UInt
+) {
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileDeletionInfo: FfiConverterRustBuffer<MobileDeletionInfo> {
+    override fun read(buf: ByteBuffer): MobileDeletionInfo {
+        return MobileDeletionInfo(
+            FfiConverterTypeMobileDeletionState.read(buf),
+            FfiConverterULong.read(buf),
+            FfiConverterULong.read(buf),
+            FfiConverterUInt.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: MobileDeletionInfo) = (
+            FfiConverterTypeMobileDeletionState.allocationSize(value.`state`) +
+            FfiConverterULong.allocationSize(value.`scheduledAt`) +
+            FfiConverterULong.allocationSize(value.`executeAt`) +
+            FfiConverterUInt.allocationSize(value.`daysRemaining`)
+    )
+
+    override fun write(value: MobileDeletionInfo, buf: ByteBuffer) {
+            FfiConverterTypeMobileDeletionState.write(value.`state`, buf)
+            FfiConverterULong.write(value.`scheduledAt`, buf)
+            FfiConverterULong.write(value.`executeAt`, buf)
+            FfiConverterUInt.write(value.`daysRemaining`, buf)
     }
 }
 
@@ -6219,6 +6632,54 @@ public object FfiConverterTypeMobileFieldValidation: FfiConverterRustBuffer<Mobi
             FfiConverterString.write(value.`fieldName`, buf)
             FfiConverterString.write(value.`fieldValue`, buf)
             FfiConverterULong.write(value.`validatedAt`, buf)
+    }
+}
+
+
+
+/**
+ * GDPR data export result.
+ */
+data class MobileGdprExport (
+    /**
+     * Exported data as JSON string.
+     */
+    var `jsonData`: kotlin.String, 
+    /**
+     * When the export was created (Unix timestamp).
+     */
+    var `exportedAt`: kotlin.ULong, 
+    /**
+     * Export format version.
+     */
+    var `version`: kotlin.UInt
+) {
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileGdprExport: FfiConverterRustBuffer<MobileGdprExport> {
+    override fun read(buf: ByteBuffer): MobileGdprExport {
+        return MobileGdprExport(
+            FfiConverterString.read(buf),
+            FfiConverterULong.read(buf),
+            FfiConverterUInt.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: MobileGdprExport) = (
+            FfiConverterString.allocationSize(value.`jsonData`) +
+            FfiConverterULong.allocationSize(value.`exportedAt`) +
+            FfiConverterUInt.allocationSize(value.`version`)
+    )
+
+    override fun write(value: MobileGdprExport, buf: ByteBuffer) {
+            FfiConverterString.write(value.`jsonData`, buf)
+            FfiConverterULong.write(value.`exportedAt`, buf)
+            FfiConverterUInt.write(value.`version`, buf)
     }
 }
 
@@ -7366,6 +7827,53 @@ public object FfiConverterTypeMobileApplyResult : FfiConverterRustBuffer<MobileA
 
 
 /**
+ * Types of consent that can be granted or revoked.
+ */
+
+enum class MobileConsentType {
+    
+    /**
+     * Consent for local data processing.
+     */
+    DATA_PROCESSING,
+    /**
+     * Consent for sharing contact information.
+     */
+    CONTACT_SHARING,
+    /**
+     * Consent for anonymous usage analytics.
+     */
+    ANALYTICS,
+    /**
+     * Consent to participate in recovery vouching.
+     */
+    RECOVERY_VOUCHING;
+    companion object
+}
+
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileConsentType: FfiConverterRustBuffer<MobileConsentType> {
+    override fun read(buf: ByteBuffer) = try {
+        MobileConsentType.values()[buf.getInt() - 1]
+    } catch (e: IndexOutOfBoundsException) {
+        throw RuntimeException("invalid enum value, something is very wrong!!", e)
+    }
+
+    override fun allocationSize(value: MobileConsentType) = 4UL
+
+    override fun write(value: MobileConsentType, buf: ByteBuffer) {
+        buf.putInt(value.ordinal + 1)
+    }
+}
+
+
+
+
+
+/**
  * Content type for mobile platforms.
  */
 
@@ -7404,6 +7912,49 @@ public object FfiConverterTypeMobileContentType: FfiConverterRustBuffer<MobileCo
     override fun allocationSize(value: MobileContentType) = 4UL
 
     override fun write(value: MobileContentType, buf: ByteBuffer) {
+        buf.putInt(value.ordinal + 1)
+    }
+}
+
+
+
+
+
+/**
+ * Deletion state for mobile.
+ */
+
+enum class MobileDeletionState {
+    
+    /**
+     * No deletion scheduled.
+     */
+    NONE,
+    /**
+     * Deletion scheduled with grace period.
+     */
+    SCHEDULED,
+    /**
+     * Deletion has been executed.
+     */
+    EXECUTED;
+    companion object
+}
+
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileDeletionState: FfiConverterRustBuffer<MobileDeletionState> {
+    override fun read(buf: ByteBuffer) = try {
+        MobileDeletionState.values()[buf.getInt() - 1]
+    } catch (e: IndexOutOfBoundsException) {
+        throw RuntimeException("invalid enum value, something is very wrong!!", e)
+    }
+
+    override fun allocationSize(value: MobileDeletionState) = 4UL
+
+    override fun write(value: MobileDeletionState, buf: ByteBuffer) {
         buf.putInt(value.ordinal + 1)
     }
 }
@@ -7609,6 +8160,22 @@ sealed class MobileException: kotlin.Exception() {
             get() = "v1=${ v1 }"
     }
     
+    class GdprException(
+        
+        val v1: kotlin.String
+        ) : MobileException() {
+        override val message
+            get() = "v1=${ v1 }"
+    }
+    
+    class DeletionNotAllowed(
+        
+        val v1: kotlin.String
+        ) : MobileException() {
+        override val message
+            get() = "v1=${ v1 }"
+    }
+    
     class Internal(
         
         val v1: kotlin.String
@@ -7661,7 +8228,13 @@ public object FfiConverterTypeMobileError : FfiConverterRustBuffer<MobileExcepti
             12 -> MobileException.InvalidInput(
                 FfiConverterString.read(buf),
                 )
-            13 -> MobileException.Internal(
+            13 -> MobileException.GdprException(
+                FfiConverterString.read(buf),
+                )
+            14 -> MobileException.DeletionNotAllowed(
+                FfiConverterString.read(buf),
+                )
+            15 -> MobileException.Internal(
                 FfiConverterString.read(buf),
                 )
             else -> throw RuntimeException("invalid error enum value, something is very wrong!!")
@@ -7722,6 +8295,16 @@ public object FfiConverterTypeMobileError : FfiConverterRustBuffer<MobileExcepti
                 + FfiConverterString.allocationSize(value.v1)
             )
             is MobileException.InvalidInput -> (
+                // Add the size for the Int that specifies the variant plus the size needed for all fields
+                4UL
+                + FfiConverterString.allocationSize(value.v1)
+            )
+            is MobileException.GdprException -> (
+                // Add the size for the Int that specifies the variant plus the size needed for all fields
+                4UL
+                + FfiConverterString.allocationSize(value.v1)
+            )
+            is MobileException.DeletionNotAllowed -> (
                 // Add the size for the Int that specifies the variant plus the size needed for all fields
                 4UL
                 + FfiConverterString.allocationSize(value.v1)
@@ -7792,8 +8375,18 @@ public object FfiConverterTypeMobileError : FfiConverterRustBuffer<MobileExcepti
                 FfiConverterString.write(value.v1, buf)
                 Unit
             }
-            is MobileException.Internal -> {
+            is MobileException.GdprException -> {
                 buf.putInt(13)
+                FfiConverterString.write(value.v1, buf)
+                Unit
+            }
+            is MobileException.DeletionNotAllowed -> {
+                buf.putInt(14)
+                FfiConverterString.write(value.v1, buf)
+                Unit
+            }
+            is MobileException.Internal -> {
+                buf.putInt(15)
                 FfiConverterString.write(value.v1, buf)
                 Unit
             }
@@ -8761,6 +9354,34 @@ public object FfiConverterSequenceTypeMobileApplyFailure: FfiConverterRustBuffer
         buf.putInt(value.size)
         value.iterator().forEach {
             FfiConverterTypeMobileApplyFailure.write(it, buf)
+        }
+    }
+}
+
+
+
+
+/**
+ * @suppress
+ */
+public object FfiConverterSequenceTypeMobileConsentRecord: FfiConverterRustBuffer<List<MobileConsentRecord>> {
+    override fun read(buf: ByteBuffer): List<MobileConsentRecord> {
+        val len = buf.getInt()
+        return List<MobileConsentRecord>(len) {
+            FfiConverterTypeMobileConsentRecord.read(buf)
+        }
+    }
+
+    override fun allocationSize(value: List<MobileConsentRecord>): ULong {
+        val sizeForLength = 4UL
+        val sizeForItems = value.map { FfiConverterTypeMobileConsentRecord.allocationSize(it) }.sum()
+        return sizeForLength + sizeForItems
+    }
+
+    override fun write(value: List<MobileConsentRecord>, buf: ByteBuffer) {
+        buf.putInt(value.size)
+        value.iterator().forEach {
+            FfiConverterTypeMobileConsentRecord.write(it, buf)
         }
     }
 }
