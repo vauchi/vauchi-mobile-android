@@ -654,6 +654,15 @@ internal open class UniffiForeignFutureStructVoid(
 internal interface UniffiForeignFutureCompleteVoid : com.sun.jna.Callback {
     fun callback(`callbackData`: Long,`result`: UniffiForeignFutureStructVoid.UniffiByValue,)
 }
+internal interface UniffiCallbackInterfaceMobilePlatformKeychainMethod0 : com.sun.jna.Callback {
+    fun callback(`uniffiHandle`: Long,`name`: RustBuffer.ByValue,`key`: RustBuffer.ByValue,`uniffiOutReturn`: Pointer,uniffiCallStatus: UniffiRustCallStatus,)
+}
+internal interface UniffiCallbackInterfaceMobilePlatformKeychainMethod1 : com.sun.jna.Callback {
+    fun callback(`uniffiHandle`: Long,`name`: RustBuffer.ByValue,`uniffiOutReturn`: RustBuffer,uniffiCallStatus: UniffiRustCallStatus,)
+}
+internal interface UniffiCallbackInterfaceMobilePlatformKeychainMethod2 : com.sun.jna.Callback {
+    fun callback(`uniffiHandle`: Long,`name`: RustBuffer.ByValue,`uniffiOutReturn`: Pointer,uniffiCallStatus: UniffiRustCallStatus,)
+}
 internal interface UniffiCallbackInterfacePlatformAudioHandlerMethod0 : com.sun.jna.Callback {
     fun callback(`uniffiHandle`: Long,`uniffiOutReturn`: RustBuffer,uniffiCallStatus: UniffiRustCallStatus,)
 }
@@ -668,6 +677,28 @@ internal interface UniffiCallbackInterfacePlatformAudioHandlerMethod3 : com.sun.
 }
 internal interface UniffiCallbackInterfacePlatformAudioHandlerMethod4 : com.sun.jna.Callback {
     fun callback(`uniffiHandle`: Long,`uniffiOutReturn`: Pointer,uniffiCallStatus: UniffiRustCallStatus,)
+}
+@Structure.FieldOrder("saveKey", "loadKey", "deleteKey", "uniffiFree")
+internal open class UniffiVTableCallbackInterfaceMobilePlatformKeychain(
+    @JvmField internal var `saveKey`: UniffiCallbackInterfaceMobilePlatformKeychainMethod0? = null,
+    @JvmField internal var `loadKey`: UniffiCallbackInterfaceMobilePlatformKeychainMethod1? = null,
+    @JvmField internal var `deleteKey`: UniffiCallbackInterfaceMobilePlatformKeychainMethod2? = null,
+    @JvmField internal var `uniffiFree`: UniffiCallbackInterfaceFree? = null,
+) : Structure() {
+    class UniffiByValue(
+        `saveKey`: UniffiCallbackInterfaceMobilePlatformKeychainMethod0? = null,
+        `loadKey`: UniffiCallbackInterfaceMobilePlatformKeychainMethod1? = null,
+        `deleteKey`: UniffiCallbackInterfaceMobilePlatformKeychainMethod2? = null,
+        `uniffiFree`: UniffiCallbackInterfaceFree? = null,
+    ): UniffiVTableCallbackInterfaceMobilePlatformKeychain(`saveKey`,`loadKey`,`deleteKey`,`uniffiFree`,), Structure.ByValue
+
+   internal fun uniffiSetValue(other: UniffiVTableCallbackInterfaceMobilePlatformKeychain) {
+        `saveKey` = other.`saveKey`
+        `loadKey` = other.`loadKey`
+        `deleteKey` = other.`deleteKey`
+        `uniffiFree` = other.`uniffiFree`
+    }
+
 }
 @Structure.FieldOrder("checkCapability", "emitSignal", "receiveSignal", "isActive", "stop", "uniffiFree")
 internal open class UniffiVTableCallbackInterfacePlatformAudioHandler(
@@ -1037,6 +1068,24 @@ internal open class UniffiVTableCallbackInterfacePlatformAudioHandler(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // A JNA Library to expose the extern-C FFI definitions.
 // This is an implementation detail which will be called internally by the public API.
 
@@ -1047,6 +1096,7 @@ internal interface UniffiLib : Library {
             .also { lib: UniffiLib ->
                 uniffiCheckContractApiVersion(lib)
                 uniffiCheckApiChecksums(lib)
+                uniffiCallbackInterfaceMobilePlatformKeychain.register(lib)
                 uniffiCallbackInterfacePlatformAudioHandler.register(lib)
                 }
         }
@@ -1101,6 +1151,8 @@ internal interface UniffiLib : Library {
     ): Long
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_cancel_account_deletion(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_cancel_shred(`ptr`: Pointer,`token`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_check_consent(`ptr`: Pointer,`consentType`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_check_content_updates(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
@@ -1130,7 +1182,7 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_dismiss_demo_contact(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_execute_account_deletion(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
-    ): Unit
+    ): Int
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_export_backup(`ptr`: Pointer,`password`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_export_gdpr_data(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
@@ -1205,6 +1257,8 @@ internal interface UniffiLib : Library {
     ): Int
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_grant_consent(`ptr`: Pointer,`consentType`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_hard_shred(`ptr`: Pointer,`token`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_has_identity(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_has_seen_aha_moment(`ptr`: Pointer,`momentType`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1241,6 +1295,8 @@ internal interface UniffiLib : Library {
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_manual_retry(`ptr`: Pointer,`messageId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_panic_shred(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_parse_device_link_qr(`ptr`: Pointer,`qrData`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_parse_recovery_claim(`ptr`: Pointer,`claimB64`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1281,8 +1337,14 @@ internal interface UniffiLib : Library {
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_set_pinned_certificate(`ptr`: Pointer,`certPem`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_set_platform_keychain(`ptr`: Pointer,`keychain`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_show_field_to_contact(`ptr`: Pointer,`contactId`: RustBuffer.ByValue,`fieldLabel`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_shred_status(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_soft_shred(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_sync(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_trigger_demo_update(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
@@ -1301,6 +1363,10 @@ internal interface UniffiLib : Library {
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_verify_recovery_proof(`ptr`: Pointer,`proofB64`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_verify_shred(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_init_callback_vtable_mobileplatformkeychain(`vtable`: UniffiVTableCallbackInterfaceMobilePlatformKeychain,
+    ): Unit
     fun uniffi_vauchi_mobile_fn_init_callback_vtable_platformaudiohandler(`vtable`: UniffiVTableCallbackInterfacePlatformAudioHandler,
     ): Unit
     fun uniffi_vauchi_mobile_fn_func_check_password_strength(`password`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1515,6 +1581,8 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_cancel_account_deletion(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_cancel_shred(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_check_consent(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_check_content_updates(
@@ -1619,6 +1687,8 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_grant_consent(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_hard_shred(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_has_identity(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_has_seen_aha_moment(
@@ -1654,6 +1724,8 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_list_social_networks(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_manual_retry(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_panic_shred(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_parse_device_link_qr(
     ): Short
@@ -1695,7 +1767,13 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_set_pinned_certificate(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_set_platform_keychain(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_show_field_to_contact(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_shred_status(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_soft_shred(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_sync(
     ): Short
@@ -1715,6 +1793,8 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_verify_recovery_proof(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_verify_shred(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_constructor_mobileproximityverifier_new(
     ): Short
     fun uniffi_vauchi_mobile_checksum_constructor_mobileproximityverifier_without_handler(
@@ -1722,6 +1802,12 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_checksum_constructor_vauchimobile_new(
     ): Short
     fun uniffi_vauchi_mobile_checksum_constructor_vauchimobile_new_with_secure_key(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobileplatformkeychain_save_key(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobileplatformkeychain_load_key(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobileplatformkeychain_delete_key(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_platformaudiohandler_check_capability(
     ): Short
@@ -1846,6 +1932,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_cancel_account_deletion() != 49743.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_cancel_shred() != 45075.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_check_consent() != 20830.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -1888,7 +1977,7 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_dismiss_demo_contact() != 52421.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
-    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_execute_account_deletion() != 40961.toShort()) {
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_execute_account_deletion() != 5865.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_export_backup() != 14975.toShort()) {
@@ -2002,6 +2091,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_grant_consent() != 28571.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_hard_shred() != 25712.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_has_identity() != 17028.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -2054,6 +2146,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_manual_retry() != 42209.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_panic_shred() != 52835.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_parse_device_link_qr() != 14305.toShort()) {
@@ -2116,7 +2211,16 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_set_pinned_certificate() != 2029.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_set_platform_keychain() != 45535.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_show_field_to_contact() != 3699.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_shred_status() != 19648.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_soft_shred() != 22022.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_sync() != 44616.toShort()) {
@@ -2146,6 +2250,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_verify_recovery_proof() != 55854.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_verify_shred() != 51157.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_constructor_mobileproximityverifier_new() != 33177.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -2156,6 +2263,15 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_constructor_vauchimobile_new_with_secure_key() != 16278.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileplatformkeychain_save_key() != 54986.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileplatformkeychain_load_key() != 19543.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileplatformkeychain_delete_key() != 34382.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_platformaudiohandler_check_capability() != 34713.toShort()) {
@@ -2977,6 +3093,11 @@ public interface VauchiMobileInterface {
     fun `cancelAccountDeletion`()
     
     /**
+     * Cancel a scheduled shred during the grace period.
+     */
+    fun `cancelShred`(`token`: MobileShredToken)
+    
+    /**
      * Check whether consent is currently granted for a type.
      */
     fun `checkConsent`(`consentType`: MobileConsentType): kotlin.Boolean
@@ -3064,8 +3185,12 @@ public interface VauchiMobileInterface {
     
     /**
      * Execute account deletion (only after grace period).
+     *
+     * Generates revocation messages for all contacts and shreds CEKs.
+     * Returns the number of revocation messages generated (caller should
+     * arrange relay delivery).
      */
-    fun `executeAccountDeletion`()
+    fun `executeAccountDeletion`(): kotlin.UInt
     
     /**
      * Export encrypted backup.
@@ -3266,6 +3391,17 @@ public interface VauchiMobileInterface {
     fun `grantConsent`(`consentType`: MobileConsentType)
     
     /**
+     * Execute irreversible crypto-shredding (Hard Shred).
+     *
+     * Requires the grace period to have elapsed. Destroys all key material,
+     * secure-deletes the database, and removes all local data.
+     *
+     * **WARNING**: This operation is irreversible. All account data will be
+     * permanently destroyed.
+     */
+    fun `hardShred`(`token`: MobileShredToken): MobileShredReport
+    
+    /**
      * Check if identity exists.
      */
     fun `hasIdentity`(): kotlin.Boolean
@@ -3364,6 +3500,16 @@ public interface VauchiMobileInterface {
      * Returns true if the retry entry was found and rescheduled.
      */
     fun `manualRetry`(`messageId`: kotlin.String): kotlin.Boolean
+    
+    /**
+     * Execute immediate crypto-shredding without grace period (Panic Shred).
+     *
+     * Loads pre-signed messages before destroying keys, then sends them
+     * best-effort. Use only in emergencies.
+     *
+     * **WARNING**: This operation is irreversible and immediate. No grace period.
+     */
+    fun `panicShred`(): MobileShredReport
     
     /**
      * Parse a device link QR code.
@@ -3482,9 +3628,36 @@ public interface VauchiMobileInterface {
     fun `setPinnedCertificate`(`certPem`: kotlin.String)
     
     /**
+     * Set the platform keychain for crypto-shredding operations.
+     *
+     * Must be called before any shred operation. The keychain provides
+     * access to the platform's native secure storage (iOS Keychain,
+     * Android KeyStore) for SMK management.
+     */
+    fun `setPlatformKeychain`(`keychain`: MobilePlatformKeychain)
+    
+    /**
      * Show field to contact.
      */
     fun `showFieldToContact`(`contactId`: kotlin.String, `fieldLabel`: kotlin.String)
+    
+    /**
+     * Get current shred status.
+     *
+     * Returns whether no shred is in progress, one is scheduled (with remaining
+     * time), or has been executed.
+     */
+    fun `shredStatus`(): MobileShredStatus
+    
+    /**
+     * Schedule crypto-shredding with 7-day grace period (Soft Shred).
+     *
+     * Returns a token that must be passed to `hard_shred()` after the grace period.
+     * Also refreshes the pre-signed messages file for future panic shred.
+     *
+     * Requires `set_platform_keychain()` to be called first.
+     */
+    fun `softShred`(): MobileShredToken
     
     /**
      * Sync with relay server.
@@ -3544,6 +3717,13 @@ public interface VauchiMobileInterface {
      * on whether to accept the recovered identity.
      */
     fun `verifyRecoveryProof`(`proofB64`: kotlin.String): MobileRecoveryVerification
+    
+    /**
+     * Verify that shredding was successful by checking for residual data.
+     *
+     * Returns verification results showing which items were confirmed destroyed.
+     */
+    fun `verifyShred`(): MobileShredVerification
     
     companion object
 }
@@ -3796,6 +3976,21 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Cancel a scheduled shred during the grace period.
+     */
+    @Throws(MobileException::class)override fun `cancelShred`(`token`: MobileShredToken)
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_cancel_shred(
+        it, FfiConverterTypeMobileShredToken.lower(`token`),_status)
+}
+    }
+    
+    
+
+    
+    /**
      * Check whether consent is currently granted for a type.
      */
     @Throws(MobileException::class)override fun `checkConsent`(`consentType`: MobileConsentType): kotlin.Boolean {
@@ -4033,16 +4228,21 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     
     /**
      * Execute account deletion (only after grace period).
+     *
+     * Generates revocation messages for all contacts and shreds CEKs.
+     * Returns the number of revocation messages generated (caller should
+     * arrange relay delivery).
      */
-    @Throws(MobileException::class)override fun `executeAccountDeletion`()
-        = 
+    @Throws(MobileException::class)override fun `executeAccountDeletion`(): kotlin.UInt {
+            return FfiConverterUInt.lift(
     callWithPointer {
     uniffiRustCallWithError(MobileException) { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_execute_account_deletion(
         it, _status)
 }
     }
-    
+    )
+    }
     
 
     
@@ -4646,6 +4846,28 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Execute irreversible crypto-shredding (Hard Shred).
+     *
+     * Requires the grace period to have elapsed. Destroys all key material,
+     * secure-deletes the database, and removes all local data.
+     *
+     * **WARNING**: This operation is irreversible. All account data will be
+     * permanently destroyed.
+     */
+    @Throws(MobileException::class)override fun `hardShred`(`token`: MobileShredToken): MobileShredReport {
+            return FfiConverterTypeMobileShredReport.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_hard_shred(
+        it, FfiConverterTypeMobileShredToken.lower(`token`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
      * Check if identity exists.
      */override fun `hasIdentity`(): kotlin.Boolean {
             return FfiConverterBoolean.lift(
@@ -4928,6 +5150,27 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     uniffiRustCallWithError(MobileException) { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_manual_retry(
         it, FfiConverterString.lower(`messageId`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Execute immediate crypto-shredding without grace period (Panic Shred).
+     *
+     * Loads pre-signed messages before destroying keys, then sends them
+     * best-effort. Use only in emergencies.
+     *
+     * **WARNING**: This operation is irreversible and immediate. No grace period.
+     */
+    @Throws(MobileException::class)override fun `panicShred`(): MobileShredReport {
+            return FfiConverterTypeMobileShredReport.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_panic_shred(
+        it, _status)
 }
     }
     )
@@ -5260,6 +5503,24 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Set the platform keychain for crypto-shredding operations.
+     *
+     * Must be called before any shred operation. The keychain provides
+     * access to the platform's native secure storage (iOS Keychain,
+     * Android KeyStore) for SMK management.
+     */override fun `setPlatformKeychain`(`keychain`: MobilePlatformKeychain)
+        = 
+    callWithPointer {
+    uniffiRustCall() { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_set_platform_keychain(
+        it, FfiConverterTypeMobilePlatformKeychain.lower(`keychain`),_status)
+}
+    }
+    
+    
+
+    
+    /**
      * Show field to contact.
      */
     @Throws(MobileException::class)override fun `showFieldToContact`(`contactId`: kotlin.String, `fieldLabel`: kotlin.String)
@@ -5271,6 +5532,46 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 }
     }
     
+    
+
+    
+    /**
+     * Get current shred status.
+     *
+     * Returns whether no shred is in progress, one is scheduled (with remaining
+     * time), or has been executed.
+     */
+    @Throws(MobileException::class)override fun `shredStatus`(): MobileShredStatus {
+            return FfiConverterTypeMobileShredStatus.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_shred_status(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Schedule crypto-shredding with 7-day grace period (Soft Shred).
+     *
+     * Returns a token that must be passed to `hard_shred()` after the grace period.
+     * Also refreshes the pre-signed messages file for future panic shred.
+     *
+     * Requires `set_platform_keychain()` to be called first.
+     */
+    @Throws(MobileException::class)override fun `softShred`(): MobileShredToken {
+            return FfiConverterTypeMobileShredToken.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_soft_shred(
+        it, _status)
+}
+    }
+    )
+    }
     
 
     
@@ -5423,6 +5724,24 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     uniffiRustCallWithError(MobileException) { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_verify_recovery_proof(
         it, FfiConverterString.lower(`proofB64`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Verify that shredding was successful by checking for residual data.
+     *
+     * Returns verification results showing which items were confirmed destroyed.
+     */
+    @Throws(MobileException::class)override fun `verifyShred`(): MobileShredVerification {
+            return FfiConverterTypeMobileShredVerification.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_verify_shred(
+        it, _status)
 }
     }
     )
@@ -7181,6 +7500,192 @@ public object FfiConverterTypeMobileRetryEntry: FfiConverterRustBuffer<MobileRet
 
 
 /**
+ * Report of shred operations performed.
+ */
+data class MobileShredReport (
+    /**
+     * Number of contacts notified of deletion.
+     */
+    var `contactsNotified`: kotlin.UInt, 
+    /**
+     * Whether the relay purge was sent successfully.
+     */
+    var `relayPurgeSent`: kotlin.Boolean, 
+    /**
+     * Number of linked devices notified.
+     */
+    var `devicesNotified`: kotlin.UInt, 
+    /**
+     * Whether SMK was destroyed from SecureStorage.
+     */
+    var `smkDestroyed`: kotlin.Boolean, 
+    /**
+     * Whether the identity backup file was securely deleted.
+     */
+    var `identityFileDestroyed`: kotlin.Boolean, 
+    /**
+     * Number of key files deleted.
+     */
+    var `keyFilesDestroyed`: kotlin.UInt, 
+    /**
+     * Whether the SQLite database was securely deleted.
+     */
+    var `sqliteDestroyed`: kotlin.Boolean, 
+    /**
+     * Whether the pre-signed messages file was deleted.
+     */
+    var `preSignedDeleted`: kotlin.Boolean, 
+    /**
+     * Whether the data directory was removed.
+     */
+    var `dataDirDeleted`: kotlin.Boolean
+) {
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileShredReport: FfiConverterRustBuffer<MobileShredReport> {
+    override fun read(buf: ByteBuffer): MobileShredReport {
+        return MobileShredReport(
+            FfiConverterUInt.read(buf),
+            FfiConverterBoolean.read(buf),
+            FfiConverterUInt.read(buf),
+            FfiConverterBoolean.read(buf),
+            FfiConverterBoolean.read(buf),
+            FfiConverterUInt.read(buf),
+            FfiConverterBoolean.read(buf),
+            FfiConverterBoolean.read(buf),
+            FfiConverterBoolean.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: MobileShredReport) = (
+            FfiConverterUInt.allocationSize(value.`contactsNotified`) +
+            FfiConverterBoolean.allocationSize(value.`relayPurgeSent`) +
+            FfiConverterUInt.allocationSize(value.`devicesNotified`) +
+            FfiConverterBoolean.allocationSize(value.`smkDestroyed`) +
+            FfiConverterBoolean.allocationSize(value.`identityFileDestroyed`) +
+            FfiConverterUInt.allocationSize(value.`keyFilesDestroyed`) +
+            FfiConverterBoolean.allocationSize(value.`sqliteDestroyed`) +
+            FfiConverterBoolean.allocationSize(value.`preSignedDeleted`) +
+            FfiConverterBoolean.allocationSize(value.`dataDirDeleted`)
+    )
+
+    override fun write(value: MobileShredReport, buf: ByteBuffer) {
+            FfiConverterUInt.write(value.`contactsNotified`, buf)
+            FfiConverterBoolean.write(value.`relayPurgeSent`, buf)
+            FfiConverterUInt.write(value.`devicesNotified`, buf)
+            FfiConverterBoolean.write(value.`smkDestroyed`, buf)
+            FfiConverterBoolean.write(value.`identityFileDestroyed`, buf)
+            FfiConverterUInt.write(value.`keyFilesDestroyed`, buf)
+            FfiConverterBoolean.write(value.`sqliteDestroyed`, buf)
+            FfiConverterBoolean.write(value.`preSignedDeleted`, buf)
+            FfiConverterBoolean.write(value.`dataDirDeleted`, buf)
+    }
+}
+
+
+
+/**
+ * Token returned by soft_shred to authorize hard_shred.
+ */
+data class MobileShredToken (
+    /**
+     * When the token was created (unix seconds).
+     */
+    var `createdAt`: kotlin.ULong
+) {
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileShredToken: FfiConverterRustBuffer<MobileShredToken> {
+    override fun read(buf: ByteBuffer): MobileShredToken {
+        return MobileShredToken(
+            FfiConverterULong.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: MobileShredToken) = (
+            FfiConverterULong.allocationSize(value.`createdAt`)
+    )
+
+    override fun write(value: MobileShredToken, buf: ByteBuffer) {
+            FfiConverterULong.write(value.`createdAt`, buf)
+    }
+}
+
+
+
+/**
+ * Post-shred verification result.
+ */
+data class MobileShredVerification (
+    /**
+     * Whether SMK is absent from SecureStorage.
+     */
+    var `smkAbsent`: kotlin.Boolean, 
+    /**
+     * Whether the database file is absent.
+     */
+    var `databaseAbsent`: kotlin.Boolean, 
+    /**
+     * Whether the data directory is absent.
+     */
+    var `dataDirAbsent`: kotlin.Boolean, 
+    /**
+     * Whether the pre-signed messages file is absent.
+     */
+    var `preSignedAbsent`: kotlin.Boolean, 
+    /**
+     * Overall: all checks passed.
+     */
+    var `allClear`: kotlin.Boolean
+) {
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileShredVerification: FfiConverterRustBuffer<MobileShredVerification> {
+    override fun read(buf: ByteBuffer): MobileShredVerification {
+        return MobileShredVerification(
+            FfiConverterBoolean.read(buf),
+            FfiConverterBoolean.read(buf),
+            FfiConverterBoolean.read(buf),
+            FfiConverterBoolean.read(buf),
+            FfiConverterBoolean.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: MobileShredVerification) = (
+            FfiConverterBoolean.allocationSize(value.`smkAbsent`) +
+            FfiConverterBoolean.allocationSize(value.`databaseAbsent`) +
+            FfiConverterBoolean.allocationSize(value.`dataDirAbsent`) +
+            FfiConverterBoolean.allocationSize(value.`preSignedAbsent`) +
+            FfiConverterBoolean.allocationSize(value.`allClear`)
+    )
+
+    override fun write(value: MobileShredVerification, buf: ByteBuffer) {
+            FfiConverterBoolean.write(value.`smkAbsent`, buf)
+            FfiConverterBoolean.write(value.`databaseAbsent`, buf)
+            FfiConverterBoolean.write(value.`dataDirAbsent`, buf)
+            FfiConverterBoolean.write(value.`preSignedAbsent`, buf)
+            FfiConverterBoolean.write(value.`allClear`, buf)
+    }
+}
+
+
+
+/**
  * Social network info.
  */
 data class MobileSocialNetwork (
@@ -7648,6 +8153,71 @@ public object FfiConverterTypeMobileVisibilityLabelDetail: FfiConverterRustBuffe
             FfiConverterULong.write(value.`createdAt`, buf)
             FfiConverterULong.write(value.`modifiedAt`, buf)
     }
+}
+
+
+
+
+
+/**
+ * Error type for platform keychain callback interface.
+ *
+ * UniFFI requires a named error enum for callback interfaces (String is not supported).
+ * Mobile platforms return this from keychain operations.
+ */
+sealed class KeychainException: kotlin.Exception() {
+    
+    class OperationFailed(
+        
+        val `msg`: kotlin.String
+        ) : KeychainException() {
+        override val message
+            get() = "msg=${ `msg` }"
+    }
+    
+
+    companion object ErrorHandler : UniffiRustCallStatusErrorHandler<KeychainException> {
+        override fun lift(error_buf: RustBuffer.ByValue): KeychainException = FfiConverterTypeKeychainError.lift(error_buf)
+    }
+
+    
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeKeychainError : FfiConverterRustBuffer<KeychainException> {
+    override fun read(buf: ByteBuffer): KeychainException {
+        
+
+        return when(buf.getInt()) {
+            1 -> KeychainException.OperationFailed(
+                FfiConverterString.read(buf),
+                )
+            else -> throw RuntimeException("invalid error enum value, something is very wrong!!")
+        }
+    }
+
+    override fun allocationSize(value: KeychainException): ULong {
+        return when(value) {
+            is KeychainException.OperationFailed -> (
+                // Add the size for the Int that specifies the variant plus the size needed for all fields
+                4UL
+                + FfiConverterString.allocationSize(value.`msg`)
+            )
+        }
+    }
+
+    override fun write(value: KeychainException, buf: ByteBuffer) {
+        when(value) {
+            is KeychainException.OperationFailed -> {
+                buf.putInt(1)
+                FfiConverterString.write(value.`msg`, buf)
+                Unit
+            }
+        }.let { /* this makes the `when` an expression, which ensures it is exhaustive */ }
+    }
+
 }
 
 
@@ -8176,6 +8746,14 @@ sealed class MobileException: kotlin.Exception() {
             get() = "v1=${ v1 }"
     }
     
+    class ShredException(
+        
+        val v1: kotlin.String
+        ) : MobileException() {
+        override val message
+            get() = "v1=${ v1 }"
+    }
+    
     class Internal(
         
         val v1: kotlin.String
@@ -8234,7 +8812,10 @@ public object FfiConverterTypeMobileError : FfiConverterRustBuffer<MobileExcepti
             14 -> MobileException.DeletionNotAllowed(
                 FfiConverterString.read(buf),
                 )
-            15 -> MobileException.Internal(
+            15 -> MobileException.ShredException(
+                FfiConverterString.read(buf),
+                )
+            16 -> MobileException.Internal(
                 FfiConverterString.read(buf),
                 )
             else -> throw RuntimeException("invalid error enum value, something is very wrong!!")
@@ -8305,6 +8886,11 @@ public object FfiConverterTypeMobileError : FfiConverterRustBuffer<MobileExcepti
                 + FfiConverterString.allocationSize(value.v1)
             )
             is MobileException.DeletionNotAllowed -> (
+                // Add the size for the Int that specifies the variant plus the size needed for all fields
+                4UL
+                + FfiConverterString.allocationSize(value.v1)
+            )
+            is MobileException.ShredException -> (
                 // Add the size for the Int that specifies the variant plus the size needed for all fields
                 4UL
                 + FfiConverterString.allocationSize(value.v1)
@@ -8385,8 +8971,13 @@ public object FfiConverterTypeMobileError : FfiConverterRustBuffer<MobileExcepti
                 FfiConverterString.write(value.v1, buf)
                 Unit
             }
-            is MobileException.Internal -> {
+            is MobileException.ShredException -> {
                 buf.putInt(15)
+                FfiConverterString.write(value.v1, buf)
+                Unit
+            }
+            is MobileException.Internal -> {
+                buf.putInt(16)
                 FfiConverterString.write(value.v1, buf)
                 Unit
             }
@@ -8546,6 +9137,99 @@ public object FfiConverterTypeMobilePasswordStrength: FfiConverterRustBuffer<Mob
 
     override fun write(value: MobilePasswordStrength, buf: ByteBuffer) {
         buf.putInt(value.ordinal + 1)
+    }
+}
+
+
+
+
+
+/**
+ * Current shred status for the account.
+ */
+sealed class MobileShredStatus {
+    
+    /**
+     * No shred operation in progress.
+     */
+    object None : MobileShredStatus()
+    
+    
+    /**
+     * Soft shred scheduled — waiting for grace period to elapse.
+     */
+    data class Scheduled(
+        /**
+         * Seconds remaining in grace period.
+         */
+        val `remainingSecs`: kotlin.ULong) : MobileShredStatus() {
+        companion object
+    }
+    
+    /**
+     * Hard shred has been executed — all data destroyed.
+     */
+    object Executed : MobileShredStatus()
+    
+    
+
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileShredStatus : FfiConverterRustBuffer<MobileShredStatus>{
+    override fun read(buf: ByteBuffer): MobileShredStatus {
+        return when(buf.getInt()) {
+            1 -> MobileShredStatus.None
+            2 -> MobileShredStatus.Scheduled(
+                FfiConverterULong.read(buf),
+                )
+            3 -> MobileShredStatus.Executed
+            else -> throw RuntimeException("invalid enum value, something is very wrong!!")
+        }
+    }
+
+    override fun allocationSize(value: MobileShredStatus) = when(value) {
+        is MobileShredStatus.None -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+            )
+        }
+        is MobileShredStatus.Scheduled -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+                + FfiConverterULong.allocationSize(value.`remainingSecs`)
+            )
+        }
+        is MobileShredStatus.Executed -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+            )
+        }
+    }
+
+    override fun write(value: MobileShredStatus, buf: ByteBuffer) {
+        when(value) {
+            is MobileShredStatus.None -> {
+                buf.putInt(1)
+                Unit
+            }
+            is MobileShredStatus.Scheduled -> {
+                buf.putInt(2)
+                FfiConverterULong.write(value.`remainingSecs`, buf)
+                Unit
+            }
+            is MobileShredStatus.Executed -> {
+                buf.putInt(3)
+                Unit
+            }
+        }.let { /* this makes the `when` an expression, which ensures it is exhaustive */ }
     }
 }
 
@@ -8783,6 +9467,153 @@ public object FfiConverterTypeMobileUpdateStatus : FfiConverterRustBuffer<Mobile
 
 
 /**
+ * Callback interface for platform-specific secure key storage.
+ *
+ * The mobile platform (iOS/Android) implements this interface to provide
+ * access to the native keychain (iOS Keychain, Android KeyStore).
+ * Used by shred operations to destroy the Shredding Master Key (SMK).
+ */
+public interface MobilePlatformKeychain {
+    
+    /**
+     * Saves a key to the platform keychain.
+     */
+    fun `saveKey`(`name`: kotlin.String, `key`: kotlin.ByteArray)
+    
+    /**
+     * Loads a key from the platform keychain.
+     * Returns None if the key doesn't exist.
+     */
+    fun `loadKey`(`name`: kotlin.String): kotlin.ByteArray?
+    
+    /**
+     * Deletes a key from the platform keychain.
+     */
+    fun `deleteKey`(`name`: kotlin.String)
+    
+    companion object
+}
+
+// Magic number for the Rust proxy to call using the same mechanism as every other method,
+// to free the callback once it's dropped by Rust.
+internal const val IDX_CALLBACK_FREE = 0
+// Callback return codes
+internal const val UNIFFI_CALLBACK_SUCCESS = 0
+internal const val UNIFFI_CALLBACK_ERROR = 1
+internal const val UNIFFI_CALLBACK_UNEXPECTED_ERROR = 2
+
+/**
+ * @suppress
+ */
+public abstract class FfiConverterCallbackInterface<CallbackInterface: Any>: FfiConverter<CallbackInterface, Long> {
+    internal val handleMap = UniffiHandleMap<CallbackInterface>()
+
+    internal fun drop(handle: Long) {
+        handleMap.remove(handle)
+    }
+
+    override fun lift(value: Long): CallbackInterface {
+        return handleMap.get(value)
+    }
+
+    override fun read(buf: ByteBuffer) = lift(buf.getLong())
+
+    override fun lower(value: CallbackInterface) = handleMap.insert(value)
+
+    override fun allocationSize(value: CallbackInterface) = 8UL
+
+    override fun write(value: CallbackInterface, buf: ByteBuffer) {
+        buf.putLong(lower(value))
+    }
+}
+
+// Put the implementation in an object so we don't pollute the top-level namespace
+internal object uniffiCallbackInterfaceMobilePlatformKeychain {
+    internal object `saveKey`: UniffiCallbackInterfaceMobilePlatformKeychainMethod0 {
+        override fun callback(`uniffiHandle`: Long,`name`: RustBuffer.ByValue,`key`: RustBuffer.ByValue,`uniffiOutReturn`: Pointer,uniffiCallStatus: UniffiRustCallStatus,) {
+            val uniffiObj = FfiConverterTypeMobilePlatformKeychain.handleMap.get(uniffiHandle)
+            val makeCall = { ->
+                uniffiObj.`saveKey`(
+                    FfiConverterString.lift(`name`),
+                    FfiConverterByteArray.lift(`key`),
+                )
+            }
+            val writeReturn = { _: Unit -> Unit }
+            uniffiTraitInterfaceCallWithError(
+                uniffiCallStatus,
+                makeCall,
+                writeReturn,
+                { e: KeychainException -> FfiConverterTypeKeychainError.lower(e) }
+            )
+        }
+    }
+    internal object `loadKey`: UniffiCallbackInterfaceMobilePlatformKeychainMethod1 {
+        override fun callback(`uniffiHandle`: Long,`name`: RustBuffer.ByValue,`uniffiOutReturn`: RustBuffer,uniffiCallStatus: UniffiRustCallStatus,) {
+            val uniffiObj = FfiConverterTypeMobilePlatformKeychain.handleMap.get(uniffiHandle)
+            val makeCall = { ->
+                uniffiObj.`loadKey`(
+                    FfiConverterString.lift(`name`),
+                )
+            }
+            val writeReturn = { value: kotlin.ByteArray? -> uniffiOutReturn.setValue(FfiConverterOptionalByteArray.lower(value)) }
+            uniffiTraitInterfaceCallWithError(
+                uniffiCallStatus,
+                makeCall,
+                writeReturn,
+                { e: KeychainException -> FfiConverterTypeKeychainError.lower(e) }
+            )
+        }
+    }
+    internal object `deleteKey`: UniffiCallbackInterfaceMobilePlatformKeychainMethod2 {
+        override fun callback(`uniffiHandle`: Long,`name`: RustBuffer.ByValue,`uniffiOutReturn`: Pointer,uniffiCallStatus: UniffiRustCallStatus,) {
+            val uniffiObj = FfiConverterTypeMobilePlatformKeychain.handleMap.get(uniffiHandle)
+            val makeCall = { ->
+                uniffiObj.`deleteKey`(
+                    FfiConverterString.lift(`name`),
+                )
+            }
+            val writeReturn = { _: Unit -> Unit }
+            uniffiTraitInterfaceCallWithError(
+                uniffiCallStatus,
+                makeCall,
+                writeReturn,
+                { e: KeychainException -> FfiConverterTypeKeychainError.lower(e) }
+            )
+        }
+    }
+
+    internal object uniffiFree: UniffiCallbackInterfaceFree {
+        override fun callback(handle: Long) {
+            FfiConverterTypeMobilePlatformKeychain.handleMap.remove(handle)
+        }
+    }
+
+    internal var vtable = UniffiVTableCallbackInterfaceMobilePlatformKeychain.UniffiByValue(
+        `saveKey`,
+        `loadKey`,
+        `deleteKey`,
+        uniffiFree,
+    )
+
+    // Registers the foreign callback with the Rust side.
+    // This method is generated for each callback interface.
+    internal fun register(lib: UniffiLib) {
+        lib.uniffi_vauchi_mobile_fn_init_callback_vtable_mobileplatformkeychain(vtable)
+    }
+}
+
+/**
+ * The ffiConverter which transforms the Callbacks in to handles to pass to Rust.
+ *
+ * @suppress
+ */
+public object FfiConverterTypeMobilePlatformKeychain: FfiConverterCallbackInterface<MobilePlatformKeychain>()
+
+
+
+
+
+/**
  * Callback interface for platform-specific audio operations.
  *
  * Implement this trait in Swift (iOS) or Kotlin (Android) to provide
@@ -8830,38 +9661,7 @@ public interface PlatformAudioHandler {
     companion object
 }
 
-// Magic number for the Rust proxy to call using the same mechanism as every other method,
-// to free the callback once it's dropped by Rust.
-internal const val IDX_CALLBACK_FREE = 0
-// Callback return codes
-internal const val UNIFFI_CALLBACK_SUCCESS = 0
-internal const val UNIFFI_CALLBACK_ERROR = 1
-internal const val UNIFFI_CALLBACK_UNEXPECTED_ERROR = 2
 
-/**
- * @suppress
- */
-public abstract class FfiConverterCallbackInterface<CallbackInterface: Any>: FfiConverter<CallbackInterface, Long> {
-    internal val handleMap = UniffiHandleMap<CallbackInterface>()
-
-    internal fun drop(handle: Long) {
-        handleMap.remove(handle)
-    }
-
-    override fun lift(value: Long): CallbackInterface {
-        return handleMap.get(value)
-    }
-
-    override fun read(buf: ByteBuffer) = lift(buf.getLong())
-
-    override fun lower(value: CallbackInterface) = handleMap.insert(value)
-
-    override fun allocationSize(value: CallbackInterface) = 8UL
-
-    override fun write(value: CallbackInterface, buf: ByteBuffer) {
-        buf.putLong(lower(value))
-    }
-}
 
 // Put the implementation in an object so we don't pollute the top-level namespace
 internal object uniffiCallbackInterfacePlatformAudioHandler {
@@ -9014,6 +9814,38 @@ public object FfiConverterOptionalString: FfiConverterRustBuffer<kotlin.String?>
         } else {
             buf.put(1)
             FfiConverterString.write(value, buf)
+        }
+    }
+}
+
+
+
+
+/**
+ * @suppress
+ */
+public object FfiConverterOptionalByteArray: FfiConverterRustBuffer<kotlin.ByteArray?> {
+    override fun read(buf: ByteBuffer): kotlin.ByteArray? {
+        if (buf.get().toInt() == 0) {
+            return null
+        }
+        return FfiConverterByteArray.read(buf)
+    }
+
+    override fun allocationSize(value: kotlin.ByteArray?): ULong {
+        if (value == null) {
+            return 1UL
+        } else {
+            return 1UL + FfiConverterByteArray.allocationSize(value)
+        }
+    }
+
+    override fun write(value: kotlin.ByteArray?, buf: ByteBuffer) {
+        if (value == null) {
+            buf.put(0)
+        } else {
+            buf.put(1)
+            FfiConverterByteArray.write(value, buf)
         }
     }
 }
