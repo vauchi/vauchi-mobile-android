@@ -1096,6 +1096,12 @@ internal open class UniffiVTableCallbackInterfacePlatformAudioHandler(
 
 
 
+
+
+
+
+
+
 // A JNA Library to expose the extern-C FFI definitions.
 // This is an implementation detail which will be called internally by the public API.
 
@@ -1359,12 +1365,18 @@ internal interface UniffiLib : Library {
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_trigger_demo_update(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_trust_contact_for_recovery(`ptr`: Pointer,`id`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_trusted_contact_count(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Int
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_try_trigger_aha_moment(`ptr`: Pointer,`momentType`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_try_trigger_aha_moment_with_context(`ptr`: Pointer,`momentType`: RustBuffer.ByValue,`context`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_unlink_device(`ptr`: Pointer,`deviceIndex`: Int,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_untrust_contact_for_recovery(`ptr`: Pointer,`id`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_update_field(`ptr`: Pointer,`label`: RustBuffer.ByValue,`newValue`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_validate_field(`ptr`: Pointer,`contactId`: RustBuffer.ByValue,`fieldId`: RustBuffer.ByValue,`fieldValue`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1809,11 +1821,17 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_trigger_demo_update(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_trust_contact_for_recovery(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_trusted_contact_count(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_try_trigger_aha_moment(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_try_trigger_aha_moment_with_context(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_unlink_device(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_untrust_contact_for_recovery(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_update_field(
     ): Short
@@ -2274,6 +2292,12 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_trigger_demo_update() != 56863.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_trust_contact_for_recovery() != 65532.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_trusted_contact_count() != 12819.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_try_trigger_aha_moment() != 32158.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -2281,6 +2305,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_unlink_device() != 30553.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_untrust_contact_for_recovery() != 31348.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_update_field() != 13386.toShort()) {
@@ -3715,6 +3742,18 @@ public interface VauchiMobileInterface {
     fun `triggerDemoUpdate`(): MobileDemoContact?
     
     /**
+     * Mark a contact as trusted for recovery.
+     *
+     * Blocked contacts cannot be trusted for recovery.
+     */
+    fun `trustContactForRecovery`(`id`: kotlin.String)
+    
+    /**
+     * Get the number of contacts trusted for recovery.
+     */
+    fun `trustedContactCount`(): kotlin.UInt
+    
+    /**
      * Try to trigger an aha moment. Returns the moment if not yet seen, None otherwise.
      */
     fun `tryTriggerAhaMoment`(`momentType`: MobileAhaMomentType): MobileAhaMoment?
@@ -3735,6 +3774,11 @@ public interface VauchiMobileInterface {
      * The device_index is the position in the devices list (0-based).
      */
     fun `unlinkDevice`(`deviceIndex`: kotlin.UInt): kotlin.Boolean
+    
+    /**
+     * Remove recovery trust from a contact.
+     */
+    fun `untrustContactForRecovery`(`id`: kotlin.String)
     
     /**
      * Update field value.
@@ -5653,6 +5697,39 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Mark a contact as trusted for recovery.
+     *
+     * Blocked contacts cannot be trusted for recovery.
+     */
+    @Throws(MobileException::class)override fun `trustContactForRecovery`(`id`: kotlin.String)
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_trust_contact_for_recovery(
+        it, FfiConverterString.lower(`id`),_status)
+}
+    }
+    
+    
+
+    
+    /**
+     * Get the number of contacts trusted for recovery.
+     */
+    @Throws(MobileException::class)override fun `trustedContactCount`(): kotlin.UInt {
+            return FfiConverterUInt.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_trusted_contact_count(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
      * Try to trigger an aha moment. Returns the moment if not yet seen, None otherwise.
      */
     @Throws(MobileException::class)override fun `tryTriggerAhaMoment`(`momentType`: MobileAhaMomentType): MobileAhaMoment? {
@@ -5704,6 +5781,21 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     }
     )
     }
+    
+
+    
+    /**
+     * Remove recovery trust from a contact.
+     */
+    @Throws(MobileException::class)override fun `untrustContactForRecovery`(`id`: kotlin.String)
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_untrust_contact_for_recovery(
+        it, FfiConverterString.lower(`id`),_status)
+}
+    }
+    
     
 
     
@@ -6016,6 +6108,7 @@ data class MobileContact (
     var `id`: kotlin.String, 
     var `displayName`: kotlin.String, 
     var `isVerified`: kotlin.Boolean, 
+    var `isRecoveryTrusted`: kotlin.Boolean, 
     var `card`: MobileContactCard, 
     var `addedAt`: kotlin.ULong
 ) {
@@ -6032,6 +6125,7 @@ public object FfiConverterTypeMobileContact: FfiConverterRustBuffer<MobileContac
             FfiConverterString.read(buf),
             FfiConverterString.read(buf),
             FfiConverterBoolean.read(buf),
+            FfiConverterBoolean.read(buf),
             FfiConverterTypeMobileContactCard.read(buf),
             FfiConverterULong.read(buf),
         )
@@ -6041,6 +6135,7 @@ public object FfiConverterTypeMobileContact: FfiConverterRustBuffer<MobileContac
             FfiConverterString.allocationSize(value.`id`) +
             FfiConverterString.allocationSize(value.`displayName`) +
             FfiConverterBoolean.allocationSize(value.`isVerified`) +
+            FfiConverterBoolean.allocationSize(value.`isRecoveryTrusted`) +
             FfiConverterTypeMobileContactCard.allocationSize(value.`card`) +
             FfiConverterULong.allocationSize(value.`addedAt`)
     )
@@ -6049,6 +6144,7 @@ public object FfiConverterTypeMobileContact: FfiConverterRustBuffer<MobileContac
             FfiConverterString.write(value.`id`, buf)
             FfiConverterString.write(value.`displayName`, buf)
             FfiConverterBoolean.write(value.`isVerified`, buf)
+            FfiConverterBoolean.write(value.`isRecoveryTrusted`, buf)
             FfiConverterTypeMobileContactCard.write(value.`card`, buf)
             FfiConverterULong.write(value.`addedAt`, buf)
     }
