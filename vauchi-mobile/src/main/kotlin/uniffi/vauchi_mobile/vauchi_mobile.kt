@@ -1102,6 +1102,8 @@ internal open class UniffiVTableCallbackInterfacePlatformAudioHandler(
 
 
 
+
+
 // A JNA Library to expose the extern-C FFI definitions.
 // This is an implementation detail which will be called internally by the public API.
 
@@ -1425,6 +1427,8 @@ internal interface UniffiLib : Library {
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_func_get_theme(`themeId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_func_init_locales(`resourceDir`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
     fun uniffi_vauchi_mobile_fn_func_is_allowed_scheme(`scheme`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
     fun uniffi_vauchi_mobile_fn_func_is_blocked_scheme(`scheme`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1582,6 +1586,8 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_checksum_func_get_string_with_args(
     ): Short
     fun uniffi_vauchi_mobile_checksum_func_get_theme(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_func_init_locales(
     ): Short
     fun uniffi_vauchi_mobile_checksum_func_is_allowed_scheme(
     ): Short
@@ -1933,6 +1939,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_func_get_theme() != 36476.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_func_init_locales() != 4158.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_func_is_allowed_scheme() != 10327.toShort()) {
@@ -8895,6 +8904,14 @@ sealed class MobileException: kotlin.Exception() {
             get() = "v1=${ v1 }"
     }
     
+    class InitException(
+        
+        val v1: kotlin.String
+        ) : MobileException() {
+        override val message
+            get() = "v1=${ v1 }"
+    }
+    
     class Internal(
         
         val v1: kotlin.String
@@ -8956,7 +8973,10 @@ public object FfiConverterTypeMobileError : FfiConverterRustBuffer<MobileExcepti
             15 -> MobileException.ShredException(
                 FfiConverterString.read(buf),
                 )
-            16 -> MobileException.Internal(
+            16 -> MobileException.InitException(
+                FfiConverterString.read(buf),
+                )
+            17 -> MobileException.Internal(
                 FfiConverterString.read(buf),
                 )
             else -> throw RuntimeException("invalid error enum value, something is very wrong!!")
@@ -9032,6 +9052,11 @@ public object FfiConverterTypeMobileError : FfiConverterRustBuffer<MobileExcepti
                 + FfiConverterString.allocationSize(value.v1)
             )
             is MobileException.ShredException -> (
+                // Add the size for the Int that specifies the variant plus the size needed for all fields
+                4UL
+                + FfiConverterString.allocationSize(value.v1)
+            )
+            is MobileException.InitException -> (
                 // Add the size for the Int that specifies the variant plus the size needed for all fields
                 4UL
                 + FfiConverterString.allocationSize(value.v1)
@@ -9117,8 +9142,13 @@ public object FfiConverterTypeMobileError : FfiConverterRustBuffer<MobileExcepti
                 FfiConverterString.write(value.v1, buf)
                 Unit
             }
-            is MobileException.Internal -> {
+            is MobileException.InitException -> {
                 buf.putInt(16)
+                FfiConverterString.write(value.v1, buf)
+                Unit
+            }
+            is MobileException.Internal -> {
+                buf.putInt(17)
                 FfiConverterString.write(value.v1, buf)
                 Unit
             }
@@ -11015,6 +11045,22 @@ public object FfiConverterMapStringString: FfiConverterRustBuffer<Map<kotlin.Str
 }
     )
     }
+    
+
+        /**
+         * Initialize the i18n system by loading locale files from a directory.
+         *
+         * Must be called once at app startup before any i18n functions.
+         * The resource_dir should point to a directory containing locale JSON files
+         * (e.g., en.json, de.json, fr.json, es.json).
+         */
+    @Throws(MobileException::class) fun `initLocales`(`resourceDir`: kotlin.String)
+        = 
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_func_init_locales(
+        FfiConverterString.lower(`resourceDir`),_status)
+}
+    
     
 
         /**
