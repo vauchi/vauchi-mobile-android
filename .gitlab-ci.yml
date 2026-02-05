@@ -98,7 +98,7 @@ update:bindings:
         echo "WARNING: Could not fetch signature or public key — skipping verification"
       fi
 
-      unzip android-bindings.zip
+      unzip -o android-bindings.zip
 
       # Copy JNI libs
       mkdir -p vauchi-mobile/src/main/jniLibs
