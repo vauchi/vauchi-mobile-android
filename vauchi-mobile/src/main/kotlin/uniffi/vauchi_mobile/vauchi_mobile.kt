@@ -1086,6 +1086,16 @@ internal open class UniffiVTableCallbackInterfacePlatformAudioHandler(
 
 
 
+
+
+
+
+
+
+
+
+
+
 // A JNA Library to expose the extern-C FFI definitions.
 // This is an implementation detail which will be called internally by the public API.
 
@@ -1373,6 +1383,8 @@ internal interface UniffiLib : Library {
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_func_generate_storage_key(uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_func_get_aha_moment_localized(`momentType`: RustBuffer.ByValue,`locale`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_func_get_available_locales(uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_func_get_available_themes(uniffi_out_err: UniffiRustCallStatus, 
@@ -1381,9 +1393,15 @@ internal interface UniffiLib : Library {
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_func_get_faq_by_id(`id`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_func_get_faq_by_id_localized(`id`: RustBuffer.ByValue,`locale`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_func_get_faqs(uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_func_get_faqs_by_category(`category`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_func_get_faqs_by_category_localized(`category`: RustBuffer.ByValue,`locale`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_func_get_faqs_localized(`locale`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_func_get_help_categories(uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
@@ -1404,6 +1422,8 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_fn_func_parse_locale_code(`code`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_func_search_faqs(`query`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_func_search_faqs_localized(`query`: RustBuffer.ByValue,`locale`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun ffi_vauchi_mobile_rustbuffer_alloc(`size`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
@@ -1521,6 +1541,8 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_func_generate_storage_key(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_func_get_aha_moment_localized(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_func_get_available_locales(
     ): Short
     fun uniffi_vauchi_mobile_checksum_func_get_available_themes(
@@ -1529,9 +1551,15 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_func_get_faq_by_id(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_func_get_faq_by_id_localized(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_func_get_faqs(
     ): Short
     fun uniffi_vauchi_mobile_checksum_func_get_faqs_by_category(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_func_get_faqs_by_category_localized(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_func_get_faqs_localized(
     ): Short
     fun uniffi_vauchi_mobile_checksum_func_get_help_categories(
     ): Short
@@ -1552,6 +1580,8 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_checksum_func_parse_locale_code(
     ): Short
     fun uniffi_vauchi_mobile_checksum_func_search_faqs(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_func_search_faqs_localized(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_mobileproximityverifier_emit_challenge(
     ): Short
@@ -1842,6 +1872,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_func_generate_storage_key() != 24673.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_func_get_aha_moment_localized() != 58190.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_func_get_available_locales() != 16699.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -1854,10 +1887,19 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_func_get_faq_by_id() != 53682.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_func_get_faq_by_id_localized() != 4391.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_func_get_faqs() != 34098.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_func_get_faqs_by_category() != 19763.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_func_get_faqs_by_category_localized() != 52283.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_func_get_faqs_localized() != 46848.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_func_get_help_categories() != 65096.toShort()) {
@@ -1888,6 +1930,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_func_search_faqs() != 9146.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_func_search_faqs_localized() != 57224.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_mobileproximityverifier_emit_challenge() != 35393.toShort()) {
@@ -10679,6 +10724,23 @@ public object FfiConverterMapStringString: FfiConverterRustBuffer<Map<kotlin.Str
     
 
         /**
+         * Get localized aha moment content for a given moment type.
+         *
+         * Returns the title, message, and animation flag for display.
+         * This is a stateless helper — it doesn't check whether the moment
+         * has been seen. Use `try_trigger_aha_moment` on VauchiMobile for
+         * state-tracked triggering.
+         */ fun `getAhaMomentLocalized`(`momentType`: MobileAhaMomentType, `locale`: MobileLocale): MobileAhaMoment {
+            return FfiConverterTypeMobileAhaMoment.lift(
+    uniffiRustCall() { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_func_get_aha_moment_localized(
+        FfiConverterTypeMobileAhaMomentType.lower(`momentType`),FfiConverterTypeMobileLocale.lower(`locale`),_status)
+}
+    )
+    }
+    
+
+        /**
          * Get all available locales.
          */ fun `getAvailableLocales`(): List<MobileLocaleInfo> {
             return FfiConverterSequenceTypeMobileLocaleInfo.lift(
@@ -10731,6 +10793,20 @@ public object FfiConverterMapStringString: FfiConverterRustBuffer<Map<kotlin.Str
     
 
         /**
+         * Get a specific FAQ item by ID in the specified locale.
+         *
+         * Returns None if the FAQ is not found.
+         */ fun `getFaqByIdLocalized`(`id`: kotlin.String, `locale`: MobileLocale): MobileFaqItem? {
+            return FfiConverterOptionalTypeMobileFaqItem.lift(
+    uniffiRustCall() { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_func_get_faq_by_id_localized(
+        FfiConverterString.lower(`id`),FfiConverterTypeMobileLocale.lower(`locale`),_status)
+}
+    )
+    }
+    
+
+        /**
          * Get all FAQ items.
          */ fun `getFaqs`(): List<MobileFaqItem> {
             return FfiConverterSequenceTypeMobileFaqItem.lift(
@@ -10749,6 +10825,30 @@ public object FfiConverterMapStringString: FfiConverterRustBuffer<Map<kotlin.Str
     uniffiRustCall() { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_func_get_faqs_by_category(
         FfiConverterTypeMobileHelpCategory.lower(`category`),_status)
+}
+    )
+    }
+    
+
+        /**
+         * Get FAQ items for a specific category in the specified locale.
+         */ fun `getFaqsByCategoryLocalized`(`category`: MobileHelpCategory, `locale`: MobileLocale): List<MobileFaqItem> {
+            return FfiConverterSequenceTypeMobileFaqItem.lift(
+    uniffiRustCall() { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_func_get_faqs_by_category_localized(
+        FfiConverterTypeMobileHelpCategory.lower(`category`),FfiConverterTypeMobileLocale.lower(`locale`),_status)
+}
+    )
+    }
+    
+
+        /**
+         * Get all FAQ items in the specified locale.
+         */ fun `getFaqsLocalized`(`locale`: MobileLocale): List<MobileFaqItem> {
+            return FfiConverterSequenceTypeMobileFaqItem.lift(
+    uniffiRustCall() { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_func_get_faqs_localized(
+        FfiConverterTypeMobileLocale.lower(`locale`),_status)
 }
     )
     }
@@ -10890,6 +10990,20 @@ public object FfiConverterMapStringString: FfiConverterRustBuffer<Map<kotlin.Str
     uniffiRustCall() { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_func_search_faqs(
         FfiConverterString.lower(`query`),_status)
+}
+    )
+    }
+    
+
+        /**
+         * Search FAQs by query text in the specified locale.
+         *
+         * Searches in both questions and answers (case-insensitive).
+         */ fun `searchFaqsLocalized`(`query`: kotlin.String, `locale`: MobileLocale): List<MobileFaqItem> {
+            return FfiConverterSequenceTypeMobileFaqItem.lift(
+    uniffiRustCall() { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_func_search_faqs_localized(
+        FfiConverterString.lower(`query`),FfiConverterTypeMobileLocale.lower(`locale`),_status)
 }
     )
     }
