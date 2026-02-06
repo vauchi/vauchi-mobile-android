@@ -663,6 +663,9 @@ internal interface UniffiCallbackInterfaceMobilePlatformKeychainMethod1 : com.su
 internal interface UniffiCallbackInterfaceMobilePlatformKeychainMethod2 : com.sun.jna.Callback {
     fun callback(`uniffiHandle`: Long,`name`: RustBuffer.ByValue,`uniffiOutReturn`: Pointer,uniffiCallStatus: UniffiRustCallStatus,)
 }
+internal interface UniffiCallbackInterfaceMobileProximityHandlerMethod0 : com.sun.jna.Callback {
+    fun callback(`uniffiHandle`: Long,`challenge`: RustBuffer.ByValue,`timeoutMs`: Long,`uniffiOutReturn`: RustBuffer,uniffiCallStatus: UniffiRustCallStatus,)
+}
 internal interface UniffiCallbackInterfacePlatformAudioHandlerMethod0 : com.sun.jna.Callback {
     fun callback(`uniffiHandle`: Long,`uniffiOutReturn`: RustBuffer,uniffiCallStatus: UniffiRustCallStatus,)
 }
@@ -696,6 +699,22 @@ internal open class UniffiVTableCallbackInterfaceMobilePlatformKeychain(
         `saveKey` = other.`saveKey`
         `loadKey` = other.`loadKey`
         `deleteKey` = other.`deleteKey`
+        `uniffiFree` = other.`uniffiFree`
+    }
+
+}
+@Structure.FieldOrder("verifyProximity", "uniffiFree")
+internal open class UniffiVTableCallbackInterfaceMobileProximityHandler(
+    @JvmField internal var `verifyProximity`: UniffiCallbackInterfaceMobileProximityHandlerMethod0? = null,
+    @JvmField internal var `uniffiFree`: UniffiCallbackInterfaceFree? = null,
+) : Structure() {
+    class UniffiByValue(
+        `verifyProximity`: UniffiCallbackInterfaceMobileProximityHandlerMethod0? = null,
+        `uniffiFree`: UniffiCallbackInterfaceFree? = null,
+    ): UniffiVTableCallbackInterfaceMobileProximityHandler(`verifyProximity`,`uniffiFree`,), Structure.ByValue
+
+   internal fun uniffiSetValue(other: UniffiVTableCallbackInterfaceMobileProximityHandler) {
+        `verifyProximity` = other.`verifyProximity`
         `uniffiFree` = other.`uniffiFree`
     }
 
@@ -1104,6 +1123,32 @@ internal open class UniffiVTableCallbackInterfacePlatformAudioHandler(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // A JNA Library to expose the extern-C FFI definitions.
 // This is an implementation detail which will be called internally by the public API.
 
@@ -1115,6 +1160,7 @@ internal interface UniffiLib : Library {
                 uniffiCheckContractApiVersion(lib)
                 uniffiCheckApiChecksums(lib)
                 uniffiCallbackInterfaceMobilePlatformKeychain.register(lib)
+                uniffiCallbackInterfaceMobileProximityHandler.register(lib)
                 uniffiCallbackInterfacePlatformAudioHandler.register(lib)
                 }
         }
@@ -1125,6 +1171,26 @@ internal interface UniffiLib : Library {
         }
     }
 
+    fun uniffi_vauchi_mobile_fn_clone_mobileexchangesession(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Pointer
+    fun uniffi_vauchi_mobile_fn_free_mobileexchangesession(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
+    fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_complete_card_exchange(`ptr`: Pointer,`theirCardName`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
+    fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_confirm_proximity(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
+    fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_generate_qr(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_is_timed_out(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Byte
+    fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_perform_key_agreement(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
+    fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_process_qr(`ptr`: Pointer,`qrData`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
+    fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_state(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_verify_proximity(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
     fun uniffi_vauchi_mobile_fn_clone_mobileproximityverifier(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Pointer
     fun uniffi_vauchi_mobile_fn_free_mobileproximityverifier(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
@@ -1177,12 +1243,18 @@ internal interface UniffiLib : Library {
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_clear_pending_updates_for_contact(`ptr`: Pointer,`contactId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Int
-    fun uniffi_vauchi_mobile_fn_method_vauchimobile_complete_exchange(`ptr`: Pointer,`qrData`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
-    ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_contact_count(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Int
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_count_failed_deliveries(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Int
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_initiator(`ptr`: Pointer,`proximity`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    ): Pointer
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_initiator_manual(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Pointer
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_responder(`ptr`: Pointer,`proximity`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    ): Pointer
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_responder_manual(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Pointer
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_identity(`ptr`: Pointer,`displayName`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_label(`ptr`: Pointer,`name`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1207,9 +1279,9 @@ internal interface UniffiLib : Library {
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_export_storage_key(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
-    fun uniffi_vauchi_mobile_fn_method_vauchimobile_generate_device_link_qr(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_finalize_exchange(`ptr`: Pointer,`session`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
-    fun uniffi_vauchi_mobile_fn_method_vauchimobile_generate_exchange_qr(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_generate_device_link_qr(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_all_delivery_records(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
@@ -1390,6 +1462,8 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_verify_shred(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_init_callback_vtable_mobileplatformkeychain(`vtable`: UniffiVTableCallbackInterfaceMobilePlatformKeychain,
+    ): Unit
+    fun uniffi_vauchi_mobile_fn_init_callback_vtable_mobileproximityhandler(`vtable`: UniffiVTableCallbackInterfaceMobileProximityHandler,
     ): Unit
     fun uniffi_vauchi_mobile_fn_init_callback_vtable_platformaudiohandler(`vtable`: UniffiVTableCallbackInterfacePlatformAudioHandler,
     ): Unit
@@ -1601,6 +1675,22 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_func_search_faqs_localized(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_complete_card_exchange(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_confirm_proximity(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_generate_qr(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_is_timed_out(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_perform_key_agreement(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_process_qr(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_state(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_verify_proximity(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_mobileproximityverifier_emit_challenge(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_mobileproximityverifier_get_capability(
@@ -1637,11 +1727,17 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_clear_pending_updates_for_contact(
     ): Short
-    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_complete_exchange(
-    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_contact_count(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_count_failed_deliveries(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_initiator(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_initiator_manual(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_responder(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_responder_manual(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_create_identity(
     ): Short
@@ -1667,9 +1763,9 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_export_storage_key(
     ): Short
-    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_generate_device_link_qr(
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_finalize_exchange(
     ): Short
-    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_generate_exchange_qr(
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_generate_device_link_qr(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_all_delivery_records(
     ): Short
@@ -1863,6 +1959,8 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_mobileplatformkeychain_delete_key(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobileproximityhandler_verify_proximity(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_platformaudiohandler_check_capability(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_platformaudiohandler_emit_signal(
@@ -1962,6 +2060,30 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_func_search_faqs_localized() != 57224.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_complete_card_exchange() != 64003.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_confirm_proximity() != 5518.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_generate_qr() != 6354.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_is_timed_out() != 25990.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_perform_key_agreement() != 4833.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_process_qr() != 18614.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_state() != 19066.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_verify_proximity() != 43836.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_mobileproximityverifier_emit_challenge() != 35393.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -2016,13 +2138,22 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_clear_pending_updates_for_contact() != 25049.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
-    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_complete_exchange() != 59225.toShort()) {
-        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
-    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_contact_count() != 30960.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_count_failed_deliveries() != 59375.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_initiator() != 40728.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_initiator_manual() != 56747.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_responder() != 45401.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_responder_manual() != 7174.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_create_identity() != 63328.toShort()) {
@@ -2061,10 +2192,10 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_export_storage_key() != 42895.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
-    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_generate_device_link_qr() != 28478.toShort()) {
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_finalize_exchange() != 62679.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
-    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_generate_exchange_qr() != 23797.toShort()) {
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_generate_device_link_qr() != 28478.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_get_all_delivery_records() != 60693.toShort()) {
@@ -2353,6 +2484,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_mobileplatformkeychain_delete_key() != 34382.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileproximityhandler_verify_proximity() != 10196.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_platformaudiohandler_check_capability() != 34713.toShort()) {
@@ -2747,6 +2881,416 @@ private class JavaLangRefCleanable(
 ) : UniffiCleaner.Cleanable {
     override fun clean() = cleanable.clean()
 }
+/**
+ * Mobile exchange session wrapping the core `ExchangeSession` state machine.
+ *
+ * Drives the exchange flow: generate/scan QR -> verify proximity -> key agreement -> complete.
+ */
+public interface MobileExchangeSessionInterface {
+    
+    /**
+     * Complete the card exchange. Transitions AwaitingCardExchange -> Complete.
+     *
+     * The `their_card_name` is used to create a placeholder card for the contact.
+     * The real card will be received via relay sync.
+     */
+    fun `completeCardExchange`(`theirCardName`: kotlin.String)
+    
+    /**
+     * Confirm manual proximity (for sessions without audio hardware).
+     *
+     * Sets the confirmation flag so that the next `verify_proximity()` call succeeds.
+     * Only valid for manual confirmation sessions.
+     */
+    fun `confirmProximity`()
+    
+    /**
+     * Generate a QR code (initiator only). Transitions Idle -> AwaitingScan.
+     */
+    fun `generateQr`(): kotlin.String
+    
+    /**
+     * Check if the session has timed out.
+     */
+    fun `isTimedOut`(): kotlin.Boolean
+    
+    /**
+     * Perform key agreement. Transitions AwaitingKeyAgreement -> AwaitingCardExchange.
+     */
+    fun `performKeyAgreement`()
+    
+    /**
+     * Process a scanned QR code (responder only). Transitions Idle -> AwaitingProximity.
+     */
+    fun `processQr`(`qrData`: kotlin.String)
+    
+    /**
+     * Get the current state of the exchange session.
+     */
+    fun `state`(): MobileExchangeState
+    
+    /**
+     * Verify proximity. Transitions AwaitingProximity -> AwaitingKeyAgreement.
+     *
+     * For audio-based sessions, this calls the MobileProximityHandler callback.
+     * For manual sessions, call `confirm_proximity()` first, then this method.
+     */
+    fun `verifyProximity`()
+    
+    companion object
+}
+
+/**
+ * Mobile exchange session wrapping the core `ExchangeSession` state machine.
+ *
+ * Drives the exchange flow: generate/scan QR -> verify proximity -> key agreement -> complete.
+ */
+open class MobileExchangeSession: Disposable, AutoCloseable, MobileExchangeSessionInterface {
+
+    constructor(pointer: Pointer) {
+        this.pointer = pointer
+        this.cleanable = UniffiLib.CLEANER.register(this, UniffiCleanAction(pointer))
+    }
+
+    /**
+     * This constructor can be used to instantiate a fake object. Only used for tests. Any
+     * attempt to actually use an object constructed this way will fail as there is no
+     * connected Rust object.
+     */
+    @Suppress("UNUSED_PARAMETER")
+    constructor(noPointer: NoPointer) {
+        this.pointer = null
+        this.cleanable = UniffiLib.CLEANER.register(this, UniffiCleanAction(pointer))
+    }
+
+    protected val pointer: Pointer?
+    protected val cleanable: UniffiCleaner.Cleanable
+
+    private val wasDestroyed = AtomicBoolean(false)
+    private val callCounter = AtomicLong(1)
+
+    override fun destroy() {
+        // Only allow a single call to this method.
+        // TODO: maybe we should log a warning if called more than once?
+        if (this.wasDestroyed.compareAndSet(false, true)) {
+            // This decrement always matches the initial count of 1 given at creation time.
+            if (this.callCounter.decrementAndGet() == 0L) {
+                cleanable.clean()
+            }
+        }
+    }
+
+    @Synchronized
+    override fun close() {
+        this.destroy()
+    }
+
+    internal inline fun <R> callWithPointer(block: (ptr: Pointer) -> R): R {
+        // Check and increment the call counter, to keep the object alive.
+        // This needs a compare-and-set retry loop in case of concurrent updates.
+        do {
+            val c = this.callCounter.get()
+            if (c == 0L) {
+                throw IllegalStateException("${this.javaClass.simpleName} object has already been destroyed")
+            }
+            if (c == Long.MAX_VALUE) {
+                throw IllegalStateException("${this.javaClass.simpleName} call counter would overflow")
+            }
+        } while (! this.callCounter.compareAndSet(c, c + 1L))
+        // Now we can safely do the method call without the pointer being freed concurrently.
+        try {
+            return block(this.uniffiClonePointer())
+        } finally {
+            // This decrement always matches the increment we performed above.
+            if (this.callCounter.decrementAndGet() == 0L) {
+                cleanable.clean()
+            }
+        }
+    }
+
+    // Use a static inner class instead of a closure so as not to accidentally
+    // capture `this` as part of the cleanable's action.
+    private class UniffiCleanAction(private val pointer: Pointer?) : Runnable {
+        override fun run() {
+            pointer?.let { ptr ->
+                uniffiRustCall { status ->
+                    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_free_mobileexchangesession(ptr, status)
+                }
+            }
+        }
+    }
+
+    fun uniffiClonePointer(): Pointer {
+        return uniffiRustCall() { status ->
+            UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_clone_mobileexchangesession(pointer!!, status)
+        }
+    }
+
+    
+    /**
+     * Complete the card exchange. Transitions AwaitingCardExchange -> Complete.
+     *
+     * The `their_card_name` is used to create a placeholder card for the contact.
+     * The real card will be received via relay sync.
+     */
+    @Throws(MobileException::class)override fun `completeCardExchange`(`theirCardName`: kotlin.String)
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobileexchangesession_complete_card_exchange(
+        it, FfiConverterString.lower(`theirCardName`),_status)
+}
+    }
+    
+    
+
+    
+    /**
+     * Confirm manual proximity (for sessions without audio hardware).
+     *
+     * Sets the confirmation flag so that the next `verify_proximity()` call succeeds.
+     * Only valid for manual confirmation sessions.
+     */
+    @Throws(MobileException::class)override fun `confirmProximity`()
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobileexchangesession_confirm_proximity(
+        it, _status)
+}
+    }
+    
+    
+
+    
+    /**
+     * Generate a QR code (initiator only). Transitions Idle -> AwaitingScan.
+     */
+    @Throws(MobileException::class)override fun `generateQr`(): kotlin.String {
+            return FfiConverterString.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobileexchangesession_generate_qr(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Check if the session has timed out.
+     */override fun `isTimedOut`(): kotlin.Boolean {
+            return FfiConverterBoolean.lift(
+    callWithPointer {
+    uniffiRustCall() { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobileexchangesession_is_timed_out(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Perform key agreement. Transitions AwaitingKeyAgreement -> AwaitingCardExchange.
+     */
+    @Throws(MobileException::class)override fun `performKeyAgreement`()
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobileexchangesession_perform_key_agreement(
+        it, _status)
+}
+    }
+    
+    
+
+    
+    /**
+     * Process a scanned QR code (responder only). Transitions Idle -> AwaitingProximity.
+     */
+    @Throws(MobileException::class)override fun `processQr`(`qrData`: kotlin.String)
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobileexchangesession_process_qr(
+        it, FfiConverterString.lower(`qrData`),_status)
+}
+    }
+    
+    
+
+    
+    /**
+     * Get the current state of the exchange session.
+     */override fun `state`(): MobileExchangeState {
+            return FfiConverterTypeMobileExchangeState.lift(
+    callWithPointer {
+    uniffiRustCall() { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobileexchangesession_state(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Verify proximity. Transitions AwaitingProximity -> AwaitingKeyAgreement.
+     *
+     * For audio-based sessions, this calls the MobileProximityHandler callback.
+     * For manual sessions, call `confirm_proximity()` first, then this method.
+     */
+    @Throws(MobileException::class)override fun `verifyProximity`()
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobileexchangesession_verify_proximity(
+        it, _status)
+}
+    }
+    
+    
+
+    
+
+    
+    
+    companion object
+    
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileExchangeSession: FfiConverter<MobileExchangeSession, Pointer> {
+
+    override fun lower(value: MobileExchangeSession): Pointer {
+        return value.uniffiClonePointer()
+    }
+
+    override fun lift(value: Pointer): MobileExchangeSession {
+        return MobileExchangeSession(value)
+    }
+
+    override fun read(buf: ByteBuffer): MobileExchangeSession {
+        // The Rust code always writes pointers as 8 bytes, and will
+        // fail to compile if they don't fit.
+        return lift(Pointer(buf.getLong()))
+    }
+
+    override fun allocationSize(value: MobileExchangeSession) = 8UL
+
+    override fun write(value: MobileExchangeSession, buf: ByteBuffer) {
+        // The Rust code always expects pointers written as 8 bytes,
+        // and will fail to compile if they don't fit.
+        buf.putLong(Pointer.nativeValue(lower(value)))
+    }
+}
+
+
+// This template implements a class for working with a Rust struct via a Pointer/Arc<T>
+// to the live Rust struct on the other side of the FFI.
+//
+// Each instance implements core operations for working with the Rust `Arc<T>` and the
+// Kotlin Pointer to work with the live Rust struct on the other side of the FFI.
+//
+// There's some subtlety here, because we have to be careful not to operate on a Rust
+// struct after it has been dropped, and because we must expose a public API for freeing
+// theq Kotlin wrapper object in lieu of reliable finalizers. The core requirements are:
+//
+//   * Each instance holds an opaque pointer to the underlying Rust struct.
+//     Method calls need to read this pointer from the object's state and pass it in to
+//     the Rust FFI.
+//
+//   * When an instance is no longer needed, its pointer should be passed to a
+//     special destructor function provided by the Rust FFI, which will drop the
+//     underlying Rust struct.
+//
+//   * Given an instance, calling code is expected to call the special
+//     `destroy` method in order to free it after use, either by calling it explicitly
+//     or by using a higher-level helper like the `use` method. Failing to do so risks
+//     leaking the underlying Rust struct.
+//
+//   * We can't assume that calling code will do the right thing, and must be prepared
+//     to handle Kotlin method calls executing concurrently with or even after a call to
+//     `destroy`, and to handle multiple (possibly concurrent!) calls to `destroy`.
+//
+//   * We must never allow Rust code to operate on the underlying Rust struct after
+//     the destructor has been called, and must never call the destructor more than once.
+//     Doing so may trigger memory unsafety.
+//
+//   * To mitigate many of the risks of leaking memory and use-after-free unsafety, a `Cleaner`
+//     is implemented to call the destructor when the Kotlin object becomes unreachable.
+//     This is done in a background thread. This is not a panacea, and client code should be aware that
+//      1. the thread may starve if some there are objects that have poorly performing
+//     `drop` methods or do significant work in their `drop` methods.
+//      2. the thread is shared across the whole library. This can be tuned by using `android_cleaner = true`,
+//         or `android = true` in the [`kotlin` section of the `uniffi.toml` file](https://mozilla.github.io/uniffi-rs/kotlin/configuration.html).
+//
+// If we try to implement this with mutual exclusion on access to the pointer, there is the
+// possibility of a race between a method call and a concurrent call to `destroy`:
+//
+//    * Thread A starts a method call, reads the value of the pointer, but is interrupted
+//      before it can pass the pointer over the FFI to Rust.
+//    * Thread B calls `destroy` and frees the underlying Rust struct.
+//    * Thread A resumes, passing the already-read pointer value to Rust and triggering
+//      a use-after-free.
+//
+// One possible solution would be to use a `ReadWriteLock`, with each method call taking
+// a read lock (and thus allowed to run concurrently) and the special `destroy` method
+// taking a write lock (and thus blocking on live method calls). However, we aim not to
+// generate methods with any hidden blocking semantics, and a `destroy` method that might
+// block if called incorrectly seems to meet that bar.
+//
+// So, we achieve our goals by giving each instance an associated `AtomicLong` counter to track
+// the number of in-flight method calls, and an `AtomicBoolean` flag to indicate whether `destroy`
+// has been called. These are updated according to the following rules:
+//
+//    * The initial value of the counter is 1, indicating a live object with no in-flight calls.
+//      The initial value for the flag is false.
+//
+//    * At the start of each method call, we atomically check the counter.
+//      If it is 0 then the underlying Rust struct has already been destroyed and the call is aborted.
+//      If it is nonzero them we atomically increment it by 1 and proceed with the method call.
+//
+//    * At the end of each method call, we atomically decrement and check the counter.
+//      If it has reached zero then we destroy the underlying Rust struct.
+//
+//    * When `destroy` is called, we atomically flip the flag from false to true.
+//      If the flag was already true we silently fail.
+//      Otherwise we atomically decrement and check the counter.
+//      If it has reached zero then we destroy the underlying Rust struct.
+//
+// Astute readers may observe that this all sounds very similar to the way that Rust's `Arc<T>` works,
+// and indeed it is, with the addition of a flag to guard against multiple calls to `destroy`.
+//
+// The overall effect is that the underlying Rust struct is destroyed only when `destroy` has been
+// called *and* all in-flight method calls have completed, avoiding violating any of the expectations
+// of the underlying Rust code.
+//
+// This makes a cleaner a better alternative to _not_ calling `destroy()` as
+// and when the object is finished with, but the abstraction is not perfect: if the Rust object's `drop`
+// method is slow, and/or there are many objects to cleanup, and it's on a low end Android device, then the cleaner
+// thread may be starved, and the app will leak memory.
+//
+// In this case, `destroy`ing manually may be a better solution.
+//
+// The cleaner can live side by side with the manual calling of `destroy`. In the order of responsiveness, uniffi objects
+// with Rust peers are reclaimed:
+//
+// 1. By calling the `destroy` method of the object, which calls `rustObject.free()`. If that doesn't happen:
+// 2. When the object becomes unreachable, AND the Cleaner thread gets to call `rustObject.free()`. If the thread is starved then:
+// 3. The memory is reclaimed when the process terminates.
+//
+// [1] https://stackoverflow.com/questions/24376768/can-java-finalize-an-object-when-it-is-still-in-scope/24380219
+//
+
+
 /**
  * Mobile-friendly proximity verification API.
  */
@@ -3201,11 +3745,6 @@ public interface VauchiMobileInterface {
     fun `clearPendingUpdatesForContact`(`contactId`: kotlin.String): kotlin.UInt
     
     /**
-     * Complete exchange with scanned QR data.
-     */
-    fun `completeExchange`(`qrData`: kotlin.String): MobileExchangeResult
-    
-    /**
      * Get contact count.
      */
     fun `contactCount`(): kotlin.UInt
@@ -3214,6 +3753,29 @@ public interface VauchiMobileInterface {
      * Count failed deliveries.
      */
     fun `countFailedDeliveries`(): kotlin.UInt
+    
+    /**
+     * Create an exchange session as initiator (displaying QR) with proximity verification.
+     *
+     * The `proximity` handler is called during proximity verification with the
+     * audio challenge from the QR code.
+     */
+    fun `createExchangeInitiator`(`proximity`: MobileProximityHandler): MobileExchangeSession
+    
+    /**
+     * Create an exchange session as initiator with manual confirmation (no audio hardware).
+     */
+    fun `createExchangeInitiatorManual`(): MobileExchangeSession
+    
+    /**
+     * Create an exchange session as responder (scanning QR) with proximity verification.
+     */
+    fun `createExchangeResponder`(`proximity`: MobileProximityHandler): MobileExchangeSession
+    
+    /**
+     * Create an exchange session as responder with manual confirmation (no audio hardware).
+     */
+    fun `createExchangeResponderManual`(): MobileExchangeSession
     
     /**
      * Create a new identity.
@@ -3289,17 +3851,23 @@ public interface VauchiMobileInterface {
     fun `exportStorageKey`(): kotlin.ByteArray
     
     /**
+     * Finalize a completed exchange session.
+     *
+     * Extracts the contact from the session's Complete state, saves it to storage,
+     * initializes the double ratchet, and sends the encrypted exchange message via relay.
+     *
+     * The session must be in the Complete state (i.e., the state machine has been
+     * driven through all steps).
+     */
+    fun `finalizeExchange`(`session`: MobileExchangeSession): MobileExchangeResult
+    
+    /**
      * Generate a device link QR code.
      *
      * Display this QR code on the existing device for a new device to scan.
      * The QR expires after 10 minutes.
      */
     fun `generateDeviceLinkQr`(): MobileDeviceLinkData
-    
-    /**
-     * Generate exchange QR data.
-     */
-    fun `generateExchangeQr`(): MobileExchangeData
     
     /**
      * Get all delivery records.
@@ -4143,22 +4711,6 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
-     * Complete exchange with scanned QR data.
-     */
-    @Throws(MobileException::class)override fun `completeExchange`(`qrData`: kotlin.String): MobileExchangeResult {
-            return FfiConverterTypeMobileExchangeResult.lift(
-    callWithPointer {
-    uniffiRustCallWithError(MobileException) { _status ->
-    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_complete_exchange(
-        it, FfiConverterString.lower(`qrData`),_status)
-}
-    }
-    )
-    }
-    
-
-    
-    /**
      * Get contact count.
      */
     @Throws(MobileException::class)override fun `contactCount`(): kotlin.UInt {
@@ -4182,6 +4734,73 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     callWithPointer {
     uniffiRustCallWithError(MobileException) { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_count_failed_deliveries(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Create an exchange session as initiator (displaying QR) with proximity verification.
+     *
+     * The `proximity` handler is called during proximity verification with the
+     * audio challenge from the QR code.
+     */
+    @Throws(MobileException::class)override fun `createExchangeInitiator`(`proximity`: MobileProximityHandler): MobileExchangeSession {
+            return FfiConverterTypeMobileExchangeSession.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_initiator(
+        it, FfiConverterTypeMobileProximityHandler.lower(`proximity`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Create an exchange session as initiator with manual confirmation (no audio hardware).
+     */
+    @Throws(MobileException::class)override fun `createExchangeInitiatorManual`(): MobileExchangeSession {
+            return FfiConverterTypeMobileExchangeSession.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_initiator_manual(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Create an exchange session as responder (scanning QR) with proximity verification.
+     */
+    @Throws(MobileException::class)override fun `createExchangeResponder`(`proximity`: MobileProximityHandler): MobileExchangeSession {
+            return FfiConverterTypeMobileExchangeSession.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_responder(
+        it, FfiConverterTypeMobileProximityHandler.lower(`proximity`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Create an exchange session as responder with manual confirmation (no audio hardware).
+     */
+    @Throws(MobileException::class)override fun `createExchangeResponderManual`(): MobileExchangeSession {
+            return FfiConverterTypeMobileExchangeSession.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_responder_manual(
         it, _status)
 }
     }
@@ -4392,6 +5011,28 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Finalize a completed exchange session.
+     *
+     * Extracts the contact from the session's Complete state, saves it to storage,
+     * initializes the double ratchet, and sends the encrypted exchange message via relay.
+     *
+     * The session must be in the Complete state (i.e., the state machine has been
+     * driven through all steps).
+     */
+    @Throws(MobileException::class)override fun `finalizeExchange`(`session`: MobileExchangeSession): MobileExchangeResult {
+            return FfiConverterTypeMobileExchangeResult.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_finalize_exchange(
+        it, FfiConverterTypeMobileExchangeSession.lower(`session`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
      * Generate a device link QR code.
      *
      * Display this QR code on the existing device for a new device to scan.
@@ -4402,22 +5043,6 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     callWithPointer {
     uniffiRustCallWithError(MobileException) { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_generate_device_link_qr(
-        it, _status)
-}
-    }
-    )
-    }
-    
-
-    
-    /**
-     * Generate exchange QR data.
-     */
-    @Throws(MobileException::class)override fun `generateExchangeQr`(): MobileExchangeData {
-            return FfiConverterTypeMobileExchangeData.lift(
-    callWithPointer {
-    uniffiRustCallWithError(MobileException) { _status ->
-    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_generate_exchange_qr(
         it, _status)
 }
     }
@@ -6908,45 +7533,6 @@ public object FfiConverterTypeMobileDeviceLinkResult: FfiConverterRustBuffer<Mob
 
 
 /**
- * Exchange QR data.
- */
-data class MobileExchangeData (
-    var `qrData`: kotlin.String, 
-    var `publicId`: kotlin.String, 
-    var `expiresAt`: kotlin.ULong
-) {
-    
-    companion object
-}
-
-/**
- * @suppress
- */
-public object FfiConverterTypeMobileExchangeData: FfiConverterRustBuffer<MobileExchangeData> {
-    override fun read(buf: ByteBuffer): MobileExchangeData {
-        return MobileExchangeData(
-            FfiConverterString.read(buf),
-            FfiConverterString.read(buf),
-            FfiConverterULong.read(buf),
-        )
-    }
-
-    override fun allocationSize(value: MobileExchangeData) = (
-            FfiConverterString.allocationSize(value.`qrData`) +
-            FfiConverterString.allocationSize(value.`publicId`) +
-            FfiConverterULong.allocationSize(value.`expiresAt`)
-    )
-
-    override fun write(value: MobileExchangeData, buf: ByteBuffer) {
-            FfiConverterString.write(value.`qrData`, buf)
-            FfiConverterString.write(value.`publicId`, buf)
-            FfiConverterULong.write(value.`expiresAt`, buf)
-    }
-}
-
-
-
-/**
  * Exchange result.
  */
 data class MobileExchangeResult (
@@ -9160,6 +9746,165 @@ public object FfiConverterTypeMobileError : FfiConverterRustBuffer<MobileExcepti
 
 
 /**
+ * Mobile-friendly exchange state (no raw bytes or core types).
+ */
+sealed class MobileExchangeState {
+    
+    object Idle : MobileExchangeState()
+    
+    
+    data class AwaitingScan(
+        val `qrData`: kotlin.String) : MobileExchangeState() {
+        companion object
+    }
+    
+    data class AwaitingProximity(
+        val `theirPublicId`: kotlin.String) : MobileExchangeState() {
+        companion object
+    }
+    
+    object AwaitingKeyAgreement : MobileExchangeState()
+    
+    
+    object AwaitingCardExchange : MobileExchangeState()
+    
+    
+    data class Complete(
+        val `contactId`: kotlin.String, 
+        val `contactName`: kotlin.String) : MobileExchangeState() {
+        companion object
+    }
+    
+    data class Failed(
+        val `error`: kotlin.String) : MobileExchangeState() {
+        companion object
+    }
+    
+
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileExchangeState : FfiConverterRustBuffer<MobileExchangeState>{
+    override fun read(buf: ByteBuffer): MobileExchangeState {
+        return when(buf.getInt()) {
+            1 -> MobileExchangeState.Idle
+            2 -> MobileExchangeState.AwaitingScan(
+                FfiConverterString.read(buf),
+                )
+            3 -> MobileExchangeState.AwaitingProximity(
+                FfiConverterString.read(buf),
+                )
+            4 -> MobileExchangeState.AwaitingKeyAgreement
+            5 -> MobileExchangeState.AwaitingCardExchange
+            6 -> MobileExchangeState.Complete(
+                FfiConverterString.read(buf),
+                FfiConverterString.read(buf),
+                )
+            7 -> MobileExchangeState.Failed(
+                FfiConverterString.read(buf),
+                )
+            else -> throw RuntimeException("invalid enum value, something is very wrong!!")
+        }
+    }
+
+    override fun allocationSize(value: MobileExchangeState) = when(value) {
+        is MobileExchangeState.Idle -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+            )
+        }
+        is MobileExchangeState.AwaitingScan -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+                + FfiConverterString.allocationSize(value.`qrData`)
+            )
+        }
+        is MobileExchangeState.AwaitingProximity -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+                + FfiConverterString.allocationSize(value.`theirPublicId`)
+            )
+        }
+        is MobileExchangeState.AwaitingKeyAgreement -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+            )
+        }
+        is MobileExchangeState.AwaitingCardExchange -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+            )
+        }
+        is MobileExchangeState.Complete -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+                + FfiConverterString.allocationSize(value.`contactId`)
+                + FfiConverterString.allocationSize(value.`contactName`)
+            )
+        }
+        is MobileExchangeState.Failed -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+                + FfiConverterString.allocationSize(value.`error`)
+            )
+        }
+    }
+
+    override fun write(value: MobileExchangeState, buf: ByteBuffer) {
+        when(value) {
+            is MobileExchangeState.Idle -> {
+                buf.putInt(1)
+                Unit
+            }
+            is MobileExchangeState.AwaitingScan -> {
+                buf.putInt(2)
+                FfiConverterString.write(value.`qrData`, buf)
+                Unit
+            }
+            is MobileExchangeState.AwaitingProximity -> {
+                buf.putInt(3)
+                FfiConverterString.write(value.`theirPublicId`, buf)
+                Unit
+            }
+            is MobileExchangeState.AwaitingKeyAgreement -> {
+                buf.putInt(4)
+                Unit
+            }
+            is MobileExchangeState.AwaitingCardExchange -> {
+                buf.putInt(5)
+                Unit
+            }
+            is MobileExchangeState.Complete -> {
+                buf.putInt(6)
+                FfiConverterString.write(value.`contactId`, buf)
+                FfiConverterString.write(value.`contactName`, buf)
+                Unit
+            }
+            is MobileExchangeState.Failed -> {
+                buf.putInt(7)
+                FfiConverterString.write(value.`error`, buf)
+                Unit
+            }
+        }.let { /* this makes the `when` an expression, which ensures it is exhaustive */ }
+    }
+}
+
+
+
+
+
+/**
  * Mobile-friendly field type enum.
  */
 
@@ -9779,6 +10524,74 @@ internal object uniffiCallbackInterfaceMobilePlatformKeychain {
  * @suppress
  */
 public object FfiConverterTypeMobilePlatformKeychain: FfiConverterCallbackInterface<MobilePlatformKeychain>()
+
+
+
+
+
+/**
+ * Callback interface for platform-specific proximity verification.
+ *
+ * Mobile apps (iOS/Android) implement this to provide proximity verification
+ * using ultrasonic audio or other hardware-based mechanisms.
+ */
+public interface MobileProximityHandler {
+    
+    /**
+     * Perform proximity verification with the given challenge.
+     *
+     * challenge: 16 bytes from the QR code's audio_challenge field.
+     * timeout_ms: maximum time to wait in milliseconds.
+     *
+     * Returns empty string on success, error message on failure.
+     */
+    fun `verifyProximity`(`challenge`: kotlin.ByteArray, `timeoutMs`: kotlin.ULong): kotlin.String
+    
+    companion object
+}
+
+
+
+// Put the implementation in an object so we don't pollute the top-level namespace
+internal object uniffiCallbackInterfaceMobileProximityHandler {
+    internal object `verifyProximity`: UniffiCallbackInterfaceMobileProximityHandlerMethod0 {
+        override fun callback(`uniffiHandle`: Long,`challenge`: RustBuffer.ByValue,`timeoutMs`: Long,`uniffiOutReturn`: RustBuffer,uniffiCallStatus: UniffiRustCallStatus,) {
+            val uniffiObj = FfiConverterTypeMobileProximityHandler.handleMap.get(uniffiHandle)
+            val makeCall = { ->
+                uniffiObj.`verifyProximity`(
+                    FfiConverterByteArray.lift(`challenge`),
+                    FfiConverterULong.lift(`timeoutMs`),
+                )
+            }
+            val writeReturn = { value: kotlin.String -> uniffiOutReturn.setValue(FfiConverterString.lower(value)) }
+            uniffiTraitInterfaceCall(uniffiCallStatus, makeCall, writeReturn)
+        }
+    }
+
+    internal object uniffiFree: UniffiCallbackInterfaceFree {
+        override fun callback(handle: Long) {
+            FfiConverterTypeMobileProximityHandler.handleMap.remove(handle)
+        }
+    }
+
+    internal var vtable = UniffiVTableCallbackInterfaceMobileProximityHandler.UniffiByValue(
+        `verifyProximity`,
+        uniffiFree,
+    )
+
+    // Registers the foreign callback with the Rust side.
+    // This method is generated for each callback interface.
+    internal fun register(lib: UniffiLib) {
+        lib.uniffi_vauchi_mobile_fn_init_callback_vtable_mobileproximityhandler(vtable)
+    }
+}
+
+/**
+ * The ffiConverter which transforms the Callbacks in to handles to pass to Rust.
+ *
+ * @suppress
+ */
+public object FfiConverterTypeMobileProximityHandler: FfiConverterCallbackInterface<MobileProximityHandler>()
 
 
 
