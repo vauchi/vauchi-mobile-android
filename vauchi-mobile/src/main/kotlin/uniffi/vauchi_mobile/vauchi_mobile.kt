@@ -1143,12 +1143,6 @@ internal open class UniffiVTableCallbackInterfacePlatformAudioHandler(
 
 
 
-
-
-
-
-
-
 // A JNA Library to expose the extern-C FFI definitions.
 // This is an implementation detail which will be called internally by the public API.
 
@@ -1177,8 +1171,6 @@ internal interface UniffiLib : Library {
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_complete_card_exchange(`ptr`: Pointer,`theirCardName`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
-    fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_confirm_proximity(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
-    ): Unit
     fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_generate_qr(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_is_timed_out(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
@@ -1189,7 +1181,7 @@ internal interface UniffiLib : Library {
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_state(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
-    fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_verify_proximity(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_they_scanned_our_qr(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
     fun uniffi_vauchi_mobile_fn_clone_mobileproximityverifier(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Pointer
@@ -1247,18 +1239,14 @@ internal interface UniffiLib : Library {
     ): Int
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_count_failed_deliveries(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Int
-    fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_initiator(`ptr`: Pointer,`proximity`: Long,uniffi_out_err: UniffiRustCallStatus, 
-    ): Pointer
-    fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_initiator_manual(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
-    ): Pointer
-    fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_responder(`ptr`: Pointer,`proximity`: Long,uniffi_out_err: UniffiRustCallStatus, 
-    ): Pointer
-    fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_responder_manual(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
-    ): Pointer
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_identity(`ptr`: Pointer,`displayName`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_label(`ptr`: Pointer,`name`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_qr_exchange(`ptr`: Pointer,`proximity`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    ): Pointer
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_qr_exchange_manual(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Pointer
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_recovery_claim(`ptr`: Pointer,`oldPkHex`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_recovery_voucher(`ptr`: Pointer,`claimB64`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1677,8 +1665,6 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_complete_card_exchange(
     ): Short
-    fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_confirm_proximity(
-    ): Short
     fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_generate_qr(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_is_timed_out(
@@ -1689,7 +1675,7 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_state(
     ): Short
-    fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_verify_proximity(
+    fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_they_scanned_our_qr(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_mobileproximityverifier_emit_challenge(
     ): Short
@@ -1731,17 +1717,13 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_count_failed_deliveries(
     ): Short
-    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_initiator(
-    ): Short
-    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_initiator_manual(
-    ): Short
-    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_responder(
-    ): Short
-    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_responder_manual(
-    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_create_identity(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_create_label(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_create_qr_exchange(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_create_qr_exchange_manual(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_create_recovery_claim(
     ): Short
@@ -2063,10 +2045,7 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_complete_card_exchange() != 64003.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
-    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_confirm_proximity() != 5518.toShort()) {
-        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
-    }
-    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_generate_qr() != 6354.toShort()) {
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_generate_qr() != 21097.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_is_timed_out() != 25990.toShort()) {
@@ -2075,13 +2054,13 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_perform_key_agreement() != 4833.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
-    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_process_qr() != 18614.toShort()) {
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_process_qr() != 54960.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_state() != 19066.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
-    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_verify_proximity() != 43836.toShort()) {
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_they_scanned_our_qr() != 55148.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_mobileproximityverifier_emit_challenge() != 35393.toShort()) {
@@ -2144,22 +2123,16 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_count_failed_deliveries() != 59375.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
-    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_initiator() != 40728.toShort()) {
-        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
-    }
-    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_initiator_manual() != 56747.toShort()) {
-        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
-    }
-    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_responder() != 45401.toShort()) {
-        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
-    }
-    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_create_exchange_responder_manual() != 7174.toShort()) {
-        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
-    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_create_identity() != 63328.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_create_label() != 53912.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_create_qr_exchange() != 42535.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_create_qr_exchange_manual() != 25533.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_create_recovery_claim() != 34741.toShort()) {
@@ -2897,15 +2870,7 @@ public interface MobileExchangeSessionInterface {
     fun `completeCardExchange`(`theirCardName`: kotlin.String)
     
     /**
-     * Confirm manual proximity (for sessions without audio hardware).
-     *
-     * Sets the confirmation flag so that the next `verify_proximity()` call succeeds.
-     * Only valid for manual confirmation sessions.
-     */
-    fun `confirmProximity`()
-    
-    /**
-     * Generate a QR code (initiator only). Transitions Idle -> AwaitingScan.
+     * Generate and display a QR code. Transitions Idle -> DisplayingQr.
      */
     fun `generateQr`(): kotlin.String
     
@@ -2920,7 +2885,7 @@ public interface MobileExchangeSessionInterface {
     fun `performKeyAgreement`()
     
     /**
-     * Process a scanned QR code (responder only). Transitions Idle -> AwaitingProximity.
+     * Process a scanned QR code. Transitions DisplayingQr -> PeerScanned.
      */
     fun `processQr`(`qrData`: kotlin.String)
     
@@ -2930,12 +2895,9 @@ public interface MobileExchangeSessionInterface {
     fun `state`(): MobileExchangeState
     
     /**
-     * Verify proximity. Transitions AwaitingProximity -> AwaitingKeyAgreement.
-     *
-     * For audio-based sessions, this calls the MobileProximityHandler callback.
-     * For manual sessions, call `confirm_proximity()` first, then this method.
+     * Signal that the other party scanned our QR. Transitions PeerScanned -> AwaitingKeyAgreement.
      */
-    fun `verifyProximity`()
+    fun `theyScannedOurQr`()
     
     companion object
 }
@@ -3046,25 +3008,7 @@ open class MobileExchangeSession: Disposable, AutoCloseable, MobileExchangeSessi
 
     
     /**
-     * Confirm manual proximity (for sessions without audio hardware).
-     *
-     * Sets the confirmation flag so that the next `verify_proximity()` call succeeds.
-     * Only valid for manual confirmation sessions.
-     */
-    @Throws(MobileException::class)override fun `confirmProximity`()
-        = 
-    callWithPointer {
-    uniffiRustCallWithError(MobileException) { _status ->
-    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobileexchangesession_confirm_proximity(
-        it, _status)
-}
-    }
-    
-    
-
-    
-    /**
-     * Generate a QR code (initiator only). Transitions Idle -> AwaitingScan.
+     * Generate and display a QR code. Transitions Idle -> DisplayingQr.
      */
     @Throws(MobileException::class)override fun `generateQr`(): kotlin.String {
             return FfiConverterString.lift(
@@ -3110,7 +3054,7 @@ open class MobileExchangeSession: Disposable, AutoCloseable, MobileExchangeSessi
 
     
     /**
-     * Process a scanned QR code (responder only). Transitions Idle -> AwaitingProximity.
+     * Process a scanned QR code. Transitions DisplayingQr -> PeerScanned.
      */
     @Throws(MobileException::class)override fun `processQr`(`qrData`: kotlin.String)
         = 
@@ -3140,16 +3084,13 @@ open class MobileExchangeSession: Disposable, AutoCloseable, MobileExchangeSessi
 
     
     /**
-     * Verify proximity. Transitions AwaitingProximity -> AwaitingKeyAgreement.
-     *
-     * For audio-based sessions, this calls the MobileProximityHandler callback.
-     * For manual sessions, call `confirm_proximity()` first, then this method.
+     * Signal that the other party scanned our QR. Transitions PeerScanned -> AwaitingKeyAgreement.
      */
-    @Throws(MobileException::class)override fun `verifyProximity`()
+    @Throws(MobileException::class)override fun `theyScannedOurQr`()
         = 
     callWithPointer {
     uniffiRustCallWithError(MobileException) { _status ->
-    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobileexchangesession_verify_proximity(
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobileexchangesession_they_scanned_our_qr(
         it, _status)
 }
     }
@@ -3755,29 +3696,6 @@ public interface VauchiMobileInterface {
     fun `countFailedDeliveries`(): kotlin.UInt
     
     /**
-     * Create an exchange session as initiator (displaying QR) with proximity verification.
-     *
-     * The `proximity` handler is called during proximity verification with the
-     * audio challenge from the QR code.
-     */
-    fun `createExchangeInitiator`(`proximity`: MobileProximityHandler): MobileExchangeSession
-    
-    /**
-     * Create an exchange session as initiator with manual confirmation (no audio hardware).
-     */
-    fun `createExchangeInitiatorManual`(): MobileExchangeSession
-    
-    /**
-     * Create an exchange session as responder (scanning QR) with proximity verification.
-     */
-    fun `createExchangeResponder`(`proximity`: MobileProximityHandler): MobileExchangeSession
-    
-    /**
-     * Create an exchange session as responder with manual confirmation (no audio hardware).
-     */
-    fun `createExchangeResponderManual`(): MobileExchangeSession
-    
-    /**
      * Create a new identity.
      */
     fun `createIdentity`(`displayName`: kotlin.String)
@@ -3786,6 +3704,19 @@ public interface VauchiMobileInterface {
      * Create a new visibility label.
      */
     fun `createLabel`(`name`: kotlin.String): MobileVisibilityLabel
+    
+    /**
+     * Create a QR exchange session with proximity verification.
+     *
+     * Both parties display and scan QR codes. Uses fresh ephemeral keys
+     * for full forward secrecy.
+     */
+    fun `createQrExchange`(`proximity`: MobileProximityHandler): MobileExchangeSession
+    
+    /**
+     * Create a QR exchange session with manual confirmation (no audio hardware).
+     */
+    fun `createQrExchangeManual`(): MobileExchangeSession
     
     /**
      * Create a recovery claim for a lost identity.
@@ -4743,73 +4674,6 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
-     * Create an exchange session as initiator (displaying QR) with proximity verification.
-     *
-     * The `proximity` handler is called during proximity verification with the
-     * audio challenge from the QR code.
-     */
-    @Throws(MobileException::class)override fun `createExchangeInitiator`(`proximity`: MobileProximityHandler): MobileExchangeSession {
-            return FfiConverterTypeMobileExchangeSession.lift(
-    callWithPointer {
-    uniffiRustCallWithError(MobileException) { _status ->
-    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_initiator(
-        it, FfiConverterTypeMobileProximityHandler.lower(`proximity`),_status)
-}
-    }
-    )
-    }
-    
-
-    
-    /**
-     * Create an exchange session as initiator with manual confirmation (no audio hardware).
-     */
-    @Throws(MobileException::class)override fun `createExchangeInitiatorManual`(): MobileExchangeSession {
-            return FfiConverterTypeMobileExchangeSession.lift(
-    callWithPointer {
-    uniffiRustCallWithError(MobileException) { _status ->
-    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_initiator_manual(
-        it, _status)
-}
-    }
-    )
-    }
-    
-
-    
-    /**
-     * Create an exchange session as responder (scanning QR) with proximity verification.
-     */
-    @Throws(MobileException::class)override fun `createExchangeResponder`(`proximity`: MobileProximityHandler): MobileExchangeSession {
-            return FfiConverterTypeMobileExchangeSession.lift(
-    callWithPointer {
-    uniffiRustCallWithError(MobileException) { _status ->
-    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_responder(
-        it, FfiConverterTypeMobileProximityHandler.lower(`proximity`),_status)
-}
-    }
-    )
-    }
-    
-
-    
-    /**
-     * Create an exchange session as responder with manual confirmation (no audio hardware).
-     */
-    @Throws(MobileException::class)override fun `createExchangeResponderManual`(): MobileExchangeSession {
-            return FfiConverterTypeMobileExchangeSession.lift(
-    callWithPointer {
-    uniffiRustCallWithError(MobileException) { _status ->
-    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_create_exchange_responder_manual(
-        it, _status)
-}
-    }
-    )
-    }
-    
-
-    
-    /**
      * Create a new identity.
      */
     @Throws(MobileException::class)override fun `createIdentity`(`displayName`: kotlin.String)
@@ -4833,6 +4697,41 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     uniffiRustCallWithError(MobileException) { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_create_label(
         it, FfiConverterString.lower(`name`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Create a QR exchange session with proximity verification.
+     *
+     * Both parties display and scan QR codes. Uses fresh ephemeral keys
+     * for full forward secrecy.
+     */
+    @Throws(MobileException::class)override fun `createQrExchange`(`proximity`: MobileProximityHandler): MobileExchangeSession {
+            return FfiConverterTypeMobileExchangeSession.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_create_qr_exchange(
+        it, FfiConverterTypeMobileProximityHandler.lower(`proximity`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Create a QR exchange session with manual confirmation (no audio hardware).
+     */
+    @Throws(MobileException::class)override fun `createQrExchangeManual`(): MobileExchangeSession {
+            return FfiConverterTypeMobileExchangeSession.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_create_qr_exchange_manual(
+        it, _status)
 }
     }
     )
@@ -9753,15 +9652,13 @@ sealed class MobileExchangeState {
     object Idle : MobileExchangeState()
     
     
-    data class AwaitingScan(
+    data class DisplayingQr(
         val `qrData`: kotlin.String) : MobileExchangeState() {
         companion object
     }
     
-    data class AwaitingProximity(
-        val `theirPublicId`: kotlin.String) : MobileExchangeState() {
-        companion object
-    }
+    object PeerScanned : MobileExchangeState()
+    
     
     object AwaitingKeyAgreement : MobileExchangeState()
     
@@ -9792,12 +9689,10 @@ public object FfiConverterTypeMobileExchangeState : FfiConverterRustBuffer<Mobil
     override fun read(buf: ByteBuffer): MobileExchangeState {
         return when(buf.getInt()) {
             1 -> MobileExchangeState.Idle
-            2 -> MobileExchangeState.AwaitingScan(
+            2 -> MobileExchangeState.DisplayingQr(
                 FfiConverterString.read(buf),
                 )
-            3 -> MobileExchangeState.AwaitingProximity(
-                FfiConverterString.read(buf),
-                )
+            3 -> MobileExchangeState.PeerScanned
             4 -> MobileExchangeState.AwaitingKeyAgreement
             5 -> MobileExchangeState.AwaitingCardExchange
             6 -> MobileExchangeState.Complete(
@@ -9818,18 +9713,17 @@ public object FfiConverterTypeMobileExchangeState : FfiConverterRustBuffer<Mobil
                 4UL
             )
         }
-        is MobileExchangeState.AwaitingScan -> {
+        is MobileExchangeState.DisplayingQr -> {
             // Add the size for the Int that specifies the variant plus the size needed for all fields
             (
                 4UL
                 + FfiConverterString.allocationSize(value.`qrData`)
             )
         }
-        is MobileExchangeState.AwaitingProximity -> {
+        is MobileExchangeState.PeerScanned -> {
             // Add the size for the Int that specifies the variant plus the size needed for all fields
             (
                 4UL
-                + FfiConverterString.allocationSize(value.`theirPublicId`)
             )
         }
         is MobileExchangeState.AwaitingKeyAgreement -> {
@@ -9867,14 +9761,13 @@ public object FfiConverterTypeMobileExchangeState : FfiConverterRustBuffer<Mobil
                 buf.putInt(1)
                 Unit
             }
-            is MobileExchangeState.AwaitingScan -> {
+            is MobileExchangeState.DisplayingQr -> {
                 buf.putInt(2)
                 FfiConverterString.write(value.`qrData`, buf)
                 Unit
             }
-            is MobileExchangeState.AwaitingProximity -> {
+            is MobileExchangeState.PeerScanned -> {
                 buf.putInt(3)
-                FfiConverterString.write(value.`theirPublicId`, buf)
                 Unit
             }
             is MobileExchangeState.AwaitingKeyAgreement -> {
