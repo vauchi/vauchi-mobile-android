@@ -31,6 +31,13 @@ import java.nio.charset.CodingErrorAction
 import java.util.concurrent.atomic.AtomicLong
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.coroutines.resume
+import kotlinx.coroutines.CancellableContinuation
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 
 // This is a helper for safely working with byte buffers returned from the Rust code.
 // A rust-owned buffer is represented by its capacity, its current length, and a
@@ -1143,6 +1150,78 @@ internal open class UniffiVTableCallbackInterfacePlatformAudioHandler(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // A JNA Library to expose the extern-C FFI definitions.
 // This is an implementation detail which will be called internally by the public API.
 
@@ -1165,11 +1244,39 @@ internal interface UniffiLib : Library {
         }
     }
 
+    fun uniffi_vauchi_mobile_fn_clone_mobiledevicelinkinitiator(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Pointer
+    fun uniffi_vauchi_mobile_fn_free_mobiledevicelinkinitiator(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
+    fun uniffi_vauchi_mobile_fn_method_mobiledevicelinkinitiator_confirm_link(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_mobiledevicelinkinitiator_prepare_confirmation(`ptr`: Pointer,`encryptedRequest`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_mobiledevicelinkinitiator_proximity_challenge(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_mobiledevicelinkinitiator_qr_data(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_mobiledevicelinkinitiator_set_proximity_verified(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
+    fun uniffi_vauchi_mobile_fn_clone_mobiledevicelinkresponder(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Pointer
+    fun uniffi_vauchi_mobile_fn_free_mobiledevicelinkresponder(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
+    fun uniffi_vauchi_mobile_fn_method_mobiledevicelinkresponder_compute_confirmation_code(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_mobiledevicelinkresponder_create_request(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_mobiledevicelinkresponder_finish_join(`ptr`: Pointer,`encryptedResponse`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_mobiledevicelinkresponder_identity_fingerprint(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_clone_mobileexchangesession(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Pointer
     fun uniffi_vauchi_mobile_fn_free_mobileexchangesession(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_complete_card_exchange(`ptr`: Pointer,`theirCardName`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
+    fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_confirm_proximity(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_mobileexchangesession_generate_qr(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
@@ -1211,6 +1318,8 @@ internal interface UniffiLib : Library {
     ): Pointer
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_add_contact_to_label(`ptr`: Pointer,`labelId`: RustBuffer.ByValue,`contactId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_add_decoy_contact(`ptr`: Pointer,`name`: RustBuffer.ByValue,`cardJson`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_add_field(`ptr`: Pointer,`fieldType`: RustBuffer.ByValue,`label`: RustBuffer.ByValue,`value`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_add_recovery_voucher(`ptr`: Pointer,`voucherB64`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1220,6 +1329,8 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_aha_moments_total_count(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Int
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_apply_content_updates(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_authenticate(`ptr`: Pointer,`password`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_auto_remove_demo_contact(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
@@ -1235,6 +1346,10 @@ internal interface UniffiLib : Library {
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_clear_pending_updates_for_contact(`ptr`: Pointer,`contactId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Int
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_configure_duress_alerts(`ptr`: Pointer,`contactIds`: RustBuffer.ByValue,`message`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_configure_emergency_broadcast(`ptr`: Pointer,`contactIds`: RustBuffer.ByValue,`message`: RustBuffer.ByValue,`includeLocation`: Byte,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_contact_count(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Int
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_count_failed_deliveries(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
@@ -1251,12 +1366,18 @@ internal interface UniffiLib : Library {
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_create_recovery_voucher(`ptr`: Pointer,`claimB64`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_delete_decoy_contact(`ptr`: Pointer,`id`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_delete_label(`ptr`: Pointer,`labelId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_delete_retry(`ptr`: Pointer,`messageId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_device_count(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Int
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_disable_duress(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_disable_emergency_broadcast(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_dismiss_demo_contact(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_execute_account_deletion(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
@@ -1299,6 +1420,10 @@ internal interface UniffiLib : Library {
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_due_retries(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_duress_settings(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_emergency_config(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_field_validation_count(`ptr`: Pointer,`contactId`: RustBuffer.ByValue,`fieldId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Int
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_field_validation_status(`ptr`: Pointer,`contactId`: RustBuffer.ByValue,`fieldId`: RustBuffer.ByValue,`fieldValue`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1310,6 +1435,8 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_offline_queue_capacity(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Int
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_own_card(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_own_fingerprint(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_get_pending_deliveries(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
@@ -1343,6 +1470,8 @@ internal interface UniffiLib : Library {
     ): Byte
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_has_validated_field(`ptr`: Pointer,`contactId`: RustBuffer.ByValue,`fieldId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_hide_contact(`ptr`: Pointer,`contactId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_hide_field_from_contact(`ptr`: Pointer,`contactId`: RustBuffer.ByValue,`fieldLabel`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_import_backup(`ptr`: Pointer,`backupData`: RustBuffer.ByValue,`password`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1355,15 +1484,23 @@ internal interface UniffiLib : Library {
     ): Byte
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_is_demo_update_available(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_is_duress_enabled(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Byte
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_is_field_visible_to_contact(`ptr`: Pointer,`contactId`: RustBuffer.ByValue,`fieldLabel`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_is_offline_queue_full(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Byte
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_is_password_enabled(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_is_primary_device(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_list_contacts(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_list_contacts_paginated(`ptr`: Pointer,`offset`: Int,`limit`: Int,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_list_decoy_contacts(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_list_hidden_contacts(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_list_labels(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
@@ -1407,6 +1544,8 @@ internal interface UniffiLib : Library {
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_search_social_networks(`ptr`: Pointer,`query`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_send_emergency_broadcast(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_set_contact_field_override(`ptr`: Pointer,`contactId`: RustBuffer.ByValue,`fieldLabel`: RustBuffer.ByValue,`isVisible`: Byte,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_set_display_name(`ptr`: Pointer,`name`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1417,14 +1556,24 @@ internal interface UniffiLib : Library {
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_set_platform_keychain(`ptr`: Pointer,`keychain`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_setup_app_password(`ptr`: Pointer,`password`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_setup_duress_password(`ptr`: Pointer,`duressPassword`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_show_field_to_contact(`ptr`: Pointer,`contactId`: RustBuffer.ByValue,`fieldLabel`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_shred_status(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_soft_shred(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_start_device_join(`ptr`: Pointer,`qrData`: RustBuffer.ByValue,`deviceName`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Pointer
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_start_device_link(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
+    ): Pointer
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_sync(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_sync_async(`ptr`: Pointer,
+    ): Long
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_trigger_demo_update(`ptr`: Pointer,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_trust_contact_for_recovery(`ptr`: Pointer,`id`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1435,6 +1584,8 @@ internal interface UniffiLib : Library {
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_try_trigger_aha_moment_with_context(`ptr`: Pointer,`momentType`: RustBuffer.ByValue,`context`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_method_vauchimobile_unhide_contact(`ptr`: Pointer,`contactId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Unit
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_unlink_device(`ptr`: Pointer,`deviceIndex`: Int,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
     fun uniffi_vauchi_mobile_fn_method_vauchimobile_untrust_contact_for_recovery(`ptr`: Pointer,`id`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -1455,6 +1606,8 @@ internal interface UniffiLib : Library {
     ): Unit
     fun uniffi_vauchi_mobile_fn_init_callback_vtable_platformaudiohandler(`vtable`: UniffiVTableCallbackInterfacePlatformAudioHandler,
     ): Unit
+    fun uniffi_vauchi_mobile_fn_func_ble_exchange_status(uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_func_check_password_strength(`password`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_func_generate_storage_key(uniffi_out_err: UniffiRustCallStatus, 
@@ -1502,6 +1655,8 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_fn_func_search_faqs(`query`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun uniffi_vauchi_mobile_fn_func_search_faqs_localized(`query`: RustBuffer.ByValue,`locale`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_vauchi_mobile_fn_func_widget_panic_shred(`dataDir`: RustBuffer.ByValue,`keychain`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun ffi_vauchi_mobile_rustbuffer_alloc(`size`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
@@ -1615,6 +1770,8 @@ internal interface UniffiLib : Library {
     ): Unit
     fun ffi_vauchi_mobile_rust_future_complete_void(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
+    fun uniffi_vauchi_mobile_checksum_func_ble_exchange_status(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_func_check_password_strength(
     ): Short
     fun uniffi_vauchi_mobile_checksum_func_generate_storage_key(
@@ -1663,7 +1820,29 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_func_search_faqs_localized(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_func_widget_panic_shred(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobiledevicelinkinitiator_confirm_link(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobiledevicelinkinitiator_prepare_confirmation(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobiledevicelinkinitiator_proximity_challenge(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobiledevicelinkinitiator_qr_data(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobiledevicelinkinitiator_set_proximity_verified(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobiledevicelinkresponder_compute_confirmation_code(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobiledevicelinkresponder_create_request(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobiledevicelinkresponder_finish_join(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobiledevicelinkresponder_identity_fingerprint(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_complete_card_exchange(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_confirm_proximity(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_mobileexchangesession_generate_qr(
     ): Short
@@ -1689,6 +1868,8 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_add_contact_to_label(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_add_decoy_contact(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_add_field(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_add_recovery_voucher(
@@ -1698,6 +1879,8 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_aha_moments_total_count(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_apply_content_updates(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_authenticate(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_auto_remove_demo_contact(
     ): Short
@@ -1712,6 +1895,10 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_check_content_updates(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_clear_pending_updates_for_contact(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_configure_duress_alerts(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_configure_emergency_broadcast(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_contact_count(
     ): Short
@@ -1729,11 +1916,17 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_create_recovery_voucher(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_delete_decoy_contact(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_delete_label(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_delete_retry(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_device_count(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_disable_duress(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_disable_emergency_broadcast(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_dismiss_demo_contact(
     ): Short
@@ -1777,6 +1970,10 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_due_retries(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_duress_settings(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_emergency_config(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_field_validation_count(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_field_validation_status(
@@ -1788,6 +1985,8 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_offline_queue_capacity(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_own_card(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_own_fingerprint(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_get_pending_deliveries(
     ): Short
@@ -1821,6 +2020,8 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_has_validated_field(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_hide_contact(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_hide_field_from_contact(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_import_backup(
@@ -1833,15 +2034,23 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_is_demo_update_available(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_is_duress_enabled(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_is_field_visible_to_contact(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_is_offline_queue_full(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_is_password_enabled(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_is_primary_device(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_list_contacts(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_list_contacts_paginated(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_list_decoy_contacts(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_list_hidden_contacts(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_list_labels(
     ): Short
@@ -1885,6 +2094,8 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_search_social_networks(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_send_emergency_broadcast(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_set_contact_field_override(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_set_display_name(
@@ -1895,13 +2106,23 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_set_platform_keychain(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_setup_app_password(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_setup_duress_password(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_show_field_to_contact(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_shred_status(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_soft_shred(
     ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_start_device_join(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_start_device_link(
+    ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_sync(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_sync_async(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_trigger_demo_update(
     ): Short
@@ -1912,6 +2133,8 @@ internal interface UniffiLib : Library {
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_try_trigger_aha_moment(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_try_trigger_aha_moment_with_context(
+    ): Short
+    fun uniffi_vauchi_mobile_checksum_method_vauchimobile_unhide_contact(
     ): Short
     fun uniffi_vauchi_mobile_checksum_method_vauchimobile_unlink_device(
     ): Short
@@ -1970,6 +2193,9 @@ private fun uniffiCheckContractApiVersion(lib: UniffiLib) {
 
 @Suppress("UNUSED_PARAMETER")
 private fun uniffiCheckApiChecksums(lib: UniffiLib) {
+    if (lib.uniffi_vauchi_mobile_checksum_func_ble_exchange_status() != 2830.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_func_check_password_strength() != 58506.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -2042,7 +2268,40 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_func_search_faqs_localized() != 57224.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_func_widget_panic_shred() != 35082.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobiledevicelinkinitiator_confirm_link() != 24604.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobiledevicelinkinitiator_prepare_confirmation() != 45542.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobiledevicelinkinitiator_proximity_challenge() != 64927.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobiledevicelinkinitiator_qr_data() != 669.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobiledevicelinkinitiator_set_proximity_verified() != 56517.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobiledevicelinkresponder_compute_confirmation_code() != 4477.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobiledevicelinkresponder_create_request() != 43772.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobiledevicelinkresponder_finish_join() != 23650.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobiledevicelinkresponder_identity_fingerprint() != 55591.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_complete_card_exchange() != 64003.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_confirm_proximity() != 36862.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_mobileexchangesession_generate_qr() != 21097.toShort()) {
@@ -2081,6 +2340,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_add_contact_to_label() != 6394.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_add_decoy_contact() != 30330.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_add_field() != 50791.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -2094,6 +2356,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_apply_content_updates() != 9726.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_authenticate() != 26386.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_auto_remove_demo_contact() != 63912.toShort()) {
@@ -2115,6 +2380,12 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_clear_pending_updates_for_contact() != 25049.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_configure_duress_alerts() != 16570.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_configure_emergency_broadcast() != 40924.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_contact_count() != 30960.toShort()) {
@@ -2141,6 +2412,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_create_recovery_voucher() != 64336.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_delete_decoy_contact() != 36941.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_delete_label() != 49151.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -2148,6 +2422,12 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_device_count() != 11012.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_disable_duress() != 50779.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_disable_emergency_broadcast() != 24366.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_dismiss_demo_contact() != 52421.toShort()) {
@@ -2213,6 +2493,12 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_get_due_retries() != 45644.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_get_duress_settings() != 46277.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_get_emergency_config() != 46434.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_get_field_validation_count() != 23050.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -2229,6 +2515,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_get_own_card() != 41646.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_get_own_fingerprint() != 60612.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_get_pending_deliveries() != 20816.toShort()) {
@@ -2279,6 +2568,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_has_validated_field() != 50022.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_hide_contact() != 15708.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_hide_field_from_contact() != 26050.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -2297,10 +2589,16 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_is_demo_update_available() != 17863.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_is_duress_enabled() != 45103.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_is_field_visible_to_contact() != 31866.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_is_offline_queue_full() != 65171.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_is_password_enabled() != 34976.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_is_primary_device() != 55103.toShort()) {
@@ -2310,6 +2608,12 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_list_contacts_paginated() != 30748.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_list_decoy_contacts() != 27082.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_list_hidden_contacts() != 42503.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_list_labels() != 31739.toShort()) {
@@ -2375,6 +2679,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_search_social_networks() != 27909.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_send_emergency_broadcast() != 34786.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_set_contact_field_override() != 24591.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -2390,6 +2697,12 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_set_platform_keychain() != 45535.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_setup_app_password() != 46352.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_setup_duress_password() != 48796.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_show_field_to_contact() != 3699.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -2399,7 +2712,16 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_soft_shred() != 22022.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_start_device_join() != 7246.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_start_device_link() != 44513.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_sync() != 44616.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_sync_async() != 40029.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_trigger_demo_update() != 56863.toShort()) {
@@ -2415,6 +2737,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_try_trigger_aha_moment_with_context() != 36865.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_unhide_contact() != 3991.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_vauchi_mobile_checksum_method_vauchimobile_unlink_device() != 30553.toShort()) {
@@ -2480,6 +2805,46 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
 }
 
 // Async support
+// Async return type handlers
+
+internal const val UNIFFI_RUST_FUTURE_POLL_READY = 0.toByte()
+internal const val UNIFFI_RUST_FUTURE_POLL_MAYBE_READY = 1.toByte()
+
+internal val uniffiContinuationHandleMap = UniffiHandleMap<CancellableContinuation<Byte>>()
+
+// FFI type for Rust future continuations
+internal object uniffiRustFutureContinuationCallbackImpl: UniffiRustFutureContinuationCallback {
+    override fun callback(data: Long, pollResult: Byte) {
+        uniffiContinuationHandleMap.remove(data).resume(pollResult)
+    }
+}
+
+internal suspend fun<T, F, E: kotlin.Exception> uniffiRustCallAsync(
+    rustFuture: Long,
+    pollFunc: (Long, UniffiRustFutureContinuationCallback, Long) -> Unit,
+    completeFunc: (Long, UniffiRustCallStatus) -> F,
+    freeFunc: (Long) -> Unit,
+    liftFunc: (F) -> T,
+    errorHandler: UniffiRustCallStatusErrorHandler<E>
+): T {
+    try {
+        do {
+            val pollResult = suspendCancellableCoroutine<Byte> { continuation ->
+                pollFunc(
+                    rustFuture,
+                    uniffiRustFutureContinuationCallbackImpl,
+                    uniffiContinuationHandleMap.insert(continuation)
+                )
+            }
+        } while (pollResult != UNIFFI_RUST_FUTURE_POLL_READY);
+
+        return liftFunc(
+            uniffiRustCallWithError(errorHandler, { status -> completeFunc(rustFuture, status) })
+        )
+    } finally {
+        freeFunc(rustFuture)
+    }
+}
 
 // Public interface members begin here.
 
@@ -2855,6 +3220,660 @@ private class JavaLangRefCleanable(
     override fun clean() = cleanable.clean()
 }
 /**
+ * UniFFI-exposed wrapper around DeviceLinkInitiator.
+ *
+ * Uses Mutex for interior mutability (required by UniFFI's Arc<T>).
+ * Holds both the initiator and a pending request between prepare_confirmation
+ * and confirm_link calls.
+ */
+public interface MobileDeviceLinkInitiatorInterface {
+    
+    /**
+     * After user confirms, creates the encrypted response.
+     *
+     * Must call prepare_confirmation() and set_proximity_verified() first.
+     */
+    fun `confirmLink`(): MobileDeviceLinkResult
+    
+    /**
+     * Decrypts an incoming link request and returns confirmation details.
+     *
+     * The caller displays the confirmation code and device name to the user.
+     */
+    fun `prepareConfirmation`(`encryptedRequest`: kotlin.ByteArray): MobileDeviceLinkConfirmation
+    
+    /**
+     * Returns the 16-byte proximity challenge.
+     */
+    fun `proximityChallenge`(): kotlin.ByteArray
+    
+    /**
+     * Returns the QR data string for display.
+     */
+    fun `qrData`(): kotlin.String
+    
+    /**
+     * Marks proximity as verified.
+     */
+    fun `setProximityVerified`()
+    
+    companion object
+}
+
+/**
+ * UniFFI-exposed wrapper around DeviceLinkInitiator.
+ *
+ * Uses Mutex for interior mutability (required by UniFFI's Arc<T>).
+ * Holds both the initiator and a pending request between prepare_confirmation
+ * and confirm_link calls.
+ */
+open class MobileDeviceLinkInitiator: Disposable, AutoCloseable, MobileDeviceLinkInitiatorInterface {
+
+    constructor(pointer: Pointer) {
+        this.pointer = pointer
+        this.cleanable = UniffiLib.CLEANER.register(this, UniffiCleanAction(pointer))
+    }
+
+    /**
+     * This constructor can be used to instantiate a fake object. Only used for tests. Any
+     * attempt to actually use an object constructed this way will fail as there is no
+     * connected Rust object.
+     */
+    @Suppress("UNUSED_PARAMETER")
+    constructor(noPointer: NoPointer) {
+        this.pointer = null
+        this.cleanable = UniffiLib.CLEANER.register(this, UniffiCleanAction(pointer))
+    }
+
+    protected val pointer: Pointer?
+    protected val cleanable: UniffiCleaner.Cleanable
+
+    private val wasDestroyed = AtomicBoolean(false)
+    private val callCounter = AtomicLong(1)
+
+    override fun destroy() {
+        // Only allow a single call to this method.
+        // TODO: maybe we should log a warning if called more than once?
+        if (this.wasDestroyed.compareAndSet(false, true)) {
+            // This decrement always matches the initial count of 1 given at creation time.
+            if (this.callCounter.decrementAndGet() == 0L) {
+                cleanable.clean()
+            }
+        }
+    }
+
+    @Synchronized
+    override fun close() {
+        this.destroy()
+    }
+
+    internal inline fun <R> callWithPointer(block: (ptr: Pointer) -> R): R {
+        // Check and increment the call counter, to keep the object alive.
+        // This needs a compare-and-set retry loop in case of concurrent updates.
+        do {
+            val c = this.callCounter.get()
+            if (c == 0L) {
+                throw IllegalStateException("${this.javaClass.simpleName} object has already been destroyed")
+            }
+            if (c == Long.MAX_VALUE) {
+                throw IllegalStateException("${this.javaClass.simpleName} call counter would overflow")
+            }
+        } while (! this.callCounter.compareAndSet(c, c + 1L))
+        // Now we can safely do the method call without the pointer being freed concurrently.
+        try {
+            return block(this.uniffiClonePointer())
+        } finally {
+            // This decrement always matches the increment we performed above.
+            if (this.callCounter.decrementAndGet() == 0L) {
+                cleanable.clean()
+            }
+        }
+    }
+
+    // Use a static inner class instead of a closure so as not to accidentally
+    // capture `this` as part of the cleanable's action.
+    private class UniffiCleanAction(private val pointer: Pointer?) : Runnable {
+        override fun run() {
+            pointer?.let { ptr ->
+                uniffiRustCall { status ->
+                    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_free_mobiledevicelinkinitiator(ptr, status)
+                }
+            }
+        }
+    }
+
+    fun uniffiClonePointer(): Pointer {
+        return uniffiRustCall() { status ->
+            UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_clone_mobiledevicelinkinitiator(pointer!!, status)
+        }
+    }
+
+    
+    /**
+     * After user confirms, creates the encrypted response.
+     *
+     * Must call prepare_confirmation() and set_proximity_verified() first.
+     */
+    @Throws(MobileException::class)override fun `confirmLink`(): MobileDeviceLinkResult {
+            return FfiConverterTypeMobileDeviceLinkResult.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobiledevicelinkinitiator_confirm_link(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Decrypts an incoming link request and returns confirmation details.
+     *
+     * The caller displays the confirmation code and device name to the user.
+     */
+    @Throws(MobileException::class)override fun `prepareConfirmation`(`encryptedRequest`: kotlin.ByteArray): MobileDeviceLinkConfirmation {
+            return FfiConverterTypeMobileDeviceLinkConfirmation.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobiledevicelinkinitiator_prepare_confirmation(
+        it, FfiConverterByteArray.lower(`encryptedRequest`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Returns the 16-byte proximity challenge.
+     */override fun `proximityChallenge`(): kotlin.ByteArray {
+            return FfiConverterByteArray.lift(
+    callWithPointer {
+    uniffiRustCall() { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobiledevicelinkinitiator_proximity_challenge(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Returns the QR data string for display.
+     */override fun `qrData`(): kotlin.String {
+            return FfiConverterString.lift(
+    callWithPointer {
+    uniffiRustCall() { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobiledevicelinkinitiator_qr_data(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Marks proximity as verified.
+     */override fun `setProximityVerified`()
+        = 
+    callWithPointer {
+    uniffiRustCall() { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobiledevicelinkinitiator_set_proximity_verified(
+        it, _status)
+}
+    }
+    
+    
+
+    
+
+    
+    
+    companion object
+    
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileDeviceLinkInitiator: FfiConverter<MobileDeviceLinkInitiator, Pointer> {
+
+    override fun lower(value: MobileDeviceLinkInitiator): Pointer {
+        return value.uniffiClonePointer()
+    }
+
+    override fun lift(value: Pointer): MobileDeviceLinkInitiator {
+        return MobileDeviceLinkInitiator(value)
+    }
+
+    override fun read(buf: ByteBuffer): MobileDeviceLinkInitiator {
+        // The Rust code always writes pointers as 8 bytes, and will
+        // fail to compile if they don't fit.
+        return lift(Pointer(buf.getLong()))
+    }
+
+    override fun allocationSize(value: MobileDeviceLinkInitiator) = 8UL
+
+    override fun write(value: MobileDeviceLinkInitiator, buf: ByteBuffer) {
+        // The Rust code always expects pointers written as 8 bytes,
+        // and will fail to compile if they don't fit.
+        buf.putLong(Pointer.nativeValue(lower(value)))
+    }
+}
+
+
+// This template implements a class for working with a Rust struct via a Pointer/Arc<T>
+// to the live Rust struct on the other side of the FFI.
+//
+// Each instance implements core operations for working with the Rust `Arc<T>` and the
+// Kotlin Pointer to work with the live Rust struct on the other side of the FFI.
+//
+// There's some subtlety here, because we have to be careful not to operate on a Rust
+// struct after it has been dropped, and because we must expose a public API for freeing
+// theq Kotlin wrapper object in lieu of reliable finalizers. The core requirements are:
+//
+//   * Each instance holds an opaque pointer to the underlying Rust struct.
+//     Method calls need to read this pointer from the object's state and pass it in to
+//     the Rust FFI.
+//
+//   * When an instance is no longer needed, its pointer should be passed to a
+//     special destructor function provided by the Rust FFI, which will drop the
+//     underlying Rust struct.
+//
+//   * Given an instance, calling code is expected to call the special
+//     `destroy` method in order to free it after use, either by calling it explicitly
+//     or by using a higher-level helper like the `use` method. Failing to do so risks
+//     leaking the underlying Rust struct.
+//
+//   * We can't assume that calling code will do the right thing, and must be prepared
+//     to handle Kotlin method calls executing concurrently with or even after a call to
+//     `destroy`, and to handle multiple (possibly concurrent!) calls to `destroy`.
+//
+//   * We must never allow Rust code to operate on the underlying Rust struct after
+//     the destructor has been called, and must never call the destructor more than once.
+//     Doing so may trigger memory unsafety.
+//
+//   * To mitigate many of the risks of leaking memory and use-after-free unsafety, a `Cleaner`
+//     is implemented to call the destructor when the Kotlin object becomes unreachable.
+//     This is done in a background thread. This is not a panacea, and client code should be aware that
+//      1. the thread may starve if some there are objects that have poorly performing
+//     `drop` methods or do significant work in their `drop` methods.
+//      2. the thread is shared across the whole library. This can be tuned by using `android_cleaner = true`,
+//         or `android = true` in the [`kotlin` section of the `uniffi.toml` file](https://mozilla.github.io/uniffi-rs/kotlin/configuration.html).
+//
+// If we try to implement this with mutual exclusion on access to the pointer, there is the
+// possibility of a race between a method call and a concurrent call to `destroy`:
+//
+//    * Thread A starts a method call, reads the value of the pointer, but is interrupted
+//      before it can pass the pointer over the FFI to Rust.
+//    * Thread B calls `destroy` and frees the underlying Rust struct.
+//    * Thread A resumes, passing the already-read pointer value to Rust and triggering
+//      a use-after-free.
+//
+// One possible solution would be to use a `ReadWriteLock`, with each method call taking
+// a read lock (and thus allowed to run concurrently) and the special `destroy` method
+// taking a write lock (and thus blocking on live method calls). However, we aim not to
+// generate methods with any hidden blocking semantics, and a `destroy` method that might
+// block if called incorrectly seems to meet that bar.
+//
+// So, we achieve our goals by giving each instance an associated `AtomicLong` counter to track
+// the number of in-flight method calls, and an `AtomicBoolean` flag to indicate whether `destroy`
+// has been called. These are updated according to the following rules:
+//
+//    * The initial value of the counter is 1, indicating a live object with no in-flight calls.
+//      The initial value for the flag is false.
+//
+//    * At the start of each method call, we atomically check the counter.
+//      If it is 0 then the underlying Rust struct has already been destroyed and the call is aborted.
+//      If it is nonzero them we atomically increment it by 1 and proceed with the method call.
+//
+//    * At the end of each method call, we atomically decrement and check the counter.
+//      If it has reached zero then we destroy the underlying Rust struct.
+//
+//    * When `destroy` is called, we atomically flip the flag from false to true.
+//      If the flag was already true we silently fail.
+//      Otherwise we atomically decrement and check the counter.
+//      If it has reached zero then we destroy the underlying Rust struct.
+//
+// Astute readers may observe that this all sounds very similar to the way that Rust's `Arc<T>` works,
+// and indeed it is, with the addition of a flag to guard against multiple calls to `destroy`.
+//
+// The overall effect is that the underlying Rust struct is destroyed only when `destroy` has been
+// called *and* all in-flight method calls have completed, avoiding violating any of the expectations
+// of the underlying Rust code.
+//
+// This makes a cleaner a better alternative to _not_ calling `destroy()` as
+// and when the object is finished with, but the abstraction is not perfect: if the Rust object's `drop`
+// method is slow, and/or there are many objects to cleanup, and it's on a low end Android device, then the cleaner
+// thread may be starved, and the app will leak memory.
+//
+// In this case, `destroy`ing manually may be a better solution.
+//
+// The cleaner can live side by side with the manual calling of `destroy`. In the order of responsiveness, uniffi objects
+// with Rust peers are reclaimed:
+//
+// 1. By calling the `destroy` method of the object, which calls `rustObject.free()`. If that doesn't happen:
+// 2. When the object becomes unreachable, AND the Cleaner thread gets to call `rustObject.free()`. If the thread is starved then:
+// 3. The memory is reclaimed when the process terminates.
+//
+// [1] https://stackoverflow.com/questions/24376768/can-java-finalize-an-object-when-it-is-still-in-scope/24380219
+//
+
+
+/**
+ * UniFFI-exposed wrapper around DeviceLinkResponder.
+ */
+public interface MobileDeviceLinkResponderInterface {
+    
+    /**
+     * Computes the confirmation code (must call create_request first).
+     */
+    fun `computeConfirmationCode`(): kotlin.String
+    
+    /**
+     * Creates an encrypted request to send to the existing device.
+     */
+    fun `createRequest`(): kotlin.ByteArray
+    
+    /**
+     * Processes the encrypted response from the existing device.
+     */
+    fun `finishJoin`(`encryptedResponse`: kotlin.ByteArray): MobileDeviceJoinResult
+    
+    /**
+     * Returns the identity fingerprint from the QR.
+     */
+    fun `identityFingerprint`(): kotlin.String
+    
+    companion object
+}
+
+/**
+ * UniFFI-exposed wrapper around DeviceLinkResponder.
+ */
+open class MobileDeviceLinkResponder: Disposable, AutoCloseable, MobileDeviceLinkResponderInterface {
+
+    constructor(pointer: Pointer) {
+        this.pointer = pointer
+        this.cleanable = UniffiLib.CLEANER.register(this, UniffiCleanAction(pointer))
+    }
+
+    /**
+     * This constructor can be used to instantiate a fake object. Only used for tests. Any
+     * attempt to actually use an object constructed this way will fail as there is no
+     * connected Rust object.
+     */
+    @Suppress("UNUSED_PARAMETER")
+    constructor(noPointer: NoPointer) {
+        this.pointer = null
+        this.cleanable = UniffiLib.CLEANER.register(this, UniffiCleanAction(pointer))
+    }
+
+    protected val pointer: Pointer?
+    protected val cleanable: UniffiCleaner.Cleanable
+
+    private val wasDestroyed = AtomicBoolean(false)
+    private val callCounter = AtomicLong(1)
+
+    override fun destroy() {
+        // Only allow a single call to this method.
+        // TODO: maybe we should log a warning if called more than once?
+        if (this.wasDestroyed.compareAndSet(false, true)) {
+            // This decrement always matches the initial count of 1 given at creation time.
+            if (this.callCounter.decrementAndGet() == 0L) {
+                cleanable.clean()
+            }
+        }
+    }
+
+    @Synchronized
+    override fun close() {
+        this.destroy()
+    }
+
+    internal inline fun <R> callWithPointer(block: (ptr: Pointer) -> R): R {
+        // Check and increment the call counter, to keep the object alive.
+        // This needs a compare-and-set retry loop in case of concurrent updates.
+        do {
+            val c = this.callCounter.get()
+            if (c == 0L) {
+                throw IllegalStateException("${this.javaClass.simpleName} object has already been destroyed")
+            }
+            if (c == Long.MAX_VALUE) {
+                throw IllegalStateException("${this.javaClass.simpleName} call counter would overflow")
+            }
+        } while (! this.callCounter.compareAndSet(c, c + 1L))
+        // Now we can safely do the method call without the pointer being freed concurrently.
+        try {
+            return block(this.uniffiClonePointer())
+        } finally {
+            // This decrement always matches the increment we performed above.
+            if (this.callCounter.decrementAndGet() == 0L) {
+                cleanable.clean()
+            }
+        }
+    }
+
+    // Use a static inner class instead of a closure so as not to accidentally
+    // capture `this` as part of the cleanable's action.
+    private class UniffiCleanAction(private val pointer: Pointer?) : Runnable {
+        override fun run() {
+            pointer?.let { ptr ->
+                uniffiRustCall { status ->
+                    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_free_mobiledevicelinkresponder(ptr, status)
+                }
+            }
+        }
+    }
+
+    fun uniffiClonePointer(): Pointer {
+        return uniffiRustCall() { status ->
+            UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_clone_mobiledevicelinkresponder(pointer!!, status)
+        }
+    }
+
+    
+    /**
+     * Computes the confirmation code (must call create_request first).
+     */
+    @Throws(MobileException::class)override fun `computeConfirmationCode`(): kotlin.String {
+            return FfiConverterString.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobiledevicelinkresponder_compute_confirmation_code(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Creates an encrypted request to send to the existing device.
+     */
+    @Throws(MobileException::class)override fun `createRequest`(): kotlin.ByteArray {
+            return FfiConverterByteArray.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobiledevicelinkresponder_create_request(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Processes the encrypted response from the existing device.
+     */
+    @Throws(MobileException::class)override fun `finishJoin`(`encryptedResponse`: kotlin.ByteArray): MobileDeviceJoinResult {
+            return FfiConverterTypeMobileDeviceJoinResult.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobiledevicelinkresponder_finish_join(
+        it, FfiConverterByteArray.lower(`encryptedResponse`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Returns the identity fingerprint from the QR.
+     */override fun `identityFingerprint`(): kotlin.String {
+            return FfiConverterString.lift(
+    callWithPointer {
+    uniffiRustCall() { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobiledevicelinkresponder_identity_fingerprint(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+
+    
+    
+    companion object
+    
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileDeviceLinkResponder: FfiConverter<MobileDeviceLinkResponder, Pointer> {
+
+    override fun lower(value: MobileDeviceLinkResponder): Pointer {
+        return value.uniffiClonePointer()
+    }
+
+    override fun lift(value: Pointer): MobileDeviceLinkResponder {
+        return MobileDeviceLinkResponder(value)
+    }
+
+    override fun read(buf: ByteBuffer): MobileDeviceLinkResponder {
+        // The Rust code always writes pointers as 8 bytes, and will
+        // fail to compile if they don't fit.
+        return lift(Pointer(buf.getLong()))
+    }
+
+    override fun allocationSize(value: MobileDeviceLinkResponder) = 8UL
+
+    override fun write(value: MobileDeviceLinkResponder, buf: ByteBuffer) {
+        // The Rust code always expects pointers written as 8 bytes,
+        // and will fail to compile if they don't fit.
+        buf.putLong(Pointer.nativeValue(lower(value)))
+    }
+}
+
+
+// This template implements a class for working with a Rust struct via a Pointer/Arc<T>
+// to the live Rust struct on the other side of the FFI.
+//
+// Each instance implements core operations for working with the Rust `Arc<T>` and the
+// Kotlin Pointer to work with the live Rust struct on the other side of the FFI.
+//
+// There's some subtlety here, because we have to be careful not to operate on a Rust
+// struct after it has been dropped, and because we must expose a public API for freeing
+// theq Kotlin wrapper object in lieu of reliable finalizers. The core requirements are:
+//
+//   * Each instance holds an opaque pointer to the underlying Rust struct.
+//     Method calls need to read this pointer from the object's state and pass it in to
+//     the Rust FFI.
+//
+//   * When an instance is no longer needed, its pointer should be passed to a
+//     special destructor function provided by the Rust FFI, which will drop the
+//     underlying Rust struct.
+//
+//   * Given an instance, calling code is expected to call the special
+//     `destroy` method in order to free it after use, either by calling it explicitly
+//     or by using a higher-level helper like the `use` method. Failing to do so risks
+//     leaking the underlying Rust struct.
+//
+//   * We can't assume that calling code will do the right thing, and must be prepared
+//     to handle Kotlin method calls executing concurrently with or even after a call to
+//     `destroy`, and to handle multiple (possibly concurrent!) calls to `destroy`.
+//
+//   * We must never allow Rust code to operate on the underlying Rust struct after
+//     the destructor has been called, and must never call the destructor more than once.
+//     Doing so may trigger memory unsafety.
+//
+//   * To mitigate many of the risks of leaking memory and use-after-free unsafety, a `Cleaner`
+//     is implemented to call the destructor when the Kotlin object becomes unreachable.
+//     This is done in a background thread. This is not a panacea, and client code should be aware that
+//      1. the thread may starve if some there are objects that have poorly performing
+//     `drop` methods or do significant work in their `drop` methods.
+//      2. the thread is shared across the whole library. This can be tuned by using `android_cleaner = true`,
+//         or `android = true` in the [`kotlin` section of the `uniffi.toml` file](https://mozilla.github.io/uniffi-rs/kotlin/configuration.html).
+//
+// If we try to implement this with mutual exclusion on access to the pointer, there is the
+// possibility of a race between a method call and a concurrent call to `destroy`:
+//
+//    * Thread A starts a method call, reads the value of the pointer, but is interrupted
+//      before it can pass the pointer over the FFI to Rust.
+//    * Thread B calls `destroy` and frees the underlying Rust struct.
+//    * Thread A resumes, passing the already-read pointer value to Rust and triggering
+//      a use-after-free.
+//
+// One possible solution would be to use a `ReadWriteLock`, with each method call taking
+// a read lock (and thus allowed to run concurrently) and the special `destroy` method
+// taking a write lock (and thus blocking on live method calls). However, we aim not to
+// generate methods with any hidden blocking semantics, and a `destroy` method that might
+// block if called incorrectly seems to meet that bar.
+//
+// So, we achieve our goals by giving each instance an associated `AtomicLong` counter to track
+// the number of in-flight method calls, and an `AtomicBoolean` flag to indicate whether `destroy`
+// has been called. These are updated according to the following rules:
+//
+//    * The initial value of the counter is 1, indicating a live object with no in-flight calls.
+//      The initial value for the flag is false.
+//
+//    * At the start of each method call, we atomically check the counter.
+//      If it is 0 then the underlying Rust struct has already been destroyed and the call is aborted.
+//      If it is nonzero them we atomically increment it by 1 and proceed with the method call.
+//
+//    * At the end of each method call, we atomically decrement and check the counter.
+//      If it has reached zero then we destroy the underlying Rust struct.
+//
+//    * When `destroy` is called, we atomically flip the flag from false to true.
+//      If the flag was already true we silently fail.
+//      Otherwise we atomically decrement and check the counter.
+//      If it has reached zero then we destroy the underlying Rust struct.
+//
+// Astute readers may observe that this all sounds very similar to the way that Rust's `Arc<T>` works,
+// and indeed it is, with the addition of a flag to guard against multiple calls to `destroy`.
+//
+// The overall effect is that the underlying Rust struct is destroyed only when `destroy` has been
+// called *and* all in-flight method calls have completed, avoiding violating any of the expectations
+// of the underlying Rust code.
+//
+// This makes a cleaner a better alternative to _not_ calling `destroy()` as
+// and when the object is finished with, but the abstraction is not perfect: if the Rust object's `drop`
+// method is slow, and/or there are many objects to cleanup, and it's on a low end Android device, then the cleaner
+// thread may be starved, and the app will leak memory.
+//
+// In this case, `destroy`ing manually may be a better solution.
+//
+// The cleaner can live side by side with the manual calling of `destroy`. In the order of responsiveness, uniffi objects
+// with Rust peers are reclaimed:
+//
+// 1. By calling the `destroy` method of the object, which calls `rustObject.free()`. If that doesn't happen:
+// 2. When the object becomes unreachable, AND the Cleaner thread gets to call `rustObject.free()`. If the thread is starved then:
+// 3. The memory is reclaimed when the process terminates.
+//
+// [1] https://stackoverflow.com/questions/24376768/can-java-finalize-an-object-when-it-is-still-in-scope/24380219
+//
+
+
+/**
  * Mobile exchange session wrapping the core `ExchangeSession` state machine.
  *
  * Drives the exchange flow: generate/scan QR -> verify proximity -> key agreement -> complete.
@@ -2868,6 +3887,17 @@ public interface MobileExchangeSessionInterface {
      * The real card will be received via relay sync.
      */
     fun `completeCardExchange`(`theirCardName`: kotlin.String)
+    
+    /**
+     * Confirm physical proximity (manual verification).
+     *
+     * For manual sessions: sets the confirmation flag so the exchange
+     * can proceed. Call this after the user confirms they are physically
+     * present with the other party.
+     *
+     * For proximity sessions: no-op (auto-verified via audio hardware).
+     */
+    fun `confirmProximity`()
     
     /**
      * Generate and display a QR code. Transitions Idle -> DisplayingQr.
@@ -3001,6 +4031,27 @@ open class MobileExchangeSession: Disposable, AutoCloseable, MobileExchangeSessi
     uniffiRustCallWithError(MobileException) { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobileexchangesession_complete_card_exchange(
         it, FfiConverterString.lower(`theirCardName`),_status)
+}
+    }
+    
+    
+
+    
+    /**
+     * Confirm physical proximity (manual verification).
+     *
+     * For manual sessions: sets the confirmation flag so the exchange
+     * can proceed. Call this after the user confirms they are physically
+     * present with the other party.
+     *
+     * For proximity sessions: no-op (auto-verified via audio hardware).
+     */
+    @Throws(MobileException::class)override fun `confirmProximity`()
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_mobileexchangesession_confirm_proximity(
+        it, _status)
 }
     }
     
@@ -3609,6 +4660,14 @@ public interface VauchiMobileInterface {
     fun `addContactToLabel`(`labelId`: kotlin.String, `contactId`: kotlin.String)
     
     /**
+     * Adds a decoy contact for duress mode.
+     *
+     * The card_json should be a JSON-serialized ContactCard.
+     * Returns the generated ID.
+     */
+    fun `addDecoyContact`(`name`: kotlin.String, `cardJson`: kotlin.String): kotlin.String
+    
+    /**
      * Add field to own card.
      */
     fun `addField`(`fieldType`: MobileFieldType, `label`: kotlin.String, `value`: kotlin.String)
@@ -3639,6 +4698,16 @@ public interface VauchiMobileInterface {
      * Note: Returns Disabled if the `content-updates` feature is not enabled.
      */
     fun `applyContentUpdates`(): MobileApplyResult
+    
+    /**
+     * Authenticates with a password.
+     *
+     * Returns the authentication mode:
+     * - `Normal` if the real password matches
+     * - `Duress` if the duress PIN matches
+     * - Returns an error if neither matches
+     */
+    fun `authenticate`(`password`: kotlin.String): MobileAuthMode
     
     /**
      * Auto-remove demo contact after first real exchange.
@@ -3684,6 +4753,22 @@ public interface VauchiMobileInterface {
      * Returns the number of cleared updates.
      */
     fun `clearPendingUpdatesForContact`(`contactId`: kotlin.String): kotlin.UInt
+    
+    /**
+     * Configures duress alert settings.
+     *
+     * Sets which contacts receive alerts, the alert message, and
+     * whether to include device location.
+     */
+    fun `configureDuressAlerts`(`contactIds`: List<kotlin.String>, `message`: kotlin.String)
+    
+    /**
+     * Configures the emergency broadcast system.
+     *
+     * Sets which contacts receive emergency alerts, the alert message,
+     * and whether to include device location.
+     */
+    fun `configureEmergencyBroadcast`(`contactIds`: List<kotlin.String>, `message`: kotlin.String, `includeLocation`: kotlin.Boolean)
     
     /**
      * Get contact count.
@@ -3736,6 +4821,11 @@ public interface VauchiMobileInterface {
     fun `createRecoveryVoucher`(`claimB64`: kotlin.String): MobileRecoveryVoucher
     
     /**
+     * Deletes a decoy contact by ID.
+     */
+    fun `deleteDecoyContact`(`id`: kotlin.String)
+    
+    /**
      * Delete a label.
      */
     fun `deleteLabel`(`labelId`: kotlin.String)
@@ -3751,6 +4841,16 @@ public interface VauchiMobileInterface {
      * Returns the number of devices linked to this identity.
      */
     fun `deviceCount`(): kotlin.UInt
+    
+    /**
+     * Disables duress mode and clears duress hash/salt.
+     */
+    fun `disableDuress`()
+    
+    /**
+     * Disables the emergency broadcast by deleting the configuration.
+     */
+    fun `disableEmergencyBroadcast`()
     
     /**
      * Dismiss the demo contact.
@@ -3874,6 +4974,20 @@ public interface VauchiMobileInterface {
     fun `getDueRetries`(): List<MobileRetryEntry>
     
     /**
+     * Gets the current duress alert settings.
+     *
+     * Returns `None` if no settings have been configured.
+     */
+    fun `getDuressSettings`(): MobileDuressSettings?
+    
+    /**
+     * Gets the current emergency broadcast configuration.
+     *
+     * Returns `None` if no configuration has been set.
+     */
+    fun `getEmergencyConfig`(): MobileEmergencyConfig?
+    
+    /**
      * Get the validation count for a field (quick check without full status).
      */
     fun `getFieldValidationCount`(`contactId`: kotlin.String, `fieldId`: kotlin.String): kotlin.UInt
@@ -3905,6 +5019,14 @@ public interface VauchiMobileInterface {
      * Get own contact card.
      */
     fun `getOwnCard`(): MobileContactCard
+    
+    /**
+     * Get formatted fingerprint of own identity public key.
+     *
+     * Returns the fingerprint as 16 groups of 4 uppercase hex characters,
+     * suitable for display and manual comparison with contacts.
+     */
+    fun `getOwnFingerprint`(): kotlin.String
     
     /**
      * Get all pending (non-terminal) deliveries.
@@ -3997,6 +5119,15 @@ public interface VauchiMobileInterface {
     fun `hasValidatedField`(`contactId`: kotlin.String, `fieldId`: kotlin.String): kotlin.Boolean
     
     /**
+     * Hides a contact from the main contact list.
+     *
+     * Hidden contacts provide plausible deniability - they only appear
+     * via secret access (gesture, PIN, or special settings navigation).
+     * Routes through the Vauchi API to ensure `ContactHidden` events are dispatched.
+     */
+    fun `hideContact`(`contactId`: kotlin.String)
+    
+    /**
      * Hide field from contact.
      */
     fun `hideFieldFromContact`(`contactId`: kotlin.String, `fieldLabel`: kotlin.String)
@@ -4030,6 +5161,11 @@ public interface VauchiMobileInterface {
     fun `isDemoUpdateAvailable`(): kotlin.Boolean
     
     /**
+     * Returns whether duress mode is enabled.
+     */
+    fun `isDuressEnabled`(): kotlin.Boolean
+    
+    /**
      * Check if field is visible to contact.
      */
     fun `isFieldVisibleToContact`(`contactId`: kotlin.String, `fieldLabel`: kotlin.String): kotlin.Boolean
@@ -4040,6 +5176,11 @@ public interface VauchiMobileInterface {
      * Default max size is 1000 updates.
      */
     fun `isOfflineQueueFull`(): kotlin.Boolean
+    
+    /**
+     * Returns whether an app password has been configured.
+     */
+    fun `isPasswordEnabled`(): kotlin.Boolean
     
     /**
      * Check if this device is the primary device (index 0).
@@ -4055,6 +5196,17 @@ public interface VauchiMobileInterface {
      * List contacts with pagination.
      */
     fun `listContactsPaginated`(`offset`: kotlin.UInt, `limit`: kotlin.UInt): List<MobileContact>
+    
+    /**
+     * Lists all decoy contacts.
+     */
+    fun `listDecoyContacts`(): List<MobileDecoyContact>
+    
+    /**
+     * Lists all hidden contacts.
+     * Routes through the Vauchi API for consistency with hide/unhide operations.
+     */
+    fun `listHiddenContacts`(): List<MobileContact>
     
     /**
      * List all visibility labels.
@@ -4183,6 +5335,13 @@ public interface VauchiMobileInterface {
     fun `searchSocialNetworks`(`query`: kotlin.String): List<MobileSocialNetwork>
     
     /**
+     * Sends an emergency broadcast to all trusted contacts.
+     *
+     * Returns the number of alerts sent and total configured.
+     */
+    fun `sendEmergencyBroadcast`(): MobileBroadcastResult
+    
+    /**
      * Set a per-contact override for field visibility.
      *
      * Per-contact overrides take precedence over label-based visibility.
@@ -4217,6 +5376,20 @@ public interface VauchiMobileInterface {
     fun `setPlatformKeychain`(`keychain`: MobilePlatformKeychain)
     
     /**
+     * Sets up an app password (PIN).
+     *
+     * Requires an identity to be created first.
+     */
+    fun `setupAppPassword`(`password`: kotlin.String)
+    
+    /**
+     * Sets up a duress PIN.
+     *
+     * Requires an app password to be configured first.
+     */
+    fun `setupDuressPassword`(`duressPassword`: kotlin.String)
+    
+    /**
      * Show field to contact.
      */
     fun `showFieldToContact`(`contactId`: kotlin.String, `fieldLabel`: kotlin.String)
@@ -4240,9 +5413,34 @@ public interface VauchiMobileInterface {
     fun `softShred`(): MobileShredToken
     
     /**
+     * Start a device join as the new device (responder).
+     *
+     * Parses the QR data scanned from the existing device and returns a
+     * `MobileDeviceLinkResponder` that can create requests and process responses.
+     */
+    fun `startDeviceJoin`(`qrData`: kotlin.String, `deviceName`: kotlin.String): MobileDeviceLinkResponder
+    
+    /**
+     * Start a device link as the existing device (initiator).
+     *
+     * Returns a `MobileDeviceLinkInitiator` that holds the QR data and can
+     * process incoming link requests from new devices.
+     */
+    fun `startDeviceLink`(): MobileDeviceLinkInitiator
+    
+    /**
      * Sync with relay server.
      */
     fun `sync`(): MobileSyncResult
+    
+    /**
+     * Async version of sync using native async WebSocket.
+     *
+     * Use this from mobile UI threads to prevent freezing.
+     * Storage is opened in scoped blocks and dropped before `.await` to keep
+     * the future `Send` (required by UniFFI async exports).
+     */
+    suspend fun `syncAsync`(): MobileSyncResult
     
     /**
      * Trigger a demo update and get the new content.
@@ -4270,6 +5468,12 @@ public interface VauchiMobileInterface {
      * Try to trigger an aha moment with context (e.g., contact name).
      */
     fun `tryTriggerAhaMomentWithContext`(`momentType`: MobileAhaMomentType, `context`: kotlin.String): MobileAhaMoment?
+    
+    /**
+     * Unhides a contact, making it visible in the main contact list again.
+     * Routes through the Vauchi API to ensure `ContactUnhidden` events are dispatched.
+     */
+    fun `unhideContact`(`contactId`: kotlin.String)
     
     /**
      * Unlink a device from this identity.
@@ -4441,6 +5645,25 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Adds a decoy contact for duress mode.
+     *
+     * The card_json should be a JSON-serialized ContactCard.
+     * Returns the generated ID.
+     */
+    @Throws(MobileException::class)override fun `addDecoyContact`(`name`: kotlin.String, `cardJson`: kotlin.String): kotlin.String {
+            return FfiConverterString.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_add_decoy_contact(
+        it, FfiConverterString.lower(`name`),FfiConverterString.lower(`cardJson`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
      * Add field to own card.
      */
     @Throws(MobileException::class)override fun `addField`(`fieldType`: MobileFieldType, `label`: kotlin.String, `value`: kotlin.String)
@@ -4516,6 +5739,27 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     uniffiRustCall() { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_apply_content_updates(
         it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Authenticates with a password.
+     *
+     * Returns the authentication mode:
+     * - `Normal` if the real password matches
+     * - `Duress` if the duress PIN matches
+     * - Returns an error if neither matches
+     */
+    @Throws(MobileException::class)override fun `authenticate`(`password`: kotlin.String): MobileAuthMode {
+            return FfiConverterTypeMobileAuthMode.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_authenticate(
+        it, FfiConverterString.lower(`password`),_status)
 }
     }
     )
@@ -4638,6 +5882,42 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     }
     )
     }
+    
+
+    
+    /**
+     * Configures duress alert settings.
+     *
+     * Sets which contacts receive alerts, the alert message, and
+     * whether to include device location.
+     */
+    @Throws(MobileException::class)override fun `configureDuressAlerts`(`contactIds`: List<kotlin.String>, `message`: kotlin.String)
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_configure_duress_alerts(
+        it, FfiConverterSequenceString.lower(`contactIds`),FfiConverterString.lower(`message`),_status)
+}
+    }
+    
+    
+
+    
+    /**
+     * Configures the emergency broadcast system.
+     *
+     * Sets which contacts receive emergency alerts, the alert message,
+     * and whether to include device location.
+     */
+    @Throws(MobileException::class)override fun `configureEmergencyBroadcast`(`contactIds`: List<kotlin.String>, `message`: kotlin.String, `includeLocation`: kotlin.Boolean)
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_configure_emergency_broadcast(
+        it, FfiConverterSequenceString.lower(`contactIds`),FfiConverterString.lower(`message`),FfiConverterBoolean.lower(`includeLocation`),_status)
+}
+    }
+    
     
 
     
@@ -4779,6 +6059,21 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Deletes a decoy contact by ID.
+     */
+    @Throws(MobileException::class)override fun `deleteDecoyContact`(`id`: kotlin.String)
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_delete_decoy_contact(
+        it, FfiConverterString.lower(`id`),_status)
+}
+    }
+    
+    
+
+    
+    /**
      * Delete a label.
      */
     @Throws(MobileException::class)override fun `deleteLabel`(`labelId`: kotlin.String)
@@ -4824,6 +6119,36 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     }
     )
     }
+    
+
+    
+    /**
+     * Disables duress mode and clears duress hash/salt.
+     */
+    @Throws(MobileException::class)override fun `disableDuress`()
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_disable_duress(
+        it, _status)
+}
+    }
+    
+    
+
+    
+    /**
+     * Disables the emergency broadcast by deleting the configuration.
+     */
+    @Throws(MobileException::class)override fun `disableEmergencyBroadcast`()
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_disable_emergency_broadcast(
+        it, _status)
+}
+    }
+    
     
 
     
@@ -5177,6 +6502,42 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Gets the current duress alert settings.
+     *
+     * Returns `None` if no settings have been configured.
+     */
+    @Throws(MobileException::class)override fun `getDuressSettings`(): MobileDuressSettings? {
+            return FfiConverterOptionalTypeMobileDuressSettings.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_get_duress_settings(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Gets the current emergency broadcast configuration.
+     *
+     * Returns `None` if no configuration has been set.
+     */
+    @Throws(MobileException::class)override fun `getEmergencyConfig`(): MobileEmergencyConfig? {
+            return FfiConverterOptionalTypeMobileEmergencyConfig.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_get_emergency_config(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
      * Get the validation count for a field (quick check without full status).
      */
     @Throws(MobileException::class)override fun `getFieldValidationCount`(`contactId`: kotlin.String, `fieldId`: kotlin.String): kotlin.UInt {
@@ -5267,6 +6628,25 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     callWithPointer {
     uniffiRustCallWithError(MobileException) { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_get_own_card(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Get formatted fingerprint of own identity public key.
+     *
+     * Returns the fingerprint as 16 groups of 4 uppercase hex characters,
+     * suitable for display and manual comparison with contacts.
+     */
+    @Throws(MobileException::class)override fun `getOwnFingerprint`(): kotlin.String {
+            return FfiConverterString.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_get_own_fingerprint(
         it, _status)
 }
     }
@@ -5536,6 +6916,25 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Hides a contact from the main contact list.
+     *
+     * Hidden contacts provide plausible deniability - they only appear
+     * via secret access (gesture, PIN, or special settings navigation).
+     * Routes through the Vauchi API to ensure `ContactHidden` events are dispatched.
+     */
+    @Throws(MobileException::class)override fun `hideContact`(`contactId`: kotlin.String)
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_hide_contact(
+        it, FfiConverterString.lower(`contactId`),_status)
+}
+    }
+    
+    
+
+    
+    /**
      * Hide field from contact.
      */
     @Throws(MobileException::class)override fun `hideFieldFromContact`(`contactId`: kotlin.String, `fieldLabel`: kotlin.String)
@@ -5630,6 +7029,22 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Returns whether duress mode is enabled.
+     */
+    @Throws(MobileException::class)override fun `isDuressEnabled`(): kotlin.Boolean {
+            return FfiConverterBoolean.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_is_duress_enabled(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
      * Check if field is visible to contact.
      */
     @Throws(MobileException::class)override fun `isFieldVisibleToContact`(`contactId`: kotlin.String, `fieldLabel`: kotlin.String): kotlin.Boolean {
@@ -5655,6 +7070,22 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     callWithPointer {
     uniffiRustCallWithError(MobileException) { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_is_offline_queue_full(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Returns whether an app password has been configured.
+     */
+    @Throws(MobileException::class)override fun `isPasswordEnabled`(): kotlin.Boolean {
+            return FfiConverterBoolean.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_is_password_enabled(
         it, _status)
 }
     }
@@ -5704,6 +7135,39 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     uniffiRustCallWithError(MobileException) { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_list_contacts_paginated(
         it, FfiConverterUInt.lower(`offset`),FfiConverterUInt.lower(`limit`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Lists all decoy contacts.
+     */
+    @Throws(MobileException::class)override fun `listDecoyContacts`(): List<MobileDecoyContact> {
+            return FfiConverterSequenceTypeMobileDecoyContact.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_list_decoy_contacts(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Lists all hidden contacts.
+     * Routes through the Vauchi API for consistency with hide/unhide operations.
+     */
+    @Throws(MobileException::class)override fun `listHiddenContacts`(): List<MobileContact> {
+            return FfiConverterSequenceTypeMobileContact.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_list_hidden_contacts(
+        it, _status)
 }
     }
     )
@@ -6061,6 +7525,24 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Sends an emergency broadcast to all trusted contacts.
+     *
+     * Returns the number of alerts sent and total configured.
+     */
+    @Throws(MobileException::class)override fun `sendEmergencyBroadcast`(): MobileBroadcastResult {
+            return FfiConverterTypeMobileBroadcastResult.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_send_emergency_broadcast(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
      * Set a per-contact override for field visibility.
      *
      * Per-contact overrides take precedence over label-based visibility.
@@ -6143,6 +7625,40 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Sets up an app password (PIN).
+     *
+     * Requires an identity to be created first.
+     */
+    @Throws(MobileException::class)override fun `setupAppPassword`(`password`: kotlin.String)
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_setup_app_password(
+        it, FfiConverterString.lower(`password`),_status)
+}
+    }
+    
+    
+
+    
+    /**
+     * Sets up a duress PIN.
+     *
+     * Requires an app password to be configured first.
+     */
+    @Throws(MobileException::class)override fun `setupDuressPassword`(`duressPassword`: kotlin.String)
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_setup_duress_password(
+        it, FfiConverterString.lower(`duressPassword`),_status)
+}
+    }
+    
+    
+
+    
+    /**
      * Show field to contact.
      */
     @Throws(MobileException::class)override fun `showFieldToContact`(`contactId`: kotlin.String, `fieldLabel`: kotlin.String)
@@ -6198,6 +7714,44 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
 
     
     /**
+     * Start a device join as the new device (responder).
+     *
+     * Parses the QR data scanned from the existing device and returns a
+     * `MobileDeviceLinkResponder` that can create requests and process responses.
+     */
+    @Throws(MobileException::class)override fun `startDeviceJoin`(`qrData`: kotlin.String, `deviceName`: kotlin.String): MobileDeviceLinkResponder {
+            return FfiConverterTypeMobileDeviceLinkResponder.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_start_device_join(
+        it, FfiConverterString.lower(`qrData`),FfiConverterString.lower(`deviceName`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Start a device link as the existing device (initiator).
+     *
+     * Returns a `MobileDeviceLinkInitiator` that holds the QR data and can
+     * process incoming link requests from new devices.
+     */
+    @Throws(MobileException::class)override fun `startDeviceLink`(): MobileDeviceLinkInitiator {
+            return FfiConverterTypeMobileDeviceLinkInitiator.lift(
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_start_device_link(
+        it, _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
      * Sync with relay server.
      */
     @Throws(MobileException::class)override fun `sync`(): MobileSyncResult {
@@ -6211,6 +7765,34 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     )
     }
     
+
+    
+    /**
+     * Async version of sync using native async WebSocket.
+     *
+     * Use this from mobile UI threads to prevent freezing.
+     * Storage is opened in scoped blocks and dropped before `.await` to keep
+     * the future `Send` (required by UniFFI async exports).
+     */
+    @Throws(MobileException::class)
+    @Suppress("ASSIGNED_BUT_NEVER_ACCESSED_VARIABLE")
+    override suspend fun `syncAsync`() : MobileSyncResult {
+        return uniffiRustCallAsync(
+        callWithPointer { thisPtr ->
+            UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_sync_async(
+                thisPtr,
+                
+            )
+        },
+        { future, callback, continuation -> UniffiLib.INSTANCE.ffi_vauchi_mobile_rust_future_poll_rust_buffer(future, callback, continuation) },
+        { future, continuation -> UniffiLib.INSTANCE.ffi_vauchi_mobile_rust_future_complete_rust_buffer(future, continuation) },
+        { future -> UniffiLib.INSTANCE.ffi_vauchi_mobile_rust_future_free_rust_buffer(future) },
+        // lift function
+        { FfiConverterTypeMobileSyncResult.lift(it) },
+        // Error FFI converter
+        MobileException.ErrorHandler,
+    )
+    }
 
     
     /**
@@ -6291,6 +7873,22 @@ open class VauchiMobile: Disposable, AutoCloseable, VauchiMobileInterface {
     }
     )
     }
+    
+
+    
+    /**
+     * Unhides a contact, making it visible in the main contact list again.
+     * Routes through the Vauchi API to ensure `ContactUnhidden` events are dispatched.
+     */
+    @Throws(MobileException::class)override fun `unhideContact`(`contactId`: kotlin.String)
+        = 
+    callWithPointer {
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_method_vauchimobile_unhide_contact(
+        it, FfiConverterString.lower(`contactId`),_status)
+}
+    }
+    
     
 
     
@@ -6573,6 +8171,47 @@ public object FfiConverterTypeMobileApplyFailure: FfiConverterRustBuffer<MobileA
 
 
 /**
+ * Emergency broadcast result for mobile platforms.
+ */
+data class MobileBroadcastResult (
+    /**
+     * Number of alerts successfully queued for delivery.
+     */
+    var `sent`: kotlin.UInt, 
+    /**
+     * Total number of trusted contacts in the config.
+     */
+    var `total`: kotlin.UInt
+) {
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileBroadcastResult: FfiConverterRustBuffer<MobileBroadcastResult> {
+    override fun read(buf: ByteBuffer): MobileBroadcastResult {
+        return MobileBroadcastResult(
+            FfiConverterUInt.read(buf),
+            FfiConverterUInt.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: MobileBroadcastResult) = (
+            FfiConverterUInt.allocationSize(value.`sent`) +
+            FfiConverterUInt.allocationSize(value.`total`)
+    )
+
+    override fun write(value: MobileBroadcastResult, buf: ByteBuffer) {
+            FfiConverterUInt.write(value.`sent`, buf)
+            FfiConverterUInt.write(value.`total`, buf)
+    }
+}
+
+
+
+/**
  * A recorded consent decision.
  */
 data class MobileConsentRecord (
@@ -6640,8 +8279,10 @@ public object FfiConverterTypeMobileConsentRecord: FfiConverterRustBuffer<Mobile
 data class MobileContact (
     var `id`: kotlin.String, 
     var `displayName`: kotlin.String, 
+    var `fingerprint`: kotlin.String, 
     var `isVerified`: kotlin.Boolean, 
     var `isRecoveryTrusted`: kotlin.Boolean, 
+    var `isHidden`: kotlin.Boolean, 
     var `card`: MobileContactCard, 
     var `addedAt`: kotlin.ULong
 ) {
@@ -6657,6 +8298,8 @@ public object FfiConverterTypeMobileContact: FfiConverterRustBuffer<MobileContac
         return MobileContact(
             FfiConverterString.read(buf),
             FfiConverterString.read(buf),
+            FfiConverterString.read(buf),
+            FfiConverterBoolean.read(buf),
             FfiConverterBoolean.read(buf),
             FfiConverterBoolean.read(buf),
             FfiConverterTypeMobileContactCard.read(buf),
@@ -6667,8 +8310,10 @@ public object FfiConverterTypeMobileContact: FfiConverterRustBuffer<MobileContac
     override fun allocationSize(value: MobileContact) = (
             FfiConverterString.allocationSize(value.`id`) +
             FfiConverterString.allocationSize(value.`displayName`) +
+            FfiConverterString.allocationSize(value.`fingerprint`) +
             FfiConverterBoolean.allocationSize(value.`isVerified`) +
             FfiConverterBoolean.allocationSize(value.`isRecoveryTrusted`) +
+            FfiConverterBoolean.allocationSize(value.`isHidden`) +
             FfiConverterTypeMobileContactCard.allocationSize(value.`card`) +
             FfiConverterULong.allocationSize(value.`addedAt`)
     )
@@ -6676,8 +8321,10 @@ public object FfiConverterTypeMobileContact: FfiConverterRustBuffer<MobileContac
     override fun write(value: MobileContact, buf: ByteBuffer) {
             FfiConverterString.write(value.`id`, buf)
             FfiConverterString.write(value.`displayName`, buf)
+            FfiConverterString.write(value.`fingerprint`, buf)
             FfiConverterBoolean.write(value.`isVerified`, buf)
             FfiConverterBoolean.write(value.`isRecoveryTrusted`, buf)
+            FfiConverterBoolean.write(value.`isHidden`, buf)
             FfiConverterTypeMobileContactCard.write(value.`card`, buf)
             FfiConverterULong.write(value.`addedAt`, buf)
     }
@@ -6806,6 +8453,47 @@ public object FfiConverterTypeMobileContentConfig: FfiConverterRustBuffer<Mobile
             FfiConverterBoolean.write(value.`remoteUpdatesEnabled`, buf)
             FfiConverterString.write(value.`contentUrl`, buf)
             FfiConverterOptionalString.write(value.`proxyUrl`, buf)
+    }
+}
+
+
+
+/**
+ * A decoy contact for mobile platforms.
+ */
+data class MobileDecoyContact (
+    /**
+     * Unique identifier for the decoy contact.
+     */
+    var `id`: kotlin.String, 
+    /**
+     * Display name shown in the contact list.
+     */
+    var `displayName`: kotlin.String
+) {
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileDecoyContact: FfiConverterRustBuffer<MobileDecoyContact> {
+    override fun read(buf: ByteBuffer): MobileDecoyContact {
+        return MobileDecoyContact(
+            FfiConverterString.read(buf),
+            FfiConverterString.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: MobileDecoyContact) = (
+            FfiConverterString.allocationSize(value.`id`) +
+            FfiConverterString.allocationSize(value.`displayName`)
+    )
+
+    override fun write(value: MobileDecoyContact, buf: ByteBuffer) {
+            FfiConverterString.write(value.`id`, buf)
+            FfiConverterString.write(value.`displayName`, buf)
     }
 }
 
@@ -7274,6 +8962,109 @@ public object FfiConverterTypeMobileDeviceInfo: FfiConverterRustBuffer<MobileDev
 
 
 /**
+ * Result of joining a device link (for new device).
+ */
+data class MobileDeviceJoinResult (
+    /**
+     * Whether joining was successful.
+     */
+    var `success`: kotlin.Boolean, 
+    /**
+     * Display name of the identity.
+     */
+    var `displayName`: kotlin.String, 
+    /**
+     * Assigned device index.
+     */
+    var `deviceIndex`: kotlin.UInt, 
+    /**
+     * Error message if failed.
+     */
+    var `errorMessage`: kotlin.String?
+) {
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileDeviceJoinResult: FfiConverterRustBuffer<MobileDeviceJoinResult> {
+    override fun read(buf: ByteBuffer): MobileDeviceJoinResult {
+        return MobileDeviceJoinResult(
+            FfiConverterBoolean.read(buf),
+            FfiConverterString.read(buf),
+            FfiConverterUInt.read(buf),
+            FfiConverterOptionalString.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: MobileDeviceJoinResult) = (
+            FfiConverterBoolean.allocationSize(value.`success`) +
+            FfiConverterString.allocationSize(value.`displayName`) +
+            FfiConverterUInt.allocationSize(value.`deviceIndex`) +
+            FfiConverterOptionalString.allocationSize(value.`errorMessage`)
+    )
+
+    override fun write(value: MobileDeviceJoinResult, buf: ByteBuffer) {
+            FfiConverterBoolean.write(value.`success`, buf)
+            FfiConverterString.write(value.`displayName`, buf)
+            FfiConverterUInt.write(value.`deviceIndex`, buf)
+            FfiConverterOptionalString.write(value.`errorMessage`, buf)
+    }
+}
+
+
+
+/**
+ * Confirmation details for device link (shown before approving).
+ */
+data class MobileDeviceLinkConfirmation (
+    /**
+     * The new device's proposed name.
+     */
+    var `deviceName`: kotlin.String, 
+    /**
+     * 6-digit confirmation code (formatted as `XXX-XXX`).
+     */
+    var `confirmationCode`: kotlin.String, 
+    /**
+     * Identity fingerprint (e.g. `AB12-CD34-EF56-7890`).
+     */
+    var `identityFingerprint`: kotlin.String
+) {
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileDeviceLinkConfirmation: FfiConverterRustBuffer<MobileDeviceLinkConfirmation> {
+    override fun read(buf: ByteBuffer): MobileDeviceLinkConfirmation {
+        return MobileDeviceLinkConfirmation(
+            FfiConverterString.read(buf),
+            FfiConverterString.read(buf),
+            FfiConverterString.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: MobileDeviceLinkConfirmation) = (
+            FfiConverterString.allocationSize(value.`deviceName`) +
+            FfiConverterString.allocationSize(value.`confirmationCode`) +
+            FfiConverterString.allocationSize(value.`identityFingerprint`)
+    )
+
+    override fun write(value: MobileDeviceLinkConfirmation, buf: ByteBuffer) {
+            FfiConverterString.write(value.`deviceName`, buf)
+            FfiConverterString.write(value.`confirmationCode`, buf)
+            FfiConverterString.write(value.`identityFingerprint`, buf)
+    }
+}
+
+
+
+/**
  * Device link QR data for display on existing device.
  */
 data class MobileDeviceLinkData (
@@ -7395,7 +9186,11 @@ data class MobileDeviceLinkResult (
     /**
      * Error message if failed.
      */
-    var `errorMessage`: kotlin.String?
+    var `errorMessage`: kotlin.String?, 
+    /**
+     * Encrypted response bytes for the new device (base64-encoded).
+     */
+    var `encryptedResponse`: kotlin.ByteArray?
 ) {
     
     companion object
@@ -7411,6 +9206,7 @@ public object FfiConverterTypeMobileDeviceLinkResult: FfiConverterRustBuffer<Mob
             FfiConverterString.read(buf),
             FfiConverterUInt.read(buf),
             FfiConverterOptionalString.read(buf),
+            FfiConverterOptionalByteArray.read(buf),
         )
     }
 
@@ -7418,7 +9214,8 @@ public object FfiConverterTypeMobileDeviceLinkResult: FfiConverterRustBuffer<Mob
             FfiConverterBoolean.allocationSize(value.`success`) +
             FfiConverterString.allocationSize(value.`deviceName`) +
             FfiConverterUInt.allocationSize(value.`deviceIndex`) +
-            FfiConverterOptionalString.allocationSize(value.`errorMessage`)
+            FfiConverterOptionalString.allocationSize(value.`errorMessage`) +
+            FfiConverterOptionalByteArray.allocationSize(value.`encryptedResponse`)
     )
 
     override fun write(value: MobileDeviceLinkResult, buf: ByteBuffer) {
@@ -7426,6 +9223,103 @@ public object FfiConverterTypeMobileDeviceLinkResult: FfiConverterRustBuffer<Mob
             FfiConverterString.write(value.`deviceName`, buf)
             FfiConverterUInt.write(value.`deviceIndex`, buf)
             FfiConverterOptionalString.write(value.`errorMessage`, buf)
+            FfiConverterOptionalByteArray.write(value.`encryptedResponse`, buf)
+    }
+}
+
+
+
+/**
+ * Duress alert settings for mobile platforms.
+ */
+data class MobileDuressSettings (
+    /**
+     * Contact IDs of trusted contacts who receive duress alerts.
+     */
+    var `alertContactIds`: List<kotlin.String>, 
+    /**
+     * Custom alert message included in the alert payload.
+     */
+    var `alertMessage`: kotlin.String, 
+    /**
+     * Whether to include device location in the alert.
+     */
+    var `includeLocation`: kotlin.Boolean
+) {
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileDuressSettings: FfiConverterRustBuffer<MobileDuressSettings> {
+    override fun read(buf: ByteBuffer): MobileDuressSettings {
+        return MobileDuressSettings(
+            FfiConverterSequenceString.read(buf),
+            FfiConverterString.read(buf),
+            FfiConverterBoolean.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: MobileDuressSettings) = (
+            FfiConverterSequenceString.allocationSize(value.`alertContactIds`) +
+            FfiConverterString.allocationSize(value.`alertMessage`) +
+            FfiConverterBoolean.allocationSize(value.`includeLocation`)
+    )
+
+    override fun write(value: MobileDuressSettings, buf: ByteBuffer) {
+            FfiConverterSequenceString.write(value.`alertContactIds`, buf)
+            FfiConverterString.write(value.`alertMessage`, buf)
+            FfiConverterBoolean.write(value.`includeLocation`, buf)
+    }
+}
+
+
+
+/**
+ * Emergency broadcast configuration for mobile platforms.
+ */
+data class MobileEmergencyConfig (
+    /**
+     * Contact IDs of trusted contacts who receive emergency alerts.
+     */
+    var `trustedContactIds`: List<kotlin.String>, 
+    /**
+     * Custom alert message included in the alert payload.
+     */
+    var `message`: kotlin.String, 
+    /**
+     * Whether to include device location in the alert.
+     */
+    var `includeLocation`: kotlin.Boolean
+) {
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileEmergencyConfig: FfiConverterRustBuffer<MobileEmergencyConfig> {
+    override fun read(buf: ByteBuffer): MobileEmergencyConfig {
+        return MobileEmergencyConfig(
+            FfiConverterSequenceString.read(buf),
+            FfiConverterString.read(buf),
+            FfiConverterBoolean.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: MobileEmergencyConfig) = (
+            FfiConverterSequenceString.allocationSize(value.`trustedContactIds`) +
+            FfiConverterString.allocationSize(value.`message`) +
+            FfiConverterBoolean.allocationSize(value.`includeLocation`)
+    )
+
+    override fun write(value: MobileEmergencyConfig, buf: ByteBuffer) {
+            FfiConverterSequenceString.write(value.`trustedContactIds`, buf)
+            FfiConverterString.write(value.`message`, buf)
+            FfiConverterBoolean.write(value.`includeLocation`, buf)
     }
 }
 
@@ -9032,6 +10926,118 @@ public object FfiConverterTypeMobileApplyResult : FfiConverterRustBuffer<MobileA
 
 
 /**
+ * Authentication mode result for mobile platforms.
+ */
+
+enum class MobileAuthMode {
+    
+    /**
+     * The normal (real) password was used.
+     */
+    NORMAL,
+    /**
+     * The duress PIN was used — show decoy contacts only.
+     */
+    DURESS;
+    companion object
+}
+
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileAuthMode: FfiConverterRustBuffer<MobileAuthMode> {
+    override fun read(buf: ByteBuffer) = try {
+        MobileAuthMode.values()[buf.getInt() - 1]
+    } catch (e: IndexOutOfBoundsException) {
+        throw RuntimeException("invalid enum value, something is very wrong!!", e)
+    }
+
+    override fun allocationSize(value: MobileAuthMode) = 4UL
+
+    override fun write(value: MobileAuthMode, buf: ByteBuffer) {
+        buf.putInt(value.ordinal + 1)
+    }
+}
+
+
+
+
+
+/**
+ * Status of BLE exchange availability on this device.
+ */
+sealed class MobileBleExchangeStatus {
+    
+    /**
+     * BLE exchange is available (native transport configured)
+     */
+    object Available : MobileBleExchangeStatus()
+    
+    
+    /**
+     * BLE exchange not available — requires native Bluetooth implementation
+     */
+    data class NotAvailable(
+        val `reason`: kotlin.String) : MobileBleExchangeStatus() {
+        companion object
+    }
+    
+
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileBleExchangeStatus : FfiConverterRustBuffer<MobileBleExchangeStatus>{
+    override fun read(buf: ByteBuffer): MobileBleExchangeStatus {
+        return when(buf.getInt()) {
+            1 -> MobileBleExchangeStatus.Available
+            2 -> MobileBleExchangeStatus.NotAvailable(
+                FfiConverterString.read(buf),
+                )
+            else -> throw RuntimeException("invalid enum value, something is very wrong!!")
+        }
+    }
+
+    override fun allocationSize(value: MobileBleExchangeStatus) = when(value) {
+        is MobileBleExchangeStatus.Available -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+            )
+        }
+        is MobileBleExchangeStatus.NotAvailable -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+                + FfiConverterString.allocationSize(value.`reason`)
+            )
+        }
+    }
+
+    override fun write(value: MobileBleExchangeStatus, buf: ByteBuffer) {
+        when(value) {
+            is MobileBleExchangeStatus.Available -> {
+                buf.putInt(1)
+                Unit
+            }
+            is MobileBleExchangeStatus.NotAvailable -> {
+                buf.putInt(2)
+                FfiConverterString.write(value.`reason`, buf)
+                Unit
+            }
+        }.let { /* this makes the `when` an expression, which ensures it is exhaustive */ }
+    }
+}
+
+
+
+
+
+/**
  * Types of consent that can be granted or revoked.
  */
 
@@ -9405,6 +11411,14 @@ sealed class MobileException: kotlin.Exception() {
             get() = "v1=${ v1 }"
     }
     
+    class BleNotAvailable(
+        
+        val v1: kotlin.String
+        ) : MobileException() {
+        override val message
+            get() = "v1=${ v1 }"
+    }
+    
 
     companion object ErrorHandler : UniffiRustCallStatusErrorHandler<MobileException> {
         override fun lift(error_buf: RustBuffer.ByValue): MobileException = FfiConverterTypeMobileError.lift(error_buf)
@@ -9462,6 +11476,9 @@ public object FfiConverterTypeMobileError : FfiConverterRustBuffer<MobileExcepti
                 FfiConverterString.read(buf),
                 )
             17 -> MobileException.Internal(
+                FfiConverterString.read(buf),
+                )
+            18 -> MobileException.BleNotAvailable(
                 FfiConverterString.read(buf),
                 )
             else -> throw RuntimeException("invalid error enum value, something is very wrong!!")
@@ -9551,6 +11568,11 @@ public object FfiConverterTypeMobileError : FfiConverterRustBuffer<MobileExcepti
                 4UL
                 + FfiConverterString.allocationSize(value.v1)
             )
+            is MobileException.BleNotAvailable -> (
+                // Add the size for the Int that specifies the variant plus the size needed for all fields
+                4UL
+                + FfiConverterString.allocationSize(value.v1)
+            )
         }
     }
 
@@ -9634,6 +11656,11 @@ public object FfiConverterTypeMobileError : FfiConverterRustBuffer<MobileExcepti
             }
             is MobileException.Internal -> {
                 buf.putInt(17)
+                FfiConverterString.write(value.v1, buf)
+                Unit
+            }
+            is MobileException.BleNotAvailable -> {
+                buf.putInt(18)
                 FfiConverterString.write(value.v1, buf)
                 Unit
             }
@@ -10273,6 +12300,51 @@ public object FfiConverterTypeMobileUpdateStatus : FfiConverterRustBuffer<Mobile
 
 
 
+/**
+ * Widget confirmation mode for panic shred activation.
+ *
+ * Defines how the user confirms a panic shred from the home screen widget.
+ */
+
+enum class MobileWidgetConfirmationMode {
+    
+    /**
+     * Default: tap once, then confirm in a dialog.
+     */
+    TAP_CONFIRM,
+    /**
+     * Long press to trigger.
+     */
+    LONG_PRESS,
+    /**
+     * Double tap to trigger.
+     */
+    DOUBLE_TAP;
+    companion object
+}
+
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeMobileWidgetConfirmationMode: FfiConverterRustBuffer<MobileWidgetConfirmationMode> {
+    override fun read(buf: ByteBuffer) = try {
+        MobileWidgetConfirmationMode.values()[buf.getInt() - 1]
+    } catch (e: IndexOutOfBoundsException) {
+        throw RuntimeException("invalid enum value, something is very wrong!!", e)
+    }
+
+    override fun allocationSize(value: MobileWidgetConfirmationMode) = 4UL
+
+    override fun write(value: MobileWidgetConfirmationMode, buf: ByteBuffer) {
+        buf.putInt(value.ordinal + 1)
+    }
+}
+
+
+
+
+
 
 
 /**
@@ -10861,6 +12933,70 @@ public object FfiConverterOptionalTypeMobileDemoContact: FfiConverterRustBuffer<
 /**
  * @suppress
  */
+public object FfiConverterOptionalTypeMobileDuressSettings: FfiConverterRustBuffer<MobileDuressSettings?> {
+    override fun read(buf: ByteBuffer): MobileDuressSettings? {
+        if (buf.get().toInt() == 0) {
+            return null
+        }
+        return FfiConverterTypeMobileDuressSettings.read(buf)
+    }
+
+    override fun allocationSize(value: MobileDuressSettings?): ULong {
+        if (value == null) {
+            return 1UL
+        } else {
+            return 1UL + FfiConverterTypeMobileDuressSettings.allocationSize(value)
+        }
+    }
+
+    override fun write(value: MobileDuressSettings?, buf: ByteBuffer) {
+        if (value == null) {
+            buf.put(0)
+        } else {
+            buf.put(1)
+            FfiConverterTypeMobileDuressSettings.write(value, buf)
+        }
+    }
+}
+
+
+
+
+/**
+ * @suppress
+ */
+public object FfiConverterOptionalTypeMobileEmergencyConfig: FfiConverterRustBuffer<MobileEmergencyConfig?> {
+    override fun read(buf: ByteBuffer): MobileEmergencyConfig? {
+        if (buf.get().toInt() == 0) {
+            return null
+        }
+        return FfiConverterTypeMobileEmergencyConfig.read(buf)
+    }
+
+    override fun allocationSize(value: MobileEmergencyConfig?): ULong {
+        if (value == null) {
+            return 1UL
+        } else {
+            return 1UL + FfiConverterTypeMobileEmergencyConfig.allocationSize(value)
+        }
+    }
+
+    override fun write(value: MobileEmergencyConfig?, buf: ByteBuffer) {
+        if (value == null) {
+            buf.put(0)
+        } else {
+            buf.put(1)
+            FfiConverterTypeMobileEmergencyConfig.write(value, buf)
+        }
+    }
+}
+
+
+
+
+/**
+ * @suppress
+ */
 public object FfiConverterOptionalTypeMobileFaqItem: FfiConverterRustBuffer<MobileFaqItem?> {
     override fun read(buf: ByteBuffer): MobileFaqItem? {
         if (buf.get().toInt() == 0) {
@@ -11147,6 +13283,34 @@ public object FfiConverterSequenceTypeMobileContactField: FfiConverterRustBuffer
         buf.putInt(value.size)
         value.iterator().forEach {
             FfiConverterTypeMobileContactField.write(it, buf)
+        }
+    }
+}
+
+
+
+
+/**
+ * @suppress
+ */
+public object FfiConverterSequenceTypeMobileDecoyContact: FfiConverterRustBuffer<List<MobileDecoyContact>> {
+    override fun read(buf: ByteBuffer): List<MobileDecoyContact> {
+        val len = buf.getInt()
+        return List<MobileDecoyContact>(len) {
+            FfiConverterTypeMobileDecoyContact.read(buf)
+        }
+    }
+
+    override fun allocationSize(value: List<MobileDecoyContact>): ULong {
+        val sizeForLength = 4UL
+        val sizeForItems = value.map { FfiConverterTypeMobileDecoyContact.allocationSize(it) }.sum()
+        return sizeForLength + sizeForItems
+    }
+
+    override fun write(value: List<MobileDecoyContact>, buf: ByteBuffer) {
+        buf.putInt(value.size)
+        value.iterator().forEach {
+            FfiConverterTypeMobileDecoyContact.write(it, buf)
         }
     }
 }
@@ -11525,6 +13689,29 @@ public object FfiConverterMapStringString: FfiConverterRustBuffer<Map<kotlin.Str
         }
     }
 }
+
+
+
+
+
+
+
+
+        /**
+         * Check if BLE exchange is available on this device.
+         *
+         * Returns NotAvailable until native BLE transport is implemented
+         * for each platform (CoreBluetooth on iOS, Android BLE on Android).
+         */ fun `bleExchangeStatus`(): MobileBleExchangeStatus {
+            return FfiConverterTypeMobileBleExchangeStatus.lift(
+    uniffiRustCall() { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_func_ble_exchange_status(
+        _status)
+}
+    )
+    }
+    
+
         /**
          * Check password strength for backup encryption.
          *
@@ -11852,6 +14039,30 @@ public object FfiConverterMapStringString: FfiConverterRustBuffer<Map<kotlin.Str
     uniffiRustCall() { _status ->
     UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_func_search_faqs_localized(
         FfiConverterString.lower(`query`),FfiConverterTypeMobileLocale.lower(`locale`),_status)
+}
+    )
+    }
+    
+
+        /**
+         * Panic shred callable from a widget without full app initialization.
+         *
+         * This is the key API for iOS/Android home screen widgets that need to
+         * trigger emergency data destruction without opening the full app or
+         * calling `open_vauchi()`.
+         *
+         * Only requires:
+         * - `data_dir`: The app's data directory path (String for UniFFI compat)
+         * - `keychain`: Platform keychain callback for SMK destruction
+         *
+         * **WARNING**: This operation is irreversible and immediate. All account
+         * data in the specified directory will be permanently destroyed.
+         */
+    @Throws(MobileException::class) fun `widgetPanicShred`(`dataDir`: kotlin.String, `keychain`: MobilePlatformKeychain): MobileShredReport {
+            return FfiConverterTypeMobileShredReport.lift(
+    uniffiRustCallWithError(MobileException) { _status ->
+    UniffiLib.INSTANCE.uniffi_vauchi_mobile_fn_func_widget_panic_shred(
+        FfiConverterString.lower(`dataDir`),FfiConverterTypeMobilePlatformKeychain.lower(`keychain`),_status)
 }
     )
     }
