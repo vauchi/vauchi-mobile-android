@@ -1,0 +1,63 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: vauchi-mobile-android
+Upstream-Contact: Mattia Egloff <mattia.egloff@pm.me>
+
+Files: LICENSE
+Copyright: 2007 Free Software Foundation, Inc.
+License: GPL-3.0-or-later
+
+Files: android-bindings.zip
+Copyright: 2024-2026 Vauchi Contributors
+License: GPL-3.0-or-later
+
+Files: checksum.sha256
+Copyright: 2024-2026 Vauchi Contributors
+License: GPL-3.0-or-later
+
+Files: vauchi-mobile-android-*/jniLibs/*/libvauchi_mobile.so
+Copyright: 2024-2026 Vauchi Contributors
+License: GPL-3.0-or-later
+
+Files: vauchi-mobile-android-*/kotlin/uniffi/vauchi_mobile/vauchi_mobile.kt
+Copyright: 2024-2026 Vauchi Contributors
+License: GPL-3.0-or-later
+
+Files: vauchi-mobile-android-*/BUILD_INFO
+Copyright: 2024-2026 Vauchi Contributors
+License: GPL-3.0-or-later
+
+Files: vauchi-mobile-android-*/README.md
+Copyright: 2024-2026 Vauchi Contributors
+License: GPL-3.0-or-later
+
+Files: vauchi-mobile/src/main/jniLibs/**/*.so
+Copyright: 2024-2026 Vauchi Contributors
+License: GPL-3.0-or-later
+
+Files: vauchi-mobile/src/main/jniLibs/.gitkeep
+Copyright: 2024-2026 Vauchi Contributors
+License: GPL-3.0-or-later
+
+Files: vauchi-mobile/src/main/kotlin/uniffi/vauchi_mobile/.gitkeep
+Copyright: 2024-2026 Vauchi Contributors
+License: GPL-3.0-or-later
+
+Files: vauchi-mobile/src/main/kotlin/uniffi/vauchi_mobile/vauchi_mobile.kt
+Copyright: 2024-2026 Vauchi Contributors
+License: GPL-3.0-or-later
+
+Files: gradle/wrapper/gradle-wrapper.jar
+Copyright: Gradle Inc.
+License: Apache-2.0
+
+Files: gradlew
+Copyright: Gradle Inc.
+License: Apache-2.0
+
+Files: gradlew.bat
+Copyright: Gradle Inc.
+License: Apache-2.0
+
+Files: gradle/wrapper/gradle-wrapper.properties
+Copyright: Gradle Inc.
+License: Apache-2.0

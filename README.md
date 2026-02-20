@@ -1,3 +1,6 @@
+<!-- SPDX-FileCopyrightText: 2026 Mattia Egloff <mattia.egloff@pm.me> -->
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+
 # VauchiMobile Android Library
 
 Android library distribution for VauchiMobile bindings.
@@ -93,7 +96,7 @@ ProGuard rules are automatically included via `consumer-rules.pro`.
 
 ## License
 
-MIT License - see [LICENSE](LICENSE)
+GPL-3.0-or-later - see [LICENSE](LICENSE)
 
 ## Links
 
