@@ -81,8 +81,8 @@ publishing {
 
                 licenses {
                     license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
+                        name.set("GPL-3.0-or-later")
+                        url.set("https://www.gnu.org/licenses/gpl-3.0.html")
                     }
                 }
 
